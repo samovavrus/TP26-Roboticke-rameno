@@ -1,0 +1,6 @@
+\babel@toc {slovak}{}\relax 
+\thispagestyle {plain}
+\contentsline {section}{\'{U}vod}{5}{section*.1}%
+\contentsline {section}{\numberline {1}Prvá kapitola dokumentácie}{6}{section.2}%
+\contentsline {subsection}{\numberline {1.1}Prvá podkapitola}{6}{subsection.3}%
+\contentsline {section}{Z\'{a}ver}{7}{section*.4}%
