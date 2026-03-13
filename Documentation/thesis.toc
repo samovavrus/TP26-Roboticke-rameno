@@ -1,6 +1,9 @@
 \babel@toc {slovak}{}\relax 
 \thispagestyle {plain}
 \contentsline {section}{\'{U}vod}{5}{section*.1}%
-\contentsline {section}{\numberline {1}Prvá kapitola dokumentácie}{6}{section.2}%
-\contentsline {subsection}{\numberline {1.1}Prvá podkapitola}{6}{subsection.3}%
-\contentsline {section}{Z\'{a}ver}{7}{section*.4}%
+\contentsline {section}{\numberline {1}Geometria modelu ramena}{6}{section.2}%
+\contentsline {section}{\numberline {2}Numerické riešenie inverznej kinematiky}{7}{section.3}%
+\contentsline {section}{\numberline {3}Implementácia softvéru na mikrokontroléri}{8}{section.4}%
+\contentsline {section}{\numberline {4}Návrh používateľského rozhrania}{9}{section.5}%
+\contentsline {section}{\numberline {5}Overenie funkčnosti a presnosti polohovania}{10}{section.6}%
+\contentsline {section}{Z\'{a}ver}{11}{section*.7}%
