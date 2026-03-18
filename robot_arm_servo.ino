@@ -101,26 +101,27 @@ void TaskControl(void* pvParameters) {
   // --- Definícia kinematiky robota ---
   // Rotačné osi každého kĺbu (uprav podľa konštrukcie robota)
   static const RotationZ R1;  // kĺb 1 – otáča v základni
-  static const RotationY R2;  // kĺb 2 – zdvíha rameno
-  static const RotationY R3;  // kĺb 3 – ohýba rameno
+  static const RotationX R2;  // kĺb 2 – zdvíha rameno
+  static const RotationX R3;  // kĺb 3 – ohýba rameno
   static const RotationX R4;  // kĺb 4 – rotuje predlaktie
-  static const RotationY R5;  // kĺb 5 – ohýba zápästie
-  static const RotationX R6;  // kĺb 6 – rotuje efektor
+  static const RotationZ R5;  // kĺb 5 – ohýba zápästie
+  static const RotationY R6;  // kĺb 6 – rotuje efektor
 
   const std::array<const RotationMatrix*, 6> joint_axes = { &R1, &R2, &R3, &R4, &R5, &R6 };
 
-  // Dĺžky článkov [m] – T1..T6 z PDF (uprav podľa fyzického robota)
-  const std::array<float, 6> link_lengths = {
-    0.100f,   // T1
-    0.000f,   // T2
-    0.150f,   // T3
-    0.135f,   // T4
-    0.000f,   // T5
-    0.070f    // T6
+  // 3D Translačné vektory podľa výkresu. 
+  const std::array<Matrix<3, 1>, 6> link_translations = {
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.094f).finished(),  // rotacia okolo Z (servo1) a rotacia okolo X (servo2)
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.105f).finished(),  // rotacia okolo X (servo3)
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.147f).finished(),  // rotacia okolo X (servo4)
+    (Matrix<3,1>() << 0.0f, 0.009f, 0.097f).finished(),  // rotacia okolo Z (servo5)
+    // offset zápästia. Ak je mimo osi do boku v smere X, zmeň 0.0 na 0.0125 atd...
+    (Matrix<3,1>() << 0.015f, -0.0215f, 0.0f).finished(), // rotacia okolo X (servo6)
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.070f).finished()   // efektor
   };
 
-  // Vytvorenie objektu kinematiky
-  Robot::RobotKinematics<6> kinematics(link_lengths, joint_axes);
+  // Vytvorenie objektu kinematiky - ZMENIŤ link_lengths na link_translations!
+  Robot::RobotKinematics<6> kinematics(link_translations, joint_axes);
 
   // --- Test priamej kinematiky ---
   Matrix<6,1> theta = Matrix<6,1>::Zero();  // všetky kĺby v nulovej polohe
@@ -133,6 +134,16 @@ void TaskControl(void* pvParameters) {
   Serial.print("FK y="); Serial.println(pos(1), 4);
   Serial.print("FK z="); Serial.println(pos(2), 4);
   // Očakávané pri theta=0: x=0, y=0, z=sum(L) = 0.455 m
+  auto J = kinematics.getJacobian(theta);   // 3x6 pozicny Jacobian
+
+  Serial.println("J:");
+  for (int r = 0; r < 3; ++r) {
+    for (int c = 0; c < 6; ++c) {
+      Serial.print(J(r, c), 6);
+      if (c < 5) Serial.print(" ");
+    }
+    Serial.println();
+  }
 
   while (1) {
 
