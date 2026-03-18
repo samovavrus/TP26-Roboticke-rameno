@@ -110,14 +110,13 @@ void TaskControl(void* pvParameters) {
   const std::array<const RotationMatrix*, 6> joint_axes = { &R1, &R2, &R3, &R4, &R5, &R6 };
 
   // 3D Translačné vektory podľa výkresu. 
-  // (Predpoklad pre momentálne nastavenie: Z je vo smere hore celým ramenom, urob úpravy podľa Tvojej konvencie)
   const std::array<Matrix<3, 1>, 6> link_translations = {
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.094f).finished(),  
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.105f).finished(),  
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.147f).finished(),  
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.097f).finished(),  
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.094f).finished(),  // rotacia okolo Z (servo1) a rotacia okolo X (servo2)
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.105f).finished(),  // rotacia okolo X (servo3)
+    (Matrix<3,1>() << 0.0f, 0.0f, 0.147f).finished(),  // rotacia okolo X (servo4)
+    (Matrix<3,1>() << 0.0f, 0.009f, 0.097f).finished(),  // rotacia okolo Z (servo5)
     // offset zápästia. Ak je mimo osi do boku v smere X, zmeň 0.0 na 0.0125 atd...
-    (Matrix<3,1>() << 0.0125f, 0.0f, 0.015f).finished(), // <-- Príklad 12.5mm posunu!
+    (Matrix<3,1>() << 0.015f, -0.0215f, 0.0f).finished(), // rotacia okolo X (servo6)
     (Matrix<3,1>() << 0.0f, 0.0f, 0.070f).finished()   // efektor
   };
 
