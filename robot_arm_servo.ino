@@ -145,6 +145,29 @@ void TaskControl(void* pvParameters) {
     Serial.println();
   }
 
+    // 1. Definícia HOME polohy v STUPŇOCH
+  Matrix<6,1> home_deg;
+  home_deg << 0.0, 45.0, 45.0, 0.0, 0.0, 0.0; // Tu píš stupne
+
+  // 2. Prepočet a presun (všetko v jednom bloku)
+  Serial.println("Moving to Home Position...");
+
+  // Vytvoríme pomocnú maticu v radiánoch (stupne * PI / 180)
+  Matrix<6,1> home_rad = home_deg * (PI / 180.0f);
+  // .data() vráti smerník na floaty, ktoré writeAngles potrebuje
+  servo_controller.writeAngles(home_rad.data(), 6);
+    auto result1 = kinematics.forwardKinematics(home_rad);
+    Matrix<3,1> pos1 = result1.first;
+    Matrix<3,3> rot1 = result1.second;
+
+    Serial.print("FKH x="); Serial.println(pos1(0), 4);
+    Serial.print("FKH y="); Serial.println(pos1(1), 4);
+    Serial.print("FKH z="); Serial.println(pos1(2), 4);
+
+  // 3. Počkaj, kým sa servá dotočia
+  vTaskDelay(pdMS_TO_TICKS(1500)); 
+  Serial.println("Robot is HOME.");
+
   while (1) {
 
   }
