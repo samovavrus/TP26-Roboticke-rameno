@@ -7,6 +7,7 @@
 
 #include <STM32FreeRTOS.h>
 #include "STM32FreeRTOSConfig.h"
+#include "ui_screens.h"
 #include "src\LiquidMenu\LiquidCrystal_I2C.h"
 #include "src\LiquidMenu\LiquidMenu.h"
 #include "src\Button.h"
@@ -64,37 +65,38 @@ void TaskUI(void* pvParameters) {
   lcd.backlight();
   lcd.clear();
 
-  pinMode(2, INPUT_PULLUP);
-  pinMode(3, INPUT_PULLUP);
-  pinMode(4, INPUT_PULLUP);
-  pinMode(5, INPUT_PULLUP);
-  pinMode(6, INPUT_PULLUP);
-  pinMode(8, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP); // A button
+
+  int screen = 0;
+  bool lastButtonState = HIGH;
 
   while (1) {
 
-    int joyX = analogRead(A0);
-    int joyY = analogRead(A1);
+    // --- simulované hodnoty (zatiaľ)
+    float x = analogRead(A0) / 10.0;
+    float y = analogRead(A1) / 10.0;
+    float z = (x+y)/2;
 
-    lcd.setCursor(0,0);
-    lcd.print("X:");
-    lcd.print(joyX);
-    lcd.print(" ");
+    float roll  = x/5;
+    float pitch = y/5;
+    float yaw   = z/5;
 
-    lcd.setCursor(8,0);
-    lcd.print("Y:");
-    lcd.print(joyY);
-    lcd.print(" ");
+    // --- čítanie tlačidla A
+    bool currentState = digitalRead(2);
 
-    lcd.setCursor(0,1);
+    // detekcia stlačenia (falling edge)
+    if (lastButtonState == HIGH && currentState == LOW) {
+      screen = !screen;   // prepni obrazovku
+    }
 
-    if(!digitalRead(2)) lcd.print("A ");
-    else if(!digitalRead(3)) lcd.print("B ");
-    else if(!digitalRead(4)) lcd.print("C ");
-    else if(!digitalRead(5)) lcd.print("D ");
-    else if(!digitalRead(6)) lcd.print("E ");
-    else if(!digitalRead(8)) lcd.print("JOY ");
-    else lcd.print("None ");
+    lastButtonState = currentState;
+
+    // --- vykreslenie
+    if (screen == 0) {
+      drawXYZ(lcd, x, y, z);
+    } else {
+      drawRPY(lcd, roll, pitch, yaw);
+    }
 
     vTaskDelay(pdMS_TO_TICKS(200));
   }
@@ -156,7 +158,7 @@ void TaskControl(void* pvParameters) {
   // Očakávané pri theta=0: x=0, y=0, z=sum(L) = 0.455 m
 
   while (1) {
-
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 }
 
@@ -178,7 +180,7 @@ void TaskSensor(void* pvParameters) {
   sensor_TOF.startContinuous((uint32_t)(Ts * 1000.0));
 
   while (1) {
-
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 
 }
