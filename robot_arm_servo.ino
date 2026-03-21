@@ -141,6 +141,47 @@ void TaskControl(void* pvParameters) {
     Serial.println();
   }
 
+    // 1. Zadefinovanie cieľovej polohy pr (napríklad [X, Y, Z] v metroch)
+  Matrix<3, 1> target_pos;
+  target_pos << 0.15f,  // X
+                0.0f,   // Y
+                0.20f;  // Z
+
+  // 2. Zadefinovanie cieľovej orientácie Rr (napríklad len identita = rovnaká orientácia ako v nulovej polohe)
+  Matrix<3, 3> target_rot = Matrix<3, 3>::Identity(); 
+
+  // 3. Počiatočný odhad kĺbov 'theta'
+  // Najlepšie je sem dať AKTUÁLNE natočenie (teraz pre test dáme samé nuly)
+  Matrix<6, 1> current_theta = Matrix<6, 1>::Zero();
+
+  // 4. Pripravenie parametrov pre solver
+  float tol_pos = 1e-4f;  // Tolerancia polohy (napr. 0.1 mm)
+  float tol_ori = 1e-3f;  // Tolerancia orientácie 
+  float lambda = 0.01f;   // Regularizačný/tlmiaci faktor (damping factor)
+  int max_iter = 50;      // Maximálny počet iterácií
+
+  // 5. Samotné zavolanie funkcie
+  bool success = kinematics.SolveIK(
+      target_pos, 
+      target_rot, 
+      current_theta, // Pozor, táto premenná sa vo vnútri funkcie upraví na výsledok!
+      tol_pos, 
+      tol_ori, 
+      lambda, 
+      max_iter
+  );
+
+  // 6. Kontrola výsledku
+  if (success) {
+      Serial.println("IK úspešne našla riešenie!");
+      Serial.println("Nové uhly kĺbov (v radiánoch):");
+      for(int i = 0; i < 6; i++) {
+          Serial.println(current_theta(i), 4);
+      }
+  } else {
+      Serial.println("IK zlyhala / nekonvergovala.");
+  }
+
   while (1) {
 
   }
