@@ -196,16 +196,83 @@ Matrix<3, DOF> getJacobian(const Matrix<DOF, 1>& theta) const {
     return jakob_mat;
 }
 
-    bool SolveIK(
-        const Matrix<3,1>&, const Matrix<3,3>&,
-        Matrix<DOF,1>&, float, float, float, int) override
+bool SolveIK(
+        const Matrix<3, 1>& pr, 
+        const Matrix<3, 3>& Rr,
+        Matrix<DOF, 1>& theta, 
+        float tol_pos, 
+        float tol_ori, 
+        float lambda, 
+        int max_iter) override
     {
-        return false;
+        for (int i = 0; i < max_iter; i++)
+        {
+            // 1. Dopredná kinematika (aktuálny stav)
+            auto fk_res = forwardKinematics(theta);
+            Matrix<3, 1> p0 = fk_res.first;
+            Matrix<3, 3> R0 = fk_res.second;
+
+            // 2. Výpočet reziduí (chyby)
+            Matrix<3, 1> rp = p0 - pr;
+            
+            // Výpočet matice chyby orientácie E = R0 * Rr^T
+            Matrix<3, 3> E = R0 * Rr.transpose();
+
+            // Extrakcia chyby orientácie podľa tvojho pseudokódu
+            Matrix<3, 1> r0;
+            r0(0) = E(1, 0); 
+            r0(1) = E(2, 0); 
+            r0(2) = E(2, 1); 
+
+            // 3. Kontrola ukončenia (ak sme v tolerancii)
+            if (rp.norm() < tol_pos && r0.norm() < tol_ori) {
+                return true; 
+            }
+
+            // 4. Získanie Jakobiánov (tieto funkcie už v robot.h máš)
+            Matrix<3, DOF> J_p = getJacobian(theta);
+            std::array<Matrix<3, 3>, DOF> dEr_R = getRotDerivatives(theta);
+
+            // Zostavenie plného Jakobiánu 6xDOF
+            Matrix<6, DOF> J = Matrix<6, DOF>::Zero();
+            
+            // Horná časť (poloha)
+            J.template block<3, DOF>(0, 0) = J_p;
+
+            // Dolná časť (orientácia - podľa dE_j = dR_j * Rr^T)
+            for (std::size_t j = 0; j < DOF; j++) {
+                Matrix<3, 3> dE_j = dEr_R[j] * Rr.transpose();
+                
+                J(3, j) = dE_j(1, 0);
+                J(4, j) = dE_j(2, 0);
+                J(5, j) = dE_j(2, 1);
+            }
+
+            // 5. Regularizácia (Levenberg-Marquardt štýl)
+            for (std::size_t k = 0; k < DOF; k++) {
+                J(k, k) += lambda;
+            }
+
+            // 6. Zostavenie vektora záporných reziduí
+            Matrix<6, 1> minus_r;
+            minus_r.template block<3, 1>(0, 0) = -rp;
+            minus_r.template block<3, 1>(3, 0) = -r0;
+
+            // 7. Výpočet zmeny uhlov (Riešenie sústavy J * delta_theta = minus_r)
+            // Pre 6x6 maticu je ColPivHouseholderQR veľmi stabilná voľba
+            Matrix<DOF, 1> delta_theta = J.colPivHouseholderQr().solve(minus_r);
+
+            // 8. Update
+            theta += delta_theta;
+        }
+
+        return false; // Nepodarilo sa nájsť riešenie v rámci max_iter
     }
+    
 
 private:
     std::array<Matrix<3, 1>, DOF> L;
     std::array<const RotationMatrix*, DOF> R_func;
 };
 
-}
+} // namespace robot_arm
