@@ -1,0 +1,41 @@
+\doxysection{ui\+\_\+screens.\+h}
+\hypertarget{ui__screens_8h_source}{}\label{ui__screens_8h_source}\index{TP26-\/Roboticke-\/rameno/ui\_screens.h@{TP26-\/Roboticke-\/rameno/ui\_screens.h}}
+\mbox{\hyperlink{ui__screens_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}src\(\backslash\)LiquidMenu\(\backslash\)LiquidCrystal\_I2C.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359}{drawXYZ}}(LiquidCrystal\_I2C\&\ lcd,\ \textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y,\ \textcolor{keywordtype}{float}\ z)\ \{}
+\DoxyCodeLine{00039\ \ \ lcd.clear();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ lcd.setCursor(0,0);}
+\DoxyCodeLine{00042\ \ \ lcd.print(\textcolor{stringliteral}{"{}X:"{}});}
+\DoxyCodeLine{00043\ \ \ lcd.print(x,1);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ lcd.setCursor(8,0);}
+\DoxyCodeLine{00046\ \ \ lcd.print(\textcolor{stringliteral}{"{}Y:"{}});}
+\DoxyCodeLine{00047\ \ \ lcd.print(y,1);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ lcd.setCursor(0,1);}
+\DoxyCodeLine{00050\ \ \ lcd.print(\textcolor{stringliteral}{"{}Z:"{}});}
+\DoxyCodeLine{00051\ \ \ lcd.print(z,1);}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0}{drawRPY}}(LiquidCrystal\_I2C\&\ lcd,\ \textcolor{keywordtype}{float}\ r,\ \textcolor{keywordtype}{float}\ p,\ \textcolor{keywordtype}{float}\ y)\ \{}
+\DoxyCodeLine{00081\ \ \ lcd.clear();}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ lcd.setCursor(0,0);}
+\DoxyCodeLine{00084\ \ \ lcd.print(\textcolor{stringliteral}{"{}R:"{}});}
+\DoxyCodeLine{00085\ \ \ lcd.print(r,1);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ lcd.setCursor(8,0);}
+\DoxyCodeLine{00088\ \ \ lcd.print(\textcolor{stringliteral}{"{}P:"{}});}
+\DoxyCodeLine{00089\ \ \ lcd.print(p,1);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ lcd.setCursor(0,1);}
+\DoxyCodeLine{00092\ \ \ lcd.print(\textcolor{stringliteral}{"{}Y:"{}});}
+\DoxyCodeLine{00093\ \ \ lcd.print(y,1);}
+\DoxyCodeLine{00094\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,171 @@
+\doxysection{geometry.\+h}
+\hypertarget{geometry_8h_source}{}\label{geometry_8h_source}\index{TP26-\/Roboticke-\/rameno/geometry.h@{TP26-\/Roboticke-\/rameno/geometry.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Eigen/Dense"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ Rows,\ \textcolor{keywordtype}{int}\ Cols>}
+\DoxyCodeLine{00010\ \textcolor{keyword}{using\ }Matrix\ =\ Eigen::Matrix<float,\ Rows,\ Cols>;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00032\ Matrix<3,3>\ rotX(\textcolor{keywordtype}{float}\ s\_theta,\ \textcolor{keywordtype}{float}\ c\_theta)}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ Matrix<3,\ 3>\ R;}
+\DoxyCodeLine{00035\ \ \ \ \ R\ <<\ 1.0,\ \ \ \ \ 0,\ \ \ \ \ \ 0,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ 0,\ c\_theta,\ -\/s\_theta,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ 0,\ s\_theta,\ \ c\_theta;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{return}\ R;}
+\DoxyCodeLine{00039\ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ Matrix<3,3>\ rotX(\textcolor{keywordtype}{float}\ theta)}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{return}\ rotX(sin(theta),\ cos(theta));}
+\DoxyCodeLine{00049\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00060\ Matrix<3,3>\ drotX(\textcolor{keywordtype}{float}\ s\_theta,\ \textcolor{keywordtype}{float}\ c\_theta)}
+\DoxyCodeLine{00061\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ Matrix<3,\ 3>\ R;}
+\DoxyCodeLine{00063\ \ \ \ \ R\ <<\ 0,\ 0,\ 0,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ 0,\ -\/s\_theta,\ -\/c\_theta,}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ 0,\ \ c\_theta,\ -\/s\_theta;}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ R;}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00074\ Matrix<3,3>\ drotX(\textcolor{keywordtype}{float}\ theta)}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ drotX(sin(theta),\ cos(theta));}
+\DoxyCodeLine{00077\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00087\ Matrix<3,3>\ rotY(\textcolor{keywordtype}{float}\ s\_theta,\ \textcolor{keywordtype}{float}\ c\_theta)}
+\DoxyCodeLine{00088\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ Matrix<3,\ 3>\ R;}
+\DoxyCodeLine{00090\ \ \ \ \ R\ <<\ c\_theta,\ 0,\ s\_theta,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ 1.0,\ 0,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ -\/s\_theta,\ 0,\ c\_theta;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ R;}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00101\ Matrix<3,3>\ rotY(\textcolor{keywordtype}{float}\ theta)}
+\DoxyCodeLine{00102\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ rotY(sin(theta),\ cos(theta));}
+\DoxyCodeLine{00104\ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00115\ Matrix<3,3>\ drotY(\textcolor{keywordtype}{float}\ s\_theta,\ \textcolor{keywordtype}{float}\ c\_theta)}
+\DoxyCodeLine{00116\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ Matrix<3,\ 3>\ R;}
+\DoxyCodeLine{00118\ \ \ \ \ R\ <<\ -\/s\_theta,\ 0,\ c\_theta,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ 0,\ 0,}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ -\/c\_theta,\ 0,\ -\/s\_theta;}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ R;}
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00129\ Matrix<3,3>\ drotY(\textcolor{keywordtype}{float}\ theta)}
+\DoxyCodeLine{00130\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ drotY(sin(theta),\ cos(theta));}
+\DoxyCodeLine{00132\ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00142\ Matrix<3,3>\ rotZ(\textcolor{keywordtype}{float}\ s\_theta,\ \textcolor{keywordtype}{float}\ c\_theta)}
+\DoxyCodeLine{00143\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ Matrix<3,\ 3>\ R;\ }
+\DoxyCodeLine{00145\ \ \ \ \ R\ <<\ c\_theta,\ -\/s\_theta,\ 0,}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ s\_theta,\ \ c\_theta,\ 0,}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ 1.0;}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{return}\ R;\ \ \ }
+\DoxyCodeLine{00149\ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00156\ Matrix<3,3>\ rotZ(\textcolor{keywordtype}{float}\ theta)}
+\DoxyCodeLine{00157\ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{return}\ rotZ(sin(theta),\ cos(theta));}
+\DoxyCodeLine{00159\ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00170\ Matrix<3,3>\ drotZ(\textcolor{keywordtype}{float}\ s\_theta,\ \textcolor{keywordtype}{float}\ c\_theta)}
+\DoxyCodeLine{00171\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ Matrix<3,\ 3>\ R;}
+\DoxyCodeLine{00173\ \ \ \ \ R\ <<\ -\/s\_theta,\ -\/c\_theta,\ 0,}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ c\_theta,\ -\/s\_theta,\ 0,}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ 0;}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{return}\ R;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00177\ \}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00184\ Matrix<3,3>\ drotZ(\textcolor{keywordtype}{float}\ theta)}
+\DoxyCodeLine{00185\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordflow}{return}\ drotZ(sin(theta),\ cos(theta));}
+\DoxyCodeLine{00187\ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00202\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00203\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classRotationMatrix_a9686bac4de9c1be6381e0afba6983ba4}{\string~RotationMatrix}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{virtual}\ Matrix<3,3>\ \mbox{\hyperlink{classRotationMatrix_ab7c5b6849623ba90f7ded86677b9c9f4}{operator()}}(\textcolor{keywordtype}{float}\ theta)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keyword}{virtual}\ Matrix<3,3>\ \mbox{\hyperlink{classRotationMatrix_afdd7cf9e618bb18572c6b6dd43d72fdc}{d}}(\textcolor{keywordtype}{float}\ theta)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationMatrix_a66c4ea61c94d09b1b74a73b094be9f26}{operator()}}(\textcolor{keywordtype}{float}\ theta,\ Matrix<3,3>\ R,\ Matrix<3,3>\ \&dR)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00234\ \};}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00243\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationX}{RotationX}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00244\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00250\ \ \ \ \ Matrix<3,3>\ \mbox{\hyperlink{classRotationX_ae8657cf8b66c77e4619de2e23da37cc1}{operator()}}(\textcolor{keywordtype}{float}\ theta)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rotX(s,\ c);}
+\DoxyCodeLine{00253\ \ \ \ \ \}}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00260\ \ \ \ \ Matrix<3,3>\ \mbox{\hyperlink{classRotationX_a45ce5bd0f2fdfbb5456903475d1859a5}{d}}(\textcolor{keywordtype}{float}\ theta)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ drotX(s,\ c);}
+\DoxyCodeLine{00263\ \ \ \ \ \}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationX_a59895240b765e21d21b7ae086ce0b14c}{operator()}}(\textcolor{keywordtype}{float}\ theta,\ Matrix<3,3>\ R,\ Matrix<3,3>\ \&dR)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ R\ =\ rotX(s,\ c);}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ dR\ =\ drotX(s,\ c);}
+\DoxyCodeLine{00275\ \ \ \ \ \}}
+\DoxyCodeLine{00276\ \};}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00285\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationY}{RotationY}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00286\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00292\ \ \ \ \ Matrix<3,3>\ \mbox{\hyperlink{classRotationY_ad239da37a65e6c7c2209a9eacf25e0fd}{operator()}}(\textcolor{keywordtype}{float}\ theta)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rotY(s,\ c);}
+\DoxyCodeLine{00295\ \ \ \ \ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00302\ \ \ \ \ Matrix<3,3>\ \mbox{\hyperlink{classRotationY_a967930ab28ae07566d84f13678d4863b}{d}}(\textcolor{keywordtype}{float}\ theta)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ drotY(s,\ c);}
+\DoxyCodeLine{00305\ \ \ \ \ \}}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationY_a2fe58d392c1b2edee2381785a03bf807}{operator()}}(\textcolor{keywordtype}{float}\ theta,\ Matrix<3,3>\ R,\ Matrix<3,3>\ \&dR)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ R\ =\ rotY(s,\ c);}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ dR\ =\ drotY(s,\ c);}
+\DoxyCodeLine{00317\ \ \ \ \ \}}
+\DoxyCodeLine{00318\ \};}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00327\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationZ}{RotationZ}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00328\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00334\ \ \ \ \ Matrix<3,3>\ \mbox{\hyperlink{classRotationZ_a439cad583ec0ce7099afabffbe5bda01}{operator()}}(\textcolor{keywordtype}{float}\ theta)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rotZ(s,\ c);}
+\DoxyCodeLine{00337\ \ \ \ \ \}}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00344\ \ \ \ \ Matrix<3,3>\ \mbox{\hyperlink{classRotationZ_ae9a01928e4336177d50500a1ce389d44}{d}}(\textcolor{keywordtype}{float}\ theta)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ drotZ(s,\ c);}
+\DoxyCodeLine{00347\ \ \ \ \ \}}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationZ_a9261617a9c71e41c22a229beab6a9a50}{operator()}}(\textcolor{keywordtype}{float}\ theta,\ Matrix<3,3>\ R,\ Matrix<3,3>\ \&dR)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ s\ =\ sin(theta),\ c\ =\ cos(theta);}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ R\ =\ rotZ(s,\ c);}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ dR\ =\ drotZ(s,\ c);}
+\DoxyCodeLine{00359\ \ \ \ \ \}}
+\DoxyCodeLine{00360\ \};}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ }
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ }
+
+\end{DoxyCode}

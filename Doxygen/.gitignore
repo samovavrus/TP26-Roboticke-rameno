@@ -1,8 +1,8 @@
 # Doxygen generated documentation
-html/*
-!html/index.html
-latex/*
-!latex/refman.pdf
+# html/*
+# !html/index.html
+# latex/*
+# !latex/refman.pdf
 xml/
 rtf/
 man/
@@ -21,7 +21,11 @@ doxygen_db/
 *.log
 *.out
 *.toc
-*.pdf
+*.ilg
+*.ind
+*.idx
+*.synctex.gz
+# *.md5
 
 # OS and editor files
 .DS_Store

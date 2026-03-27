@@ -1,0 +1,178 @@
+\doxysection{Robot\+::Robot\+Arm\texorpdfstring{$<$}{<} DOF \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classRobot_1_1RobotArm}{}\label{classRobot_1_1RobotArm}\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+
+
+High-\/level robot arm control interface.  
+
+
+
+
+{\ttfamily \#include $<$robot.\+h$>$}
+
+
+
+Collaboration diagram for Robot\+::Robot\+Arm\texorpdfstring{$<$}{<} DOF \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{classRobot_1_1RobotArm__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRobot_1_1RobotArm_abcdfa86b41a518c0ac875fed7ab20b59}{Robot\+Arm}} (\mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{Robot\+Kinematics\+Base}}$<$ DOF $>$ \texorpdfstring{$\ast$}{*}robot\+\_\+kinematics, \mbox{\hyperlink{classRobot_1_1JointActuators}{Joint\+Actuators}} \texorpdfstring{$\ast$}{*}actuators)
+\begin{DoxyCompactList}\small\item\em Initializes robot arm with kinematics solver and actuator hardware. \end{DoxyCompactList}\item 
+\Hypertarget{classRobot_1_1RobotArm_ae11ed0b078e47c58bb934a382e36bc4b}\label{classRobot_1_1RobotArm_ae11ed0b078e47c58bb934a382e36bc4b} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Robot\+Arm} ()=default
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18}{set\+Joint\+Angles}} (const Matrix$<$ DOF, 1 $>$ \&angles)
+\begin{DoxyCompactList}\small\item\em Sets and commits joint angles to hardware actuators. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classRobot_1_1RobotArm_a8f3ee7687ad39c166edace44c9dac313}{get\+Joint\+Angle}} (std\+::size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Gets current angle of a single joint. \end{DoxyCompactList}\item 
+Matrix$<$ DOF, 1 $>$ \mbox{\hyperlink{classRobot_1_1RobotArm_ac59c40b9304ceb66115bf75bff014b9a}{get\+Joint\+Angles}} () const
+\begin{DoxyCompactList}\small\item\em Gets current angles of all joints. \end{DoxyCompactList}\item 
+std\+::pair$<$ Matrix$<$ 3, 1 $>$, Matrix$<$ 3, 3 $>$ $>$ \mbox{\hyperlink{classRobot_1_1RobotArm_acb86240d2bfd77e234da66c9efe275d8}{get\+Current\+Effector\+Position\+Orientation}} () const
+\begin{DoxyCompactList}\small\item\em Computes current end-\/effector pose from joint state. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRobot_1_1RobotArm_a164ab76f17054578165f3395f2aabdb9}{go\+To}} (const Matrix$<$ 3, 1 $>$ \&pr, const Matrix$<$ 3, 3 $>$ \&Rr)
+\begin{DoxyCompactList}\small\item\em Moves robot end-\/effector to desired position and orientation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}\label{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528} 
+\mbox{\hyperlink{classRobot_1_1JointActuators}{Joint\+Actuators}} \texorpdfstring{$\ast$}{*} {\bfseries actuators\+\_\+}
+\begin{DoxyCompactList}\small\item\em Pointer to joint actuator hardware interface. \end{DoxyCompactList}\item 
+\Hypertarget{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}\label{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932} 
+Matrix$<$ DOF, 1 $>$ {\bfseries joint\+Angles\+\_\+}
+\begin{DoxyCompactList}\small\item\em Current joint angles in radians. \end{DoxyCompactList}\item 
+\Hypertarget{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}\label{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b} 
+\mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{Robot\+Kinematics\+Base}}$<$ DOF $>$ \texorpdfstring{$\ast$}{*} {\bfseries robot\+\_\+kinematics\+\_\+}
+\begin{DoxyCompactList}\small\item\em Pointer to kinematics solver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$std\+::size\+\_\+t DOF$>$\newline
+class Robot\+::\+Robot\+Arm$<$ DOF $>$}
+High-\/level robot arm control interface. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em DOF} & Degrees of freedom (number of joints)\\
+\hline
+\end{DoxyTemplParams}
+Coordinates kinematics solvers with hardware actuators to provide intuitive end-\/effector-\/centric control. Maintains current joint state and manages both forward kinematics (state monitoring) and inverse kinematics (motion planning). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classRobot_1_1RobotArm_abcdfa86b41a518c0ac875fed7ab20b59}\label{classRobot_1_1RobotArm_abcdfa86b41a518c0ac875fed7ab20b59} 
+\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}!RobotArm@{RobotArm}}
+\index{RobotArm@{RobotArm}!Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{RobotArm()}{RobotArm()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+\mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm}}$<$ DOF $>$\+::\+Robot\+Arm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{Robot\+Kinematics\+Base}}$<$ DOF $>$ \texorpdfstring{$\ast$}{*}}]{robot\+\_\+kinematics,  }\item[{\mbox{\hyperlink{classRobot_1_1JointActuators}{Joint\+Actuators}} \texorpdfstring{$\ast$}{*}}]{actuators }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes robot arm with kinematics solver and actuator hardware. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em robot\+\_\+kinematics} & Pointer to kinematics solver instance \\
+\hline
+{\em actuators} & Pointer to joint actuators instance\\
+\hline
+\end{DoxyParams}
+Does not take ownership of pointers; caller must manage object lifetimes. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRobot_1_1RobotArm_acb86240d2bfd77e234da66c9efe275d8}\label{classRobot_1_1RobotArm_acb86240d2bfd77e234da66c9efe275d8} 
+\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}!getCurrentEffectorPositionOrientation@{getCurrentEffectorPositionOrientation}}
+\index{getCurrentEffectorPositionOrientation@{getCurrentEffectorPositionOrientation}!Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{getCurrentEffectorPositionOrientation()}{getCurrentEffectorPositionOrientation()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+std\+::pair$<$ Matrix$<$ 3, 1 $>$, Matrix$<$ 3, 3 $>$ $>$ \mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm}}$<$ DOF $>$\+::get\+Current\+Effector\+Position\+Orientation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes current end-\/effector pose from joint state. 
+
+\begin{DoxyReturn}{Returns}
+Pair of (end-\/effector position \mbox{[}x,y,z\mbox{]} in meters, end-\/effector rotation matrix 3x3) 
+\end{DoxyReturn}
+\Hypertarget{classRobot_1_1RobotArm_a8f3ee7687ad39c166edace44c9dac313}\label{classRobot_1_1RobotArm_a8f3ee7687ad39c166edace44c9dac313} 
+\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}!getJointAngle@{getJointAngle}}
+\index{getJointAngle@{getJointAngle}!Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{getJointAngle()}{getJointAngle()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+float \mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm}}$<$ DOF $>$\+::get\+Joint\+Angle (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets current angle of a single joint. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & Joint index (0 to DOF-\/1) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Joint angle in radians 
+\end{DoxyReturn}
+\Hypertarget{classRobot_1_1RobotArm_ac59c40b9304ceb66115bf75bff014b9a}\label{classRobot_1_1RobotArm_ac59c40b9304ceb66115bf75bff014b9a} 
+\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}!getJointAngles@{getJointAngles}}
+\index{getJointAngles@{getJointAngles}!Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{getJointAngles()}{getJointAngles()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+Matrix$<$ DOF, 1 $>$ \mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm}}$<$ DOF $>$\+::get\+Joint\+Angles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets current angles of all joints. 
+
+\begin{DoxyReturn}{Returns}
+Vector of DOF joint angles in radians 
+\end{DoxyReturn}
+\Hypertarget{classRobot_1_1RobotArm_a164ab76f17054578165f3395f2aabdb9}\label{classRobot_1_1RobotArm_a164ab76f17054578165f3395f2aabdb9} 
+\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}!goTo@{goTo}}
+\index{goTo@{goTo}!Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{goTo()}{goTo()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+bool \mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm}}$<$ DOF $>$\+::go\+To (\begin{DoxyParamCaption}\item[{const Matrix$<$ 3, 1 $>$ \&}]{pr,  }\item[{const Matrix$<$ 3, 3 $>$ \&}]{Rr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Moves robot end-\/effector to desired position and orientation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pr} & Desired end-\/effector position \mbox{[}x, y, z\mbox{]} in meters \\
+\hline
+{\em Rr} & Desired end-\/effector rotation matrix (3x3) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if IK solution found and successfully moved to target, false if IK failed or joint angles exceeded limits
+\end{DoxyReturn}
+Solves inverse kinematics and updates joint actuators if solution found. Uses predefined convergence tolerances (1e-\/5 m position, 1e-\/3 rad orientation) and Levenberg-\/\+Marquardt damping factor 1e-\/2 with maximum 50 iterations. \Hypertarget{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18}\label{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18} 
+\index{Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}!setJointAngles@{setJointAngles}}
+\index{setJointAngles@{setJointAngles}!Robot::RobotArm$<$ DOF $>$@{Robot::RobotArm$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{setJointAngles()}{setJointAngles()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+bool \mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm}}$<$ DOF $>$\+::set\+Joint\+Angles (\begin{DoxyParamCaption}\item[{const Matrix$<$ DOF, 1 $>$ \&}]{angles }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets and commits joint angles to hardware actuators. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angles} & Target joint angles in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if angles were within limits and successfully written, false if any angle exceeded joint constraints
+\end{DoxyReturn}
+Updates internal state only if actuators successfully write the angles. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+TP26-\/\+Roboticke-\/rameno/robot.\+h\end{DoxyCompactItemize}

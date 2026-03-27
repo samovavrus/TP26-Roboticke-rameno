@@ -1,0 +1,114 @@
+\doxysection{TP26-\/\+Roboticke-\/rameno/ui\+\_\+screens.h File Reference}
+\hypertarget{ui__screens_8h}{}\label{ui__screens_8h}\index{TP26-\/Roboticke-\/rameno/ui\_screens.h@{TP26-\/Roboticke-\/rameno/ui\_screens.h}}
+
+
+User interface display functions for LCD output.  
+
+
+{\ttfamily \#include "{}src\textbackslash{}\+Liquid\+Menu\textbackslash{}\+Liquid\+Crystal\+\_\+\+I2\+C.\+h"{}}\newline
+Include dependency graph for ui\+\_\+screens.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=237pt]{ui__screens_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359}{draw\+XYZ}} (Liquid\+Crystal\+\_\+\+I2C \&lcd, float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em Displays end-\/effector position (X, Y, Z) on LCD screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0}{draw\+RPY}} (Liquid\+Crystal\+\_\+\+I2C \&lcd, float r, float p, float y)
+\begin{DoxyCompactList}\small\item\em Displays end-\/effector orientation (Roll-\/\+Pitch-\/\+Yaw) on LCD screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+User interface display functions for LCD output. 
+
+Provides inline utility functions for rendering robot arm state information on a 16×2 character LCD display via I2C connection (Liquid\+Crystal\+\_\+\+I2C).
+
+Functions display\+:
+\begin{DoxyItemize}
+\item End-\/effector position (X, Y, Z Cartesian coordinates)
+\item End-\/effector orientation (Roll-\/\+Pitch-\/\+Yaw Euler angles)
+\end{DoxyItemize}
+
+All values are formatted to 1 decimal place for readability on small displays. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0}\label{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0} 
+\index{ui\_screens.h@{ui\_screens.h}!drawRPY@{drawRPY}}
+\index{drawRPY@{drawRPY}!ui\_screens.h@{ui\_screens.h}}
+\doxysubsubsection{\texorpdfstring{drawRPY()}{drawRPY()}}
+{\footnotesize\ttfamily void draw\+RPY (\begin{DoxyParamCaption}\item[{Liquid\+Crystal\+\_\+\+I2C \&}]{lcd,  }\item[{float}]{r,  }\item[{float}]{p,  }\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Displays end-\/effector orientation (Roll-\/\+Pitch-\/\+Yaw) on LCD screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lcd} & Reference to Liquid\+Crystal\+\_\+\+I2C display object \\
+\hline
+{\em r} & Roll angle in radians (rotation about X-\/axis) \\
+\hline
+{\em p} & Pitch angle in radians (rotation about Y-\/axis) \\
+\hline
+{\em y} & Yaw angle in radians (rotation about Z-\/axis)\\
+\hline
+\end{DoxyParams}
+Display layout (16×2 character LCD)\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Row\ 0:\ \textcolor{stringliteral}{"{}R:rrr.r\ \ P:ppp.p"{}}}
+\DoxyCodeLine{Row\ 1:\ \textcolor{stringliteral}{"{}Y:yyy.y"{}}}
+
+\end{DoxyCode}
+
+
+All angles are displayed with 1 decimal place precision. Screen is cleared before rendering.
+
+Rotation convention (right-\/hand rule)\+:
+\begin{DoxyItemize}
+\item Roll (R)\+: Rotation about X-\/axis (shoulder tilt)
+\item Pitch (P)\+: Rotation about Y-\/axis (elbow elevation)
+\item Yaw (Y)\+: Rotation about Z-\/axis (wrist rotation)
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Used during manual control and end-\/effector orientation monitoring modes. Angles are typically stored internally in radians but displayed here as-\/is for direct verification against joint sensor values. Consider converting to degrees for user-\/friendlier display if needed. 
+\end{DoxyNote}
+\Hypertarget{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359}\label{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359} 
+\index{ui\_screens.h@{ui\_screens.h}!drawXYZ@{drawXYZ}}
+\index{drawXYZ@{drawXYZ}!ui\_screens.h@{ui\_screens.h}}
+\doxysubsubsection{\texorpdfstring{drawXYZ()}{drawXYZ()}}
+{\footnotesize\ttfamily void draw\+XYZ (\begin{DoxyParamCaption}\item[{Liquid\+Crystal\+\_\+\+I2C \&}]{lcd,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Displays end-\/effector position (X, Y, Z) on LCD screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lcd} & Reference to Liquid\+Crystal\+\_\+\+I2C display object \\
+\hline
+{\em x} & End-\/effector X position in meters \\
+\hline
+{\em y} & End-\/effector Y position in meters \\
+\hline
+{\em z} & End-\/effector Z position in meters\\
+\hline
+\end{DoxyParams}
+Display layout (16×2 character LCD)\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Row\ 0:\ \textcolor{stringliteral}{"{}X:xxx.x\ \ Y:yyy.y"{}}}
+\DoxyCodeLine{Row\ 1:\ \textcolor{stringliteral}{"{}Z:zzz.z"{}}}
+
+\end{DoxyCode}
+
+
+All coordinates are displayed with 1 decimal place precision. Screen is cleared before rendering.
+
+\begin{DoxyNote}{Note}
+Used during manual control and end-\/effector monitoring modes. Typical refresh rate\+: 100-\/500 ms (depends on control loop frequency). 
+\end{DoxyNote}

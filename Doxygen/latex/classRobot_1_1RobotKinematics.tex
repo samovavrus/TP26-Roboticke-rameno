@@ -1,0 +1,194 @@
+\doxysection{Robot\+::Robot\+Kinematics\texorpdfstring{$<$}{<} DOF \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classRobot_1_1RobotKinematics}{}\label{classRobot_1_1RobotKinematics}\index{Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}}
+
+
+Concrete kinematics solver using Jacobian-\/based inverse kinematics.  
+
+
+
+
+{\ttfamily \#include $<$robot.\+h$>$}
+
+
+
+Inheritance diagram for Robot\+::Robot\+Kinematics\texorpdfstring{$<$}{<} DOF \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classRobot_1_1RobotKinematics__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Robot\+::Robot\+Kinematics\texorpdfstring{$<$}{<} DOF \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classRobot_1_1RobotKinematics__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRobot_1_1RobotKinematics_a1c30cdb22be13ce92197d8fa384452d1}{Robot\+Kinematics}} (const std\+::array$<$ Matrix$<$ 3, 1 $>$, DOF $>$ \&L\+\_\+, const std\+::array$<$ const \mbox{\hyperlink{classRotationMatrix}{Rotation\+Matrix}} \texorpdfstring{$\ast$}{*}, DOF $>$ \&R\+\_\+)
+\begin{DoxyCompactList}\small\item\em Initializes kinematics solver with robot link parameters. \end{DoxyCompactList}\item 
+std\+::pair$<$ Matrix$<$ 3, 1 $>$, Matrix$<$ 3, 3 $>$ $>$ \mbox{\hyperlink{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a}{forward\+Kinematics}} (const Matrix$<$ DOF, 1 $>$ \&theta) const override
+\begin{DoxyCompactList}\small\item\em Computes end-\/effector position and orientation from joint angles. \end{DoxyCompactList}\item 
+std\+::array$<$ Matrix$<$ 3, 3 $>$, DOF $>$ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100}{get\+Rot\+Derivatives}} (const Matrix$<$ DOF, 1 $>$ \&theta) const
+\begin{DoxyCompactList}\small\item\em Computes partial derivatives of rotation matrices with respect to joint angles. \end{DoxyCompactList}\item 
+Matrix$<$ 3, DOF $>$ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415}{get\+Jacobian}} (const Matrix$<$ DOF, 1 $>$ \&theta) const
+\begin{DoxyCompactList}\small\item\em Computes 3×\+DOF geometric Jacobian for end-\/effector linear velocity. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classRobot_1_1RobotKinematics_a4e50d08914bdff03560b2c107265a6ee}{Solve\+IK}} (const Matrix$<$ 3, 1 $>$ \&pr, const Matrix$<$ 3, 3 $>$ \&Rr, Matrix$<$ DOF, 1 $>$ \&theta, float tol\+\_\+pos, float tol\+\_\+ori, float lambda, int max\+\_\+iter) override
+\begin{DoxyCompactList}\small\item\em Solves inverse kinematics using Levenberg-\/\+Marquardt optimization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$std\+::size\+\_\+t DOF$>$\newline
+class Robot\+::\+Robot\+Kinematics$<$ DOF $>$}
+Concrete kinematics solver using Jacobian-\/based inverse kinematics. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em DOF} & Degrees of freedom (number of joints)\\
+\hline
+\end{DoxyTemplParams}
+Implements forward and inverse kinematics for a robot arm using\+:
+\begin{DoxyItemize}
+\item Forward kinematics\+: Composition of rotation matrices and translations
+\item Inverse kinematics\+: Levenberg-\/\+Marquardt numerical optimization with analytical Jacobian computation for both position and orientation errors 
+\end{DoxyItemize}
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classRobot_1_1RobotKinematics_a1c30cdb22be13ce92197d8fa384452d1}\label{classRobot_1_1RobotKinematics_a1c30cdb22be13ce92197d8fa384452d1} 
+\index{Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}!RobotKinematics@{RobotKinematics}}
+\index{RobotKinematics@{RobotKinematics}!Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{RobotKinematics()}{RobotKinematics()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+\mbox{\hyperlink{classRobot_1_1RobotKinematics}{Robot\+::\+Robot\+Kinematics}}$<$ DOF $>$\+::\+Robot\+Kinematics (\begin{DoxyParamCaption}\item[{const std\+::array$<$ Matrix$<$ 3, 1 $>$, DOF $>$ \&}]{L\+\_\+,  }\item[{const std\+::array$<$ const \mbox{\hyperlink{classRotationMatrix}{Rotation\+Matrix}} \texorpdfstring{$\ast$}{*}, DOF $>$ \&}]{R\+\_\+ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes kinematics solver with robot link parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em L\+\_\+} & Array of link translation vectors (DH parameter d) \\
+\hline
+{\em R\+\_\+} & Array of rotation function pointers for each joint Each Rotation\+Matrix\texorpdfstring{$\ast$}{*} implements R(theta) = rotation matrix for that joint \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a}\label{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a} 
+\index{Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}!forwardKinematics@{forwardKinematics}}
+\index{forwardKinematics@{forwardKinematics}!Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{forwardKinematics()}{forwardKinematics()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+std\+::pair$<$ Matrix$<$ 3, 1 $>$, Matrix$<$ 3, 3 $>$ $>$ \mbox{\hyperlink{classRobot_1_1RobotKinematics}{Robot\+::\+Robot\+Kinematics}}$<$ DOF $>$\+::forward\+Kinematics (\begin{DoxyParamCaption}\item[{const Matrix$<$ DOF, 1 $>$ \&}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Computes end-\/effector position and orientation from joint angles. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Joint angles in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pair of (end-\/effector position \mbox{[}x,y,z\mbox{]}, end-\/effector rotation matrix)
+\end{DoxyReturn}
+Implements DH-\/based forward kinematics\+: p = (R0 \texorpdfstring{$\ast$}{*} R1 \texorpdfstring{$\ast$}{*} ... \texorpdfstring{$\ast$}{*} Rn) \texorpdfstring{$\ast$}{*} (L0 + L1 + ...) 
+
+Implements \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase_ae9062f000170b01e16e843af8ba6ad08}{Robot\+::\+Robot\+Kinematics\+Base$<$ DOF $>$}}.
+
+\Hypertarget{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415}\label{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415} 
+\index{Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}!getJacobian@{getJacobian}}
+\index{getJacobian@{getJacobian}!Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{getJacobian()}{getJacobian()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+Matrix$<$ 3, DOF $>$ \mbox{\hyperlink{classRobot_1_1RobotKinematics}{Robot\+::\+Robot\+Kinematics}}$<$ DOF $>$\+::get\+Jacobian (\begin{DoxyParamCaption}\item[{const Matrix$<$ DOF, 1 $>$ \&}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes 3×\+DOF geometric Jacobian for end-\/effector linear velocity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Current joint angles in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×\+DOF Jacobian matrix\+: dp/dtheta
+\end{DoxyReturn}
+Relates joint angular velocities to end-\/effector linear velocity\+: v\+\_\+end = J \texorpdfstring{$\ast$}{*} dtheta/dt
+
+Each column j represents the contribution of joint j\textquotesingle{}s rotation to end-\/effector velocity. \Hypertarget{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100}\label{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100} 
+\index{Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}!getRotDerivatives@{getRotDerivatives}}
+\index{getRotDerivatives@{getRotDerivatives}!Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{getRotDerivatives()}{getRotDerivatives()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+std\+::array$<$ Matrix$<$ 3, 3 $>$, DOF $>$ \mbox{\hyperlink{classRobot_1_1RobotKinematics}{Robot\+::\+Robot\+Kinematics}}$<$ DOF $>$\+::get\+Rot\+Derivatives (\begin{DoxyParamCaption}\item[{const Matrix$<$ DOF, 1 $>$ \&}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes partial derivatives of rotation matrices with respect to joint angles. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Current joint angles in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Array of DOF matrices\+: d\+R\+\_\+i/dtheta\+\_\+i for each joint i
+\end{DoxyReturn}
+Used internally by inverse kinematics to build the Jacobian for orientation error (last 3 rows). Computed using\+: d\+E\+\_\+i = d\+R\+\_\+i/dtheta\+\_\+i \texorpdfstring{$\ast$}{*} Rr\texorpdfstring{$^\wedge$}{\string^}T where d\+R\+\_\+i is the derivative of i-\/th rotation matrix \Hypertarget{classRobot_1_1RobotKinematics_a4e50d08914bdff03560b2c107265a6ee}\label{classRobot_1_1RobotKinematics_a4e50d08914bdff03560b2c107265a6ee} 
+\index{Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}!SolveIK@{SolveIK}}
+\index{SolveIK@{SolveIK}!Robot::RobotKinematics$<$ DOF $>$@{Robot::RobotKinematics$<$ DOF $>$}}
+\doxysubsubsection{\texorpdfstring{SolveIK()}{SolveIK()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t DOF$>$ \\
+bool \mbox{\hyperlink{classRobot_1_1RobotKinematics}{Robot\+::\+Robot\+Kinematics}}$<$ DOF $>$\+::\+Solve\+IK (\begin{DoxyParamCaption}\item[{const Matrix$<$ 3, 1 $>$ \&}]{pr,  }\item[{const Matrix$<$ 3, 3 $>$ \&}]{Rr,  }\item[{Matrix$<$ DOF, 1 $>$ \&}]{theta,  }\item[{float}]{tol\+\_\+pos,  }\item[{float}]{tol\+\_\+ori,  }\item[{float}]{lambda,  }\item[{int}]{max\+\_\+iter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Solves inverse kinematics using Levenberg-\/\+Marquardt optimization. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pr} & Desired end-\/effector position \mbox{[}x, y, z\mbox{]} in meters \\
+\hline
+{\em Rr} & Desired end-\/effector rotation matrix (3×3) \\
+\hline
+{\em theta} & \mbox{[}in/out\mbox{]} Starting joint angles (input), IK solution (output) \\
+\hline
+{\em tol\+\_\+pos} & Position error tolerance in meters \\
+\hline
+{\em tol\+\_\+ori} & Orientation error tolerance in radians (extracted from R\+\_\+error) \\
+\hline
+{\em lambda} & Damping factor for Levenberg-\/\+Marquardt regularization \\
+\hline
+{\em max\+\_\+iter} & Maximum iterations before giving up \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if converged to solution meeting both tolerances, false if max iterations exceeded without convergence
+\end{DoxyReturn}
+Algorithm\+:
+\begin{DoxyEnumerate}
+\item Compute forward kinematics for current pose
+\item Calculate position error\+: rp = p\+\_\+current -\/ p\+\_\+desired
+\item Calculate orientation error from rotation matrix\+: r0 = \mbox{[}R\+\_\+err(1,0), R\+\_\+err(2,0), R\+\_\+err(2,1)\mbox{]}
+\item Build 6×\+DOF Jacobian combining position and orientation derivatives
+\item Apply Levenberg-\/\+Marquardt damping to Jacobian diagonal
+\item Solve for joint angle updates\+: delta\+\_\+theta = J\texorpdfstring{$^\wedge$}{\string^}-\/1 \texorpdfstring{$\ast$}{*} (-\/residuals)
+\item Update joint angles and repeat until convergence 
+\end{DoxyEnumerate}
+
+Implements \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase_a4ac6e581dbf0fc69ad963925b6876fcb}{Robot\+::\+Robot\+Kinematics\+Base$<$ DOF $>$}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+TP26-\/\+Roboticke-\/rameno/robot.\+h\end{DoxyCompactItemize}

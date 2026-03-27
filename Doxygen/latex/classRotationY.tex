@@ -1,0 +1,123 @@
+\doxysection{RotationY Class Reference}
+\hypertarget{classRotationY}{}\label{classRotationY}\index{RotationY@{RotationY}}
+
+
+Rotation in Y-\/axis (right-\/hand rule\+: thumb along +Y)  
+
+
+
+
+{\ttfamily \#include $<$geometry.\+h$>$}
+
+
+
+Inheritance diagram for RotationY\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classRotationY__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for RotationY\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classRotationY__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Matrix$<$ 3, 3 $>$ \mbox{\hyperlink{classRotationY_ad239da37a65e6c7c2209a9eacf25e0fd}{operator()}} (float theta) const override
+\begin{DoxyCompactList}\small\item\em Compute Y-\/axis rotation matrix. \end{DoxyCompactList}\item 
+Matrix$<$ 3, 3 $>$ \mbox{\hyperlink{classRotationY_a967930ab28ae07566d84f13678d4863b}{d}} (float theta) const override
+\begin{DoxyCompactList}\small\item\em Compute derivative of Y-\/axis rotation matrix. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRotationY_a2fe58d392c1b2edee2381785a03bf807}{operator()}} (float theta, Matrix$<$ 3, 3 $>$ R, Matrix$<$ 3, 3 $>$ \&dR) const override
+\begin{DoxyCompactList}\small\item\em Compute both Y-\/axis rotation matrix and derivative. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classRotationMatrix}{Rotation\+Matrix}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Rotation\+Matrix} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Rotation in Y-\/axis (right-\/hand rule\+: thumb along +Y) 
+
+Concrete implementation of \doxylink{classRotationMatrix}{Rotation\+Matrix} for rotations in the Y-\/axis. Common for elbow and wrist pitch joints in robotic manipulators. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRotationY_a967930ab28ae07566d84f13678d4863b}\label{classRotationY_a967930ab28ae07566d84f13678d4863b} 
+\index{RotationY@{RotationY}!d@{d}}
+\index{d@{d}!RotationY@{RotationY}}
+\doxysubsubsection{\texorpdfstring{d()}{d()}}
+{\footnotesize\ttfamily Matrix$<$ 3, 3 $>$ Rotation\+Y\+::d (\begin{DoxyParamCaption}\item[{float}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Compute derivative of Y-\/axis rotation matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: d\+R\+\_\+y/d$\theta$ 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classRotationMatrix_afdd7cf9e618bb18572c6b6dd43d72fdc}{Rotation\+Matrix}}.
+
+\Hypertarget{classRotationY_ad239da37a65e6c7c2209a9eacf25e0fd}\label{classRotationY_ad239da37a65e6c7c2209a9eacf25e0fd} 
+\index{RotationY@{RotationY}!operator()@{operator()}}
+\index{operator()@{operator()}!RotationY@{RotationY}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Matrix$<$ 3, 3 $>$ Rotation\+Y\+::operator() (\begin{DoxyParamCaption}\item[{float}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Compute Y-\/axis rotation matrix. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix in Y-\/axis 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classRotationMatrix_ab7c5b6849623ba90f7ded86677b9c9f4}{Rotation\+Matrix}}.
+
+\Hypertarget{classRotationY_a2fe58d392c1b2edee2381785a03bf807}\label{classRotationY_a2fe58d392c1b2edee2381785a03bf807} 
+\index{RotationY@{RotationY}!operator()@{operator()}}
+\index{operator()@{operator()}!RotationY@{RotationY}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Rotation\+Y\+::operator() (\begin{DoxyParamCaption}\item[{float}]{theta,  }\item[{Matrix$<$ 3, 3 $>$}]{R,  }\item[{Matrix$<$ 3, 3 $>$ \&}]{dR }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Compute both Y-\/axis rotation matrix and derivative. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+{\em R} & \mbox{[}out\mbox{]} Computed rotation matrix \\
+\hline
+{\em dR} & \mbox{[}out\mbox{]} Computed derivative matrix \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classRotationMatrix_a66c4ea61c94d09b1b74a73b094be9f26}{Rotation\+Matrix}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+TP26-\/\+Roboticke-\/rameno/geometry.\+h\end{DoxyCompactItemize}

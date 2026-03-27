@@ -1,0 +1,122 @@
+\doxysection{Rotation\+Matrix Class Reference}
+\hypertarget{classRotationMatrix}{}\label{classRotationMatrix}\index{RotationMatrix@{RotationMatrix}}
+
+
+Abstract base class for joint rotation matrix generation.  
+
+
+
+
+{\ttfamily \#include $<$geometry.\+h$>$}
+
+
+
+Inheritance diagram for Rotation\+Matrix\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{classRotationMatrix__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRotationMatrix_a9686bac4de9c1be6381e0afba6983ba4}\label{classRotationMatrix_a9686bac4de9c1be6381e0afba6983ba4} 
+virtual {\bfseries \texorpdfstring{$\sim$}{\string~}\+Rotation\+Matrix} ()=default
+\begin{DoxyCompactList}\small\item\em Virtual destructor. \end{DoxyCompactList}\item 
+virtual Matrix$<$ 3, 3 $>$ \mbox{\hyperlink{classRotationMatrix_ab7c5b6849623ba90f7ded86677b9c9f4}{operator()}} (float theta) const =0
+\begin{DoxyCompactList}\small\item\em Compute rotation matrix from angle. \end{DoxyCompactList}\item 
+virtual Matrix$<$ 3, 3 $>$ \mbox{\hyperlink{classRotationMatrix_afdd7cf9e618bb18572c6b6dd43d72fdc}{d}} (float theta) const =0
+\begin{DoxyCompactList}\small\item\em Compute derivative of rotation matrix with respect to angle. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classRotationMatrix_a66c4ea61c94d09b1b74a73b094be9f26}{operator()}} (float theta, Matrix$<$ 3, 3 $>$ R, Matrix$<$ 3, 3 $>$ \&dR) const =0
+\begin{DoxyCompactList}\small\item\em Compute both rotation matrix and derivative in one call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for joint rotation matrix generation. 
+
+Defines an interface for generating rotation matrices in a fixed axis (X, Y, or Z) and computing their derivatives with respect to joint angles.
+
+Implementations are used in robot kinematics solvers to\+:
+\begin{DoxyItemize}
+\item Compute cumulative rotation transformations
+\item Calculate Jacobian matrices for inverse kinematics
+\item Perform forward and inverse kinematic analyses 
+\end{DoxyItemize}
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRotationMatrix_afdd7cf9e618bb18572c6b6dd43d72fdc}\label{classRotationMatrix_afdd7cf9e618bb18572c6b6dd43d72fdc} 
+\index{RotationMatrix@{RotationMatrix}!d@{d}}
+\index{d@{d}!RotationMatrix@{RotationMatrix}}
+\doxysubsubsection{\texorpdfstring{d()}{d()}}
+{\footnotesize\ttfamily virtual Matrix$<$ 3, 3 $>$ Rotation\+Matrix\+::d (\begin{DoxyParamCaption}\item[{float}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute derivative of rotation matrix with respect to angle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Joint angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R/d\theta$ 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classRotationX_a45ce5bd0f2fdfbb5456903475d1859a5}{RotationX}}, \mbox{\hyperlink{classRotationY_a967930ab28ae07566d84f13678d4863b}{RotationY}}, and \mbox{\hyperlink{classRotationZ_ae9a01928e4336177d50500a1ce389d44}{RotationZ}}.
+
+\Hypertarget{classRotationMatrix_ab7c5b6849623ba90f7ded86677b9c9f4}\label{classRotationMatrix_ab7c5b6849623ba90f7ded86677b9c9f4} 
+\index{RotationMatrix@{RotationMatrix}!operator()@{operator()}}
+\index{operator()@{operator()}!RotationMatrix@{RotationMatrix}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual Matrix$<$ 3, 3 $>$ Rotation\+Matrix\+::operator() (\begin{DoxyParamCaption}\item[{float}]{theta }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute rotation matrix from angle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Joint angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for this joint 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classRotationX_ae8657cf8b66c77e4619de2e23da37cc1}{RotationX}}, \mbox{\hyperlink{classRotationY_ad239da37a65e6c7c2209a9eacf25e0fd}{RotationY}}, and \mbox{\hyperlink{classRotationZ_a439cad583ec0ce7099afabffbe5bda01}{RotationZ}}.
+
+\Hypertarget{classRotationMatrix_a66c4ea61c94d09b1b74a73b094be9f26}\label{classRotationMatrix_a66c4ea61c94d09b1b74a73b094be9f26} 
+\index{RotationMatrix@{RotationMatrix}!operator()@{operator()}}
+\index{operator()@{operator()}!RotationMatrix@{RotationMatrix}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Rotation\+Matrix\+::operator() (\begin{DoxyParamCaption}\item[{float}]{theta,  }\item[{Matrix$<$ 3, 3 $>$}]{R,  }\item[{Matrix$<$ 3, 3 $>$ \&}]{dR }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compute both rotation matrix and derivative in one call. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Joint angle in radians \\
+\hline
+{\em R} & \mbox{[}out\mbox{]} Computed rotation matrix (passed by value, updated in call) \\
+\hline
+{\em dR} & \mbox{[}out\mbox{]} Computed derivative matrix (passed by reference)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The parameter R is intentionally passed by value for API consistency. Only dR is modified within this function. This is an optimization pattern where both computations share sin/cos evaluation. 
+\end{DoxyNote}
+
+
+Implemented in \mbox{\hyperlink{classRotationX_a59895240b765e21d21b7ae086ce0b14c}{RotationX}}, \mbox{\hyperlink{classRotationY_a2fe58d392c1b2edee2381785a03bf807}{RotationY}}, and \mbox{\hyperlink{classRotationZ_a9261617a9c71e41c22a229beab6a9a50}{RotationZ}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+TP26-\/\+Roboticke-\/rameno/geometry.\+h\end{DoxyCompactItemize}
