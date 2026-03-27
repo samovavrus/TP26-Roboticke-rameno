@@ -1,0 +1,31 @@
+# Doxygen generated documentation
+html/
+latex/
+xml/
+rtf/
+man/
+docbook/
+
+# Doxygen build directory
+doxygen_db/
+
+# Temporary and intermediate files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.pdf
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
