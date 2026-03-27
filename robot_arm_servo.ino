@@ -1,3 +1,23 @@
+/**
+ * @file robot_arm_servo.ino
+ * @brief Main firmware for STM32-based robot arm control system
+ * 
+ * Embedded control system for a 6-DOF robotic manipulator arm using:
+ * - **Kinematics**: Forward and inverse kinematics with Levenberg-Marquardt solver
+ * - **Real-time OS**: FreeRTOS for concurrent task management
+ * - **Hardware**: STM32 microcontroller with I2C peripherals
+ * - **Actuation**: PCA9685 PWM driver controlling servo motors
+ * - **Sensing**: VL53L1X time-of-flight distance sensor
+ * - **UI**: 16×2 LCD display for real-time monitoring
+ * 
+ * System architecture:
+ * - **TaskControl** (Priority: IDLE+4): Main robot kinematics and servo control
+ * - **TaskUI** (Priority: IDLE+2): User interface and display management
+ * - **TaskSensor** (Priority: IDLE+3): Distance sensor data acquisition
+ * 
+ * All tasks run concurrently under FreeRTOS scheduler with preemptive scheduling.
+ */
+
 #include <Arduino.h>
 #undef B1
 #undef B0
@@ -17,12 +37,30 @@
 #include "ServoActuator.h"
 #include "robot.h"
 
-
+/// @brief Task handle for main control task (kinematics and servo control)
 TaskHandle_t HandleTaskControl;
+
+/// @brief Task handle for UI/display task
 TaskHandle_t HandleTaskUI;
+
+/// @brief Task handle for sensor acquisition task
 TaskHandle_t HandleTaskSensor;
 
-
+/**
+ * @brief Arduino setup() - Initializes hardware and creates FreeRTOS tasks
+ * 
+ * System initialization sequence:
+ * 1. Serial communication at 250 kbps for debug output
+ * 2. I2C bus initialization for peripheral communication
+ * 3. Create three concurrent FreeRTOS tasks:
+ *    - TaskControl: Main kinematics solver (5000 bytes stack, priority IDLE+4)
+ *    - TaskUI: Display and user input (1500 bytes stack, priority IDLE+2)
+ *    - TaskSensor: Distance sensor (1000 bytes stack, priority IDLE+3)
+ * 4. Start FreeRTOS scheduler
+ * 
+ * @note This function does not return; control passes to vTaskStartScheduler().
+ *       The Arduino loop() function is never executed in this FreeRTOS-based design.
+ */
 void setup(void) {
 
   Serial.begin(250000);
@@ -43,20 +81,56 @@ void setup(void) {
               &HandleTaskUI);
 
 
-xTaskCreate(TaskSensor,
+  xTaskCreate(TaskSensor,
               "Sensor",
               1000,
               NULL,
               tskIDLE_PRIORITY + 3,
               &HandleTaskSensor);
 
-vTaskStartScheduler();
+  vTaskStartScheduler();
 }
 
+/**
+ * @brief Arduino loop() - Not used in FreeRTOS design
+ * 
+ * This function is never executed because control passes to vTaskStartScheduler()
+ * in setup(). All application logic runs within FreeRTOS tasks instead.
+ */
 void loop(void) {
 }
 
 
+/**
+ * @brief FreeRTOS task for user interface and LCD display management
+ * @param pvParameters FreeRTOS task parameter (unused)
+ * 
+ * Displays robot arm state information on 16×2 I2C LCD display:
+ * - Reads analog inputs simulating end-effector position data (X, Y, Z)
+ * - Derives orientation (Roll, Pitch, Yaw) from position signals
+ * - Monitors button A (pin 2) for screen switching (200 ms cycle)
+ * - Alternates between two display modes:
+ *   1. Screen 0: End-effector position (X, Y, Z Cartesian coordinates)
+ *   2. Screen 1: End-effector orientation (Roll, Pitch, Yaw angles)
+ * 
+ * Hardware connections:
+ * - LCD address: 0x27 (I2C, 16×2 character display)
+ * - Button A: Pin 2 (INPUT_PULLUP, triggers display switch on falling edge)
+ * - Analog X: A0 (simulates X position)
+ * - Analog Y: A1 (simulates Y position)
+ * 
+ * Task behavior:
+ * - Initializes LCD backlight and clears display
+ * - Infinite loop: reads inputs, updates display, sleeps 200 ms
+ * - Screen toggle via falling edge detection
+ * 
+ * @note Currently uses simulated analog values. In production, should receive
+ *       actual end-effector pose from TaskControl via shared memory or queue.
+ *       Consider protecting shared data with mutex if TaskControl updates values.
+ * 
+ * @todo Replace simulated analog values with actual forward kinematics results
+ * @todo Add FreeRTOS queue or shared data structure for pose communication
+ */
 void TaskUI(void* pvParameters) {
 
   LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -103,6 +177,69 @@ void TaskUI(void* pvParameters) {
 }
 
 
+/**
+ * @brief FreeRTOS task for main robot kinematics and servo control
+ * @param pvParameters FreeRTOS task parameter (unused)
+ * 
+ * Main control task implementing 6-DOF robot arm kinematics and servo actuation:
+ * 
+ * **Hardware Configuration:**
+ * - I2C Bus 2 (Wire2): PF0 (SDA), PF1 (SCL), 400 kHz clock
+ * - PCA9685 PWM controller: Controls 6 servo motors (channels 0-5)
+ * - Servo frequency: 50 Hz (standard for hobby servos)
+ * 
+ * **Kinematic Chain (6-DOF Arm):**
+ * - Joint 1: Rotation Z (base/waist) - 0.094 m link
+ * - Joint 2: Rotation X (shoulder) - 0.105 m link
+ * - Joint 3: Rotation X (elbow) - 0.147 m link
+ * - Joint 4: Rotation X (forearm) - 0.097 m link offset
+ * - Joint 5: Rotation Z (wrist pitch) - 0.0215 m offset
+ * - Joint 6: Rotation Y (end-effector) - 0.070 m to gripper
+ * - Total reach: ~0.455 m at full extension
+ * 
+ * **Servo Parameters (per joint):**
+ * Each joint has calibrated parameters:
+ * - Angle limits (min/max in radians)
+ * - PWM gain factor (radians to degrees conversion)
+ * - Angle offset (systematic calibration)
+ * 
+ * **Current Implementation:**
+ * - Initializes Eigen-based kinematics solver with RobotKinematics class
+ * - Performs forward kinematics test at zero joint angles
+ * - Prints Jacobian matrix (3×6 position derivatives) to serial
+ * - Tests inverse kinematics solver toward target position [0.15, 0, 0.20] m
+ * - Validates IK convergence with tolerances:
+ *   - Position: 0.1 mm
+ *   - Orientation: 1e-3 rad
+ *   - Levenberg-Marquardt damping: 0.01
+ *   - Max iterations: 50
+ * 
+ * **Task Flow:**
+ * 1. Initialize Wire2 I2C bus and set clock speed
+ * 2. Configure servo parameters for 6 joints
+ * 3. Create RobotServoController and initialize PCA9685
+ * 4. Define kinematic structure (rotation axes and link vectors)
+ * 5. Run forward kinematics test (theta = 0)
+ * 6. Compute and print Jacobian
+ * 7. Run inverse kinematics test to target position
+ * 8. Infinite loop with 10 ms delay (allows other tasks to run)
+ * 
+ * **Output (Serial at 250 kbps):**
+ * - Forward kinematics result: [x, y, z] at theta=0
+ * - 3×6 Jacobian matrix (position derivatives)
+ * - IK convergence status ("úspešne" = success / "zlyhala" = failed)
+ * - Converged joint angles in radians (if successful)
+ * 
+ * @note This task currently runs kinematics tests once and then idles.
+ *       Production code should implement a control loop reading desired poses
+ *       and commanding servo positions continuously.
+ * 
+ * @todo Implement real-time control loop
+ * @todo Add safety checks and joint limit enforcement
+ * @todo Integrate actual position feedback from servos
+ * @todo Add task communication (queue/mutex) with TaskUI for pose visualization
+ * @todo Implement trajectory planning and motion interpolation
+ */
 void TaskControl(void* pvParameters) {
 
   TwoWire Wire2(PF0, PF1);
@@ -216,6 +353,53 @@ void TaskControl(void* pvParameters) {
 
 #include "src\VL53L1X\VL53L1X.h"
 
+/**
+ * @brief FreeRTOS task for distance sensor data acquisition
+ * @param pvParameters FreeRTOS task parameter (unused)
+ * 
+ * Manages a VL53L1X time-of-flight (ToF) distance sensor for obstacle detection
+ * and end-effector proximity sensing:
+ * 
+ * **Hardware Configuration:**
+ * - I2C Bus 3 (Wire3): PB4 (SDA), PA8 (SCL), 400 kHz clock
+ * - Sensor: ST Microelectronics VL53L1X
+ * - Measurement range: Short range mode (up to 1.3 m typical)
+ * 
+ * **Sensor Configuration:**
+ * - Sampling period (Ts): 0.1 seconds = 100 ms
+ * - Measurement timing budget: 80% of Ts = 80 ms
+ *   (Time allowed for single ToF measurement)
+ * - Timeout: 150% of Ts = 150 ms
+ *   (Watchdog timer to prevent hangs)
+ * - Operating mode: Continuous ranging at 10 Hz
+ * 
+ * **Initialization Sequence:**
+ * 1. Create Wire3 I2C instance on specific pins
+ * 2. Initialize I2C bus at 400 kHz
+ * 3. Initialize VL53L1X sensor communication
+ * 4. Configure measurement timing (80 ms per measurement)
+ * 5. Set to short-range mode for faster response
+ * 6. Start continuous ranging mode (automatic 10 Hz sampling)
+ * 
+ * **Current Implementation:**
+ * - Initializes sensor and timing configuration
+ * - Enters infinite loop with 10 ms sleep (allows other tasks to run)
+ * - Sensor continuously acquires distance data in background
+ * 
+ * **Usage:**
+ * - Sensor data can be read via VL53L1X API calls
+ * - Output available via standard VL53L1X getDistance() method
+ * - Consider: velocity measurement, collision avoidance, object tracking
+ * 
+ * @note Current code only initializes sensor; no data reading or processing.
+ *       This task primarily yields CPU time to other tasks.
+ * 
+ * @todo Implement actual distance reading from sensor
+ * @todo Add obstacle detection logic and collision avoidance
+ * @todo Create FreeRTOS queue to communicate sensor data to TaskControl
+ * @todo Add sensor error handling and status monitoring
+ * @todo Consider integrating with motion planning for safe operation
+ */
 void TaskSensor(void* pvParameters) {
 
   const float Ts = 0.1;
