@@ -1,6 +1,8 @@
 # Doxygen generated documentation
-html/
-latex/
+html/*
+!html/index.html
+latex/*
+!latex/refman.pdf
 xml/
 rtf/
 man/
