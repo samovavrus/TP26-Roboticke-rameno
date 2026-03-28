@@ -1,6 +1,11 @@
 #include <cstddef>
 #include <array>
+#include <cmath>
 #pragma once
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846f
+#endif
 
 #include "geometry.h"
 
@@ -264,6 +269,13 @@ bool SolveIK(
 
             // 8. Update
             theta += delta_theta;
+            
+            // --- PRIDANÉ: Normalizácia uhlov do intervalu [-pi, pi] na záver iterácie ---
+            for (std::size_t j = 0; j < DOF; ++j) {
+                // std::remainder vráti zvyšok po delení, centrovaný okolo 0
+                theta(j) = std::remainder(theta(j), 2.0f * M_PI);
+            }
+            // --------------------------------------------------------------------------
         }
 
         return false; // Nepodarilo sa nájsť riešenie v rámci max_iter

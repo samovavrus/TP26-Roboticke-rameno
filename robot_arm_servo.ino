@@ -208,9 +208,46 @@ void TaskControl(void* pvParameters) {
   } else {
       Serial.println("IK zlyhala / nekonvergovala.");
   }
-
+  // Lokálne pole pre prevod z matice na primitívny typ
+  float target_angles_array[6];
+  
   while (1) {
-    vTaskDelay(pdMS_TO_TICKS(10));
+    // 1. Aktualizácia cieľovej pozície `target_pos` a `target_rot`.
+    // V budúcnosti tu budeš čítať premenné, ktoré ti prichádzajú napr. z TaskUI, z joysticku a podobne.
+    // target_pos(0) += ... (napr. posun cez joystick)
+
+    // 2. Riešenie inverznej kinematiky z existujúcej polohy
+    // current_theta slúži ako vstup (odhad) a rovno do neho skočí vyriešený výsledok
+    bool success = kinematics.SolveIK(
+        target_pos, 
+        target_rot, 
+        current_theta, 
+        tol_pos, 
+        tol_ori, 
+        lambda, 
+        max_iter
+    );
+
+    // 3. Bezpečný zápis na na fyzické servá cez PCA9685
+    if (success) {
+        // Konverzia typu z Eigen matice na obyčajné pole plavucích radových čísel C++ 
+        for(int i = 0; i < 6; i++) {
+            target_angles_array[i] = current_theta(i);
+        }
+
+        // Zápis do Servo Actuatorov, funkcia vracia 'false' ak to presiahne konfigurované min/max uhly serv
+        bool in_limits = servo_controller.writeAngles(target_angles_array, 6);
+        
+        if (!in_limits) {
+            Serial.println("Výstraha: Vypočítané IK uhly prekračujú zadané limity serv! Preskakujem zápis.");
+        }
+    } else {
+        Serial.println("IK nenašla riešenie: Zvolená poloha je pravdepodobne nedosiahnuteľná.");
+    }
+
+    // 4. Pauza medzi iteráciami, typicky 20 Hz (50 ms) alebo 50 Hz (20 ms). 
+    // Nutné pre správne fungovanie FreeRTOS.
+    vTaskDelay(pdMS_TO_TICKS(50));
   }
 }
 
