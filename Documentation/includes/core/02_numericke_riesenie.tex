@@ -1,1 +1,50 @@
-\section{Numerické riešenie inverznej kinematiky}
+\section{Numerické riešenie}
+Keďže náš manipulátor sa skladá s 6 článkov, tak v nasledovných rovniciach budeme uvažovať 
+výpočet pre týchto 6 článkov. Všeobecne však môžeme uvažovať ľubovoľný počet článkov,
+a teda aj ľubovoľný počet premenných. Pseudo programy na výpočet týchto rovníc budú
+preto všeobecne vyjadrené.
+
+Pre výpočet budeme potrebovať základné vektory a matice. Budeme uvažovať polohový vektor:
+\begin{equation}
+\mathbf{p} = \begin{pmatrix} p^x \\ p^y \\ p^z \end{pmatrix}
+\end{equation}
+a vektor kĺbových premenných:
+\begin{equation}
+\boldsymbol{\theta} = \begin{pmatrix} \theta_1 \\ \theta_2 \\ \theta_3 \\ \theta_4 \\ \theta_5 \\ \theta_6 \end{pmatrix}
+\end{equation}
+
+rotačné matice a translačný vektor na výpočet polohy koncového efektora:
+\begin{equation}
+R_x(\theta) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos(\theta) & -\sin(\theta) \\ 0 & \sin(\theta) & \cos(\theta) \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+R_y(\theta) = \begin{pmatrix} \cos(\theta) & 0 & \sin(\theta) \\ 0 & 1 & 0 \\ -\sin(\theta) & 0 & \cos(\theta) \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+R_z(\theta) = \begin{pmatrix} \cos(\theta) & -\sin(\theta) & 0 \\ \sin(\theta) & \cos(\theta) & 0 \\ 0 & 0 & 1 \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+T = \begin{pmatrix} 0 \\ 0 \\ L \end{pmatrix}
+\end{equation}
+
+\subsection{Priama kinematika}
+Priama kinematika nám umožňuje vypočítať polohu koncového efektora na základe zadaných kĺbových premenných.
+Medzi jednotlivými súradnicovými systémami platia transformácie:
+\begin{align}
+p_5 &= R_6(\theta_6)(T_6 + p_6) \\
+p_4 &= R_5(\theta_5)(T_5 + p_5) \\
+p_3 &= R_4(\theta_4)(T_4 + p_4) \\
+p_2 &= R_3(\theta_3)(T_3 + p_3) \\
+p_1 &= R_2(\theta_2)(T_2 + p_2) \\
+p_0 &= R_1(\theta_1)(T_1 + p_1)
+\end{align}
+
+Kinematika koncového efektora manipulátora je potom daná ako (transformácia z $p_6$ do $p_0$):
+\begin{equation}
+p_0(\theta) = R_1(\theta_1)\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big(T_3 + R_4(\theta_4)\left(T_4 + R_5(\theta_5)\left(T_5 + R_6(\theta_6)(T_6)\right)\right)\big)\Big)\Bigg)
+\end{equation}
+
+
