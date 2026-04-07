@@ -12,6 +12,7 @@
 #include "src\Button.h"
 #include "src\Joystick.h"
 #include "src\Keypad\Keypad.h"
+#include "src\DistanceSensor\RangingSensor.h"
 
 #include "ServoActuator.h"
 #include "robot.h"
@@ -139,25 +140,39 @@ void TaskControl(void* pvParameters) {
   }
 }
 
-#include "src\VL53L1X\VL53L1X.h"
-
 void TaskSensor(void* pvParameters) {
-
-  const float Ts = 0.1;
+  float x = 0.0f, y = 0.0f, z = 0.0f;
+  float roll = 0.0f, pitch = 0.0f, yaw = 0.0f;
+  
+  const uint32_t Ts_ms = 100;  // 100ms sample period
+  // I2C bus: SDA=PB4 (D5), SCL=PA8 (D7)
   TwoWire Wire3(PB4, PA8);
   Wire3.begin();
   Wire3.setClock(400000);
-  VL53L1X sensor_TOF;
-  sensor_TOF.setBus(&Wire3);
-
-  sensor_TOF.init();
-  sensor_TOF.setMeasurementTimingBudget((uint32_t)(0.8 * Ts * 1000.0));
-  sensor_TOF.setDistanceMode(VL53L1X::Short);
-  sensor_TOF.setTimeout((uint16_t)(Ts * 1.5 * 1000.0));
-  sensor_TOF.startContinuous((uint32_t)(Ts * 1000.0));
+  RangingSensor rangingSensor(Wire3);
+  if (!rangingSensor.init(Ts_ms, RangingSensor::DistanceMode::Short)) {
+    Serial.println("RangingSensor init failed!");
+    vTaskDelete(NULL);
+    return;
+  }
+  rangingSensor.startContinuous();
+  Serial.println("RangingSensor initialized");
 
   while (1) {
+    MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);
+    
+    Serial.print("Distance: ");
+    Serial.print(measurement.distance_mm);
+    Serial.print(" mm | Pose: (");
+    Serial.print(measurement.pose.x, 3); Serial.print(", ");
+    Serial.print(measurement.pose.y, 3); Serial.print(", ");
+    Serial.print(measurement.pose.z, 3); Serial.println(")");
 
+    if (measurement.valid) {
+      // TODO: Store measurement with pose for map reconstruction
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(Ts_ms));
   }
 
 }
