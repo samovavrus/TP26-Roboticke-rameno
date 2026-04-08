@@ -65,40 +65,105 @@ void TaskUI(void* pvParameters) {
   lcd.backlight();
   lcd.clear();
 
-  pinMode(2, INPUT_PULLUP); // A button
+  pinMode(2, INPUT_PULLUP); // Button A - change screen
+  pinMode(3, INPUT_PULLUP); // Button B - change mode
 
   int screen = 0;
-  bool lastButtonState = HIGH;
+  int mode = 0;
+
+  bool lastButtonA = HIGH;
+  bool lastButtonB = HIGH;
+
+  const char* pairXYZ[3] = {"XY","YZ","ZX"};
+  const char* pairRPY[3] = {"RP","PY","YR"};
+
+  // ---- persistent variables
+  float x = 0;
+  float y = 0;
+  float z = 0;
+
+  float roll  = 0;
+  float pitch = 0;
+  float yaw   = 0;
 
   while (1) {
 
-    // --- simulované hodnoty (zatiaľ)
-    float x = analogRead(A0) / 10.0;
-    float y = analogRead(A1) / 10.0;
-    float z = (x+y)/2;
+    int joyX = analogRead(A0);
+    int joyY = analogRead(A1);
+    Serial.println(joyX);
+    Serial.println(joyY);
 
-    float roll  = x/5;
-    float pitch = y/5;
-    float yaw   = z/5;
+    const int CENTER = 520;
+    const int DEADZONE = 20;
 
-    // --- čítanie tlačidla A
-    bool currentState = digitalRead(2);
+    float dx = 0;
+    float dy = 0;
 
-    // detekcia stlačenia (falling edge)
-    if (lastButtonState == HIGH && currentState == LOW) {
-      screen = !screen;   // prepni obrazovku
+    if (joyX > CENTER + DEADZONE)
+      dx = (joyX - (CENTER + DEADZONE)) * 0.05;
+
+    else if (joyX < CENTER - DEADZONE)
+      dx = (joyX - (CENTER - DEADZONE)) * 0.05;
+
+    if (joyY > CENTER + DEADZONE)
+      dy = (joyY - (CENTER + DEADZONE)) * 0.05;
+
+    else if (joyY < CENTER - DEADZONE)
+      dy = (joyY - (CENTER - DEADZONE)) * 0.05;
+
+    // ---- apply control based on mode
+    switch(mode)
+    {
+      case 0: // XY / RP
+        x += dx;
+        y += dy;
+
+        roll  += dx;
+        pitch += dy;
+      break;
+
+      case 1: // YZ / PY
+        y += dx;
+        z += dy;
+
+        pitch += dx;
+        yaw   += dy;
+      break;
+
+      case 2: // ZX / YR
+        z += dx;
+        x += dy;
+
+        yaw  += dx;
+        roll += dy;
+      break;
     }
 
-    lastButtonState = currentState;
+    // ---- read buttons
+    bool currentA = digitalRead(2);
+    bool currentB = digitalRead(3);
 
-    // --- vykreslenie
+    if (lastButtonA == HIGH && currentA == LOW) {
+      screen = !screen;
+      lcd.clear();
+    }
+
+    if (lastButtonB == HIGH && currentB == LOW) {
+      mode = (mode + 1) % 3;
+    }
+
+    lastButtonA = currentA;
+    lastButtonB = currentB;
+
+    // ---- draw
     if (screen == 0) {
-      drawXYZ(lcd, x, y, z);
-    } else {
-      drawRPY(lcd, roll, pitch, yaw);
+      drawXYZ(lcd, x, y, z, pairXYZ[mode]);
+    } 
+    else {
+      drawRPY(lcd, roll, pitch, yaw, pairRPY[mode]);
     }
 
-    vTaskDelay(pdMS_TO_TICKS(200));
+    vTaskDelay(pdMS_TO_TICKS(100));
   }
 }
 
