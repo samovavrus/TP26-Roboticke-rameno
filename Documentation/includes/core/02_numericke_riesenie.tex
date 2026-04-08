@@ -48,10 +48,10 @@ p_0(\theta) = R_1(\theta_1)\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big
 \end{equation}
 
 \subsubsection{Pseudokód pre priamu kinematiku}
-Nižšie je uvedený pseudo program na výpočet priamej kinematikovej transformácie, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
+Nižšie je uvedený pseudo program na výpočet priamej kinematickej úlohy, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
 Čiže pseudo program vracia polohový vektor a rotačnú maticu koncového efektora vzhľadom na základňu manipulátora.
 
-\begin{lstlisting}[caption={Výpočet priamej kinematikovej transformácie}, language=C]
+\begin{lstlisting}[caption={Výpočet priamej kinematickej úlohy}, language=C]
 function forwardKinematics(theta[], R[])
     vekt = 0;
     matica = I_3x3;
@@ -102,10 +102,10 @@ Na výpočet matice budeme potrebovať vypočítať parciálne derivácie poloho
 \end{equation}
 
 \subsubsection{Pseudokód pre Jakobián}
-Nižšie je uvedený pseudo program na výpočet Jakobiánskej matice, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
+Nižšie je uvedený pseudo program na výpočet Jakobiho matice, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
 Tento pseudo program nám umožní vypočítať Jakobián polohy efektora vzhľadom na kĺbové premenné.
 
-\begin{lstlisting}[caption={Výpočet Jakobiánskej matice}, language=C]
+\begin{lstlisting}[caption={Výpočet Jakobiho matice}, language=C]
 function jacobian(theta[], R[], dR[])
     n = size(theta[]);
     jacob_mat = 3 x n;
@@ -172,7 +172,7 @@ Reziduum (chybu) pre polohu efektora vyjadríme ako:
 \begin{equation}
 r_p(\theta) = p_0(\theta) - p_r
 \end{equation}
-Chceme aby táto chyba bola nulová (resp. minimálna), čo znamená že polohový vektor efektora sa zhoduje s požadovaným polohovým vektorom $p_r$.
+Chceme dosiahnúť, aby veľkosť tejto chyby bola minimálna, čo znamená že polohový vektor efektora sa zhoduje s požadovaným polohovým vektorom $p_r$.
 
 \subsubsection{Pseudokód pre výpočet Jakobiánu orientácie}
 Nižšie je uvedený pseudo program na výpočet derivácií rotačných matíc, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
