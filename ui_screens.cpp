@@ -101,34 +101,6 @@ void TaskUI(void* pvParameters) {
     else if (joyY < CENTER - DEADZONE)
       dy = (joyY - (CENTER - DEADZONE)) * 0.05;
 
-    // ---- apply control based on mode
-    switch(mode)
-    {
-      case 0: // XY / RP
-        x += dx;
-        y += dy;
-
-        roll  += dx;
-        pitch += dy;
-      break;
-
-      case 1: // YZ / PY
-        y += dx;
-        z += dy;
-
-        pitch += dx;
-        yaw   += dy;
-      break;
-
-      case 2: // ZX / YR
-        z += dx;
-        x += dy;
-
-        yaw  += dx;
-        roll += dy;
-      break;
-    }
-
     // ---- read buttons
     bool currentA = digitalRead(2);
     bool currentB = digitalRead(3);
@@ -147,9 +119,44 @@ void TaskUI(void* pvParameters) {
 
     // ---- draw
     if (screen == 0) {
+      // XYZ screen
+      switch(mode)
+      {
+        case 0: // XY
+          x += dx;
+          y += dy;
+        break;
+
+        case 1: // YZ
+          y += dx;
+          z += dy;
+        break;
+
+        case 2: // ZX
+          z += dx;
+          x += dy;
+        break;
+      }
       drawXYZ(lcd, x, y, z, pairXYZ[mode]);
     } 
     else {
+      switch(mode)
+      {
+        case 0: // RP
+          roll  += dx;
+          pitch += dy;
+        break;
+
+        case 1: // PY
+          pitch += dx;
+          yaw   += dy;
+        break;
+
+        case 2: // YR
+          yaw  += dx;
+          roll += dy;
+        break;
+      }
       drawRPY(lcd, roll, pitch, yaw, pairRPY[mode]);
     }
 
