@@ -1,7 +1,10 @@
 #include <Arduino.h>
 #include <STM32FreeRTOS.h>
+#include "src/Keypad/Keypad.h"
 
 #include "ui_screens.h"
+
+#define USE_KEYPAD  0   // 0 = dev buttons (pins 2,3), 1 = keypad buttons
 
 void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair)
 {
@@ -26,8 +29,6 @@ void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair
 
 void drawRPY(LiquidCrystal_I2C& lcd, float r, float p, float y, const char* pair)
 {
-  lcd.clear();
-
   lcd.setCursor(0,0);
   lcd.print("R:");
   lcd.print(r,1);
@@ -58,16 +59,30 @@ void TaskUI(void* pvParameters) {
   pinMode(2, INPUT_PULLUP); // Button A - change screen
   pinMode(3, INPUT_PULLUP); // Button B - change mode
 
+  #if USE_KEYPAD
+    const char keys[4][4] = {
+      { '1', '2', '3', 'A' },
+      { '4', '5', '6', 'B' },
+      { '7', '8', '9', 'C' },
+      { '.', '0', '-', 'D' }
+    };
+
+    byte rowPins[4] = { 4, 5, 6, 7 };
+    byte colPins[4] = { 8, 9, 10, 11 };
+
+    Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
+  #endif
+
   int screen = 0;
   int mode = 0;
 
-  bool lastButtonA = HIGH;
-  bool lastButtonB = HIGH;
+  static bool lastA = false;
+  static bool lastB = false; 
 
   const char* pairXYZ[3] = {"XY","YZ","ZX"};
   const char* pairRPY[3] = {"RP","PY","YR"};
 
-  // ---- persistent variables
+  // Test variables
   float x = 0;
   float y = 0;
   float z = 0;
@@ -77,7 +92,7 @@ void TaskUI(void* pvParameters) {
   float yaw   = 0;
 
   while (1) {
-
+    // ---- JOYSTICK ----
     int joyX = analogRead(A0);
     int joyY = analogRead(A1);
     Serial.println(joyX);
@@ -101,25 +116,33 @@ void TaskUI(void* pvParameters) {
     else if (joyY < CENTER - DEADZONE)
       dy = (joyY - (CENTER - DEADZONE)) * 0.05;
 
-    // ---- read buttons
-    bool currentA = digitalRead(2);
-    bool currentB = digitalRead(3);
+    // ---- BUTTONS ----
+    bool btnA = false;
+    bool btnB = false;
 
-    if (lastButtonA == HIGH && currentA == LOW) {
+    #if USE_KEYPAD
+      char key = keypad.getKey();
+      if (key == 'A') btnA = true;
+      if (key == 'B') btnB = true;
+    #else
+      btnA = (digitalRead(2) == LOW);
+      btnB = (digitalRead(3) == LOW);
+    #endif
+
+    if (!lastA && btnA) {
       screen = !screen;
       lcd.clear();
     }
 
-    if (lastButtonB == HIGH && currentB == LOW) {
+    if (!lastB && btnB) {
       mode = (mode + 1) % 3;
     }
 
-    lastButtonA = currentA;
-    lastButtonB = currentB;
+    lastA = btnA;
+    lastB = btnB;
 
-    // ---- draw
+    // ---- SCREEN ----
     if (screen == 0) {
-      // XYZ screen
       switch(mode)
       {
         case 0: // XY
