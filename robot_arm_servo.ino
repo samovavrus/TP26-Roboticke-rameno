@@ -7,7 +7,7 @@
 
 #include <STM32FreeRTOS.h>
 #include "STM32FreeRTOSConfig.h"
-#include "ui_screens.h"
+#include "src\UI\ui_screens.h"
 #include "src\LiquidMenu\LiquidCrystal_I2C.h"
 #include "src\LiquidMenu\LiquidMenu.h"
 #include "src\Button.h"
