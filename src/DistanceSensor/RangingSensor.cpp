@@ -1,7 +1,8 @@
 #include "RangingSensor.h"
 
 RangingSensor::RangingSensor(TwoWire& wire) 
-    : _wire(&wire), _initialized(false), _sample_period_ms(100), _last_measurement{} {}
+    : _wire(&wire), _initialized(false), _sample_period_ms(100), _last_measurement{},
+      _sd_initialized(false), _is_logging_enabled(false), _sd_cs_pin(0), _flush_counter(0) {}
 
 bool RangingSensor::init(uint32_t sample_period_ms, DistanceMode mode) {
     _sample_period_ms = sample_period_ms;
@@ -69,6 +70,43 @@ MeasurementData RangingSensor::read(float x, float y, float z, float roll, float
     data.timestamp_ms = millis();
     data.valid = (data.range_status == 0) && !_sensor.timeoutOccurred();
 
+
+    if (_is_logging_enabled && _sd_initialized && data.valid) {
+        const float d_m = data.distance_mm * 0.001f;
+
+        const float cx = cosf(data.pose.yaw) * cosf(data.pose.pitch);
+        const float cy = sinf(data.pose.yaw) * cosf(data.pose.pitch);
+        const float cz = -sinf(data.pose.pitch);
+        const float ox = data.pose.x;
+        const float oy = data.pose.y;
+        const float oz = data.pose.z;
+        const float ex = ox + d_m * cx;
+        const float ey = oy + d_m * cy;
+        const float ez = oz + d_m * cz;
+
+        if (_dataFile) {
+            _dataFile.print(data.timestamp_ms);
+            _dataFile.print(",");
+            _dataFile.print(ox, 6);
+            _dataFile.print(",");
+            _dataFile.print(oy, 6);
+            _dataFile.print(",");
+            _dataFile.print(oz, 6);
+            _dataFile.print(",");
+            _dataFile.print(ex, 6);
+            _dataFile.print(",");
+            _dataFile.print(ey, 6);
+            _dataFile.print(",");
+            _dataFile.println(ez, 6);
+
+            _flush_counter++;
+            if (_flush_counter >= 20) { 
+                _dataFile.flush();
+                _flush_counter = 0;
+            }
+        }
+    }
+
     _last_measurement = data;
     return data;
 }
@@ -96,4 +134,35 @@ bool RangingSensor::isInitialized() const {
 
 VL53L1X& RangingSensor::getSensor() {
     return _sensor;
+}
+
+bool RangingSensor::initSD(uint32_t cs_pin) {
+    _sd_cs_pin = cs_pin;
+
+    SPI.setMISO(PA6);
+    SPI.setMOSI(PA7);
+    SPI.setSCLK(PA5);
+    
+    if (SD.begin(cs_pin)) {
+        _sd_initialized = true;
+        return true;
+    }
+    
+    _sd_initialized = false;
+    return false;
+}
+
+void RangingSensor::enableLogging(bool enable) {
+    if (_sd_initialized && enable != _is_logging_enabled) {
+        _is_logging_enabled = enable;
+        if (enable) {
+            _dataFile = SD.open("octomap.txt", FILE_WRITE);
+            _flush_counter = 0;
+        } else {
+            if (_dataFile) {
+                _dataFile.flush();
+                _dataFile.close();
+            }
+        }
+    }
 }
