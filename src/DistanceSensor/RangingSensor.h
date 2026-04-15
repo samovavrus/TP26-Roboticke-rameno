@@ -72,7 +72,8 @@ public:
 
     /// @brief Enable or disable measurement logging to SD card
     /// @param enable true to start writing to SD card, false to stop
-    void enableLogging(bool enable);
+    /// @param clear true to clear the octomap.txt file before logging
+    void enableLogging(bool enable, bool clear = false);
 
 private:
     VL53L1X _sensor;

@@ -139,9 +139,9 @@ VL53L1X& RangingSensor::getSensor() {
 bool RangingSensor::initSD(uint32_t cs_pin) {
     _sd_cs_pin = cs_pin;
 
-    SPI.setMISO(PA6);
-    SPI.setMOSI(PA7);
-    SPI.setSCLK(PA5);
+    SPI.setMISO(PE5);
+    SPI.setMOSI(PE6);
+    SPI.setSCLK(PE2);
     
     if (SD.begin(cs_pin)) {
         _sd_initialized = true;
@@ -152,16 +152,32 @@ bool RangingSensor::initSD(uint32_t cs_pin) {
     return false;
 }
 
-void RangingSensor::enableLogging(bool enable) {
-    if (_sd_initialized && enable != _is_logging_enabled) {
-        _is_logging_enabled = enable;
+void RangingSensor::enableLogging(bool enable, bool clear) {
+    if (_sd_initialized) {
         if (enable) {
-            _dataFile = SD.open("octomap.txt", FILE_WRITE);
-            _flush_counter = 0;
+            if (!_is_logging_enabled) {
+                if (clear) {
+                    SD.remove("octomap.txt");
+                }
+                _dataFile = SD.open("octomap.txt", FILE_WRITE);
+                _flush_counter = 0;
+                _is_logging_enabled = true;
+            } else if (clear) {
+                if (_dataFile) {
+                    _dataFile.flush();
+                    _dataFile.close();
+                }
+                SD.remove("octomap.txt");
+                _dataFile = SD.open("octomap.txt", FILE_WRITE);
+                _flush_counter = 0;
+            }
         } else {
-            if (_dataFile) {
-                _dataFile.flush();
-                _dataFile.close();
+            if (_is_logging_enabled) {
+                if (_dataFile) {
+                    _dataFile.flush();
+                    _dataFile.close();
+                }
+                _is_logging_enabled = false;
             }
         }
     }

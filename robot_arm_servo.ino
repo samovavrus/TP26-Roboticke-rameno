@@ -156,9 +156,9 @@ void TaskSensor(void* pvParameters) {
     return;
   }
 
-  if (rangingSensor.initSD(PE15)) {
+  if (rangingSensor.initSD(PE4)) {
     Serial.println("SD Card initialized for RangingSensor!");
-    rangingSensor.enableLogging(true); // tymto zapnes logovanie do SD karty, cez rangingSensor.enableLogging(false) sa korektne vypne a uzavrie subor
+    rangingSensor.enableLogging(true, true); // 1.param: zapne logovanie, 2.param: vymaze existujuci subor
   } else {
     Serial.println("SD Card init failed! Logging disabled.");
   }
