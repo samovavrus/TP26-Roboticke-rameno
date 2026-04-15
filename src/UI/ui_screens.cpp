@@ -4,7 +4,7 @@
 
 #include "ui_screens.h"
 
-#define USE_KEYPAD  0   // 0 = dev buttons (pins 2,3), 1 = keypad buttons
+#define USE_KEYPAD  1   // 0 = dev buttons (pins 2,3), 1 = keypad buttons
 
 void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair)
 {
@@ -83,20 +83,18 @@ void TaskUI(void* pvParameters) {
   const char* pairRPY[3] = {"RP","PY","YR"};
 
   // Test variables
-  float x = 0;
-  float y = 0;
-  float z = 0;
+  float x = 15.0f;
+  float y = -388.2f;
+  float z = 155.7f;
 
-  float roll  = 0;
-  float pitch = 0;
-  float yaw   = 0;
+  float roll  = 90.0f;
+  float pitch = 0.0f;
+  float yaw   = 0.0f;
 
   while (1) {
     // ---- JOYSTICK ----
     int joyX = analogRead(A0);
     int joyY = analogRead(A1);
-    Serial.println(joyX);
-    Serial.println(joyY);
 
     const int CENTER = 520;
     const int DEADZONE = 20;
@@ -181,6 +179,18 @@ void TaskUI(void* pvParameters) {
         break;
       }
       drawRPY(lcd, roll, pitch, yaw, pairRPY[mode]);
+    }
+
+    if (gDesiredPoseQueue != NULL) {
+      DesiredPoseMessage msg = {
+        x / 1000.0f,
+        y / 1000.0f,
+        z / 1000.0f,
+        roll * DEG_TO_RAD,
+        pitch * DEG_TO_RAD,
+        yaw * DEG_TO_RAD
+      };
+      (void)xQueueSend(gDesiredPoseQueue, &msg, 0);
     }
 
     vTaskDelay(pdMS_TO_TICKS(100));
