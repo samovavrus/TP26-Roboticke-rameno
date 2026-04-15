@@ -22,12 +22,18 @@
 TaskHandle_t HandleTaskControl;
 TaskHandle_t HandleTaskUI;
 TaskHandle_t HandleTaskSensor;
+QueueHandle_t gDesiredPoseQueue = NULL;
 
 
 void setup(void) {
 
   Serial.begin(250000);
   Wire.begin();
+
+  gDesiredPoseQueue = xQueueCreate(5, sizeof(DesiredPoseMessage));
+  if (gDesiredPoseQueue == NULL) {
+    Serial.println("Failed to create desired-pose queue");
+  }
 
   xTaskCreate(TaskControl,
               "Control",
@@ -103,6 +109,12 @@ void TaskControl(void* pvParameters) {
 
   // --- Test priamej kinematiky ---
   Matrix<6,1> theta = Matrix<6,1>::Zero();  // všetky kĺby v nulovej polohe
+  theta(0) = 0.0f;  // servo1
+  theta(1) = M_PI/4.0f;  // servo2
+  theta(2) = M_PI/4.0f;  // servo3
+  theta(3) = 0.0f;  // servo4
+  theta(4) = 0.0f;  // servo5
+  theta(5) = 0.0f;  // servo6
 
   auto result = kinematics.forwardKinematics(theta);
   Matrix<3,1> pos = result.first;
@@ -125,16 +137,16 @@ void TaskControl(void* pvParameters) {
 
     // 1. Zadefinovanie cieľovej polohy pr (napríklad [X, Y, Z] v metroch)
   Matrix<3, 1> target_pos;
-  target_pos << 0.15f,  // X
-                0.0f,   // Y
-                0.20f;  // Z
+  target_pos << 0.0150f,  // X
+                -0.3882f,   // Y
+                0.1557f;  // Z
 
   // 2. Zadefinovanie cieľovej orientácie Rr (napríklad len identita = rovnaká orientácia ako v nulovej polohe)
-  Matrix<3, 3> target_rot = Matrix<3, 3>::Identity(); 
+  Matrix<3, 3> target_rot = rot; 
 
   // 3. Počiatočný odhad kĺbov 'theta'
   // Najlepšie je sem dať AKTUÁLNE natočenie (teraz pre test dáme samé nuly)
-  Matrix<6, 1> current_theta = Matrix<6, 1>::Zero();
+  Matrix<6, 1> current_theta = theta;
 
   // 4. Pripravenie parametrov pre solver
   float tol_pos = 1e-4f;  // Tolerancia polohy (napr. 0.1 mm)
@@ -165,8 +177,46 @@ void TaskControl(void* pvParameters) {
   }
   // Lokálne pole pre prevod z matice na primitívny typ
   float target_angles_array[6];
+
+  // Initialize UI/message RPY from target_rot so startup orientation is consistent.
+  const float init_pitch = asinf(-target_rot(2, 0));
+  const float init_roll = atan2f(target_rot(2, 1), target_rot(2, 2));
+  const float init_yaw = atan2f(target_rot(1, 0), target_rot(0, 0));
+
+  DesiredPoseMessage latest_pose = {
+    target_pos(0),
+    target_pos(1),
+    target_pos(2),
+    init_roll,
+    init_pitch,
+    init_yaw
+  };
   
   while (1) {
+    if (gDesiredPoseQueue != NULL) {
+      DesiredPoseMessage msg;
+      while (xQueueReceive(gDesiredPoseQueue, &msg, 0) == pdPASS) {
+        latest_pose = msg;
+      }
+    }
+
+    target_pos << latest_pose.x, latest_pose.y, latest_pose.z;
+    
+
+    // Roll-Pitch-Yaw -> rotation matrix (ZYX order: Rz(yaw) * Ry(pitch) * Rx(roll))
+    const float cr = cosf(latest_pose.roll);
+    const float sr = sinf(latest_pose.roll);
+    const float cp = cosf(latest_pose.pitch);
+    const float sp = sinf(latest_pose.pitch);
+    const float cy = cosf(latest_pose.yaw);
+    const float sy = sinf(latest_pose.yaw);
+
+    target_rot <<
+      cy * cp,              cy * sp * sr - sy * cr,   cy * sp * cr + sy * sr,
+      sy * cp,              sy * sp * sr + cy * cr,   sy * sp * cr - cy * sr,
+      -sp,                  cp * sr,                  cp * cr;
+
+
     // 1. Aktualizácia cieľovej pozície `target_pos` a `target_rot`.
     // V budúcnosti tu budeš čítať premenné, ktoré ti prichádzajú napr. z TaskUI, z joysticku a podobne.
     // target_pos(0) += ... (napr. posun cez joystick)
@@ -195,9 +245,11 @@ void TaskControl(void* pvParameters) {
         
         if (!in_limits) {
             Serial.println("Výstraha: Vypočítané IK uhly prekračujú zadané limity serv! Preskakujem zápis.");
+            while(1) vTaskDelay(pdMS_TO_TICKS(50));
         }
     } else {
         Serial.println("IK nenašla riešenie: Zvolená poloha je pravdepodobne nedosiahnuteľná.");
+        while(1) vTaskDelay(pdMS_TO_TICKS(50));
     }
 
     // 4. Pauza medzi iteráciami, typicky 20 Hz (50 ms) alebo 50 Hz (20 ms). 
