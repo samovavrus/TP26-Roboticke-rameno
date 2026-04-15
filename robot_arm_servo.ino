@@ -210,7 +210,7 @@ void TaskSensor(void* pvParameters) {
   float x = 0.0f, y = 0.0f, z = 0.0f;
   float roll = 0.0f, pitch = 0.0f, yaw = 0.0f;
   
-  const uint32_t Ts_ms = 100;  // 100ms sample period
+  const uint32_t Ts_ms = 50; 
   // I2C bus: SDA=PB4 (D5), SCL=PA8 (D7)
   TwoWire Wire3(PB4, PA8);
   Wire3.begin();
@@ -221,21 +221,27 @@ void TaskSensor(void* pvParameters) {
     vTaskDelete(NULL);
     return;
   }
+
+  if (rangingSensor.initSD(PE4)) {
+    Serial.println("SD Card initialized for RangingSensor!");
+    rangingSensor.enableLogging(true, true); // 1.param: zapne logovanie, 2.param: vymaze existujuci subor
+  } else {
+    Serial.println("SD Card init failed! Logging disabled.");
+  }
+
   rangingSensor.startContinuous();
   Serial.println("RangingSensor initialized");
 
   while (1) {
     MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);
     
-    Serial.print("Distance: ");
-    Serial.print(measurement.distance_mm);
-    Serial.print(" mm | Pose: (");
-    Serial.print(measurement.pose.x, 3); Serial.print(", ");
-    Serial.print(measurement.pose.y, 3); Serial.print(", ");
-    Serial.print(measurement.pose.z, 3); Serial.println(")");
-
     if (measurement.valid) {
-      // TODO: Store measurement with pose for map reconstruction
+      Serial.print("Distance: ");
+      Serial.print(measurement.distance_mm);
+      Serial.print(" mm | Pose: (");
+      Serial.print(measurement.pose.x, 3); Serial.print(", ");
+      Serial.print(measurement.pose.y, 3); Serial.print(", ");
+      Serial.print(measurement.pose.z, 3); Serial.println(")");
     }
 
     vTaskDelay(pdMS_TO_TICKS(Ts_ms));

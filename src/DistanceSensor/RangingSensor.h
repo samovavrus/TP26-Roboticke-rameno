@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
 #include "..\VL53L1X\VL53L1X.h"
 
 /// @brief Sensor pose in 3D space (position + orientation)
@@ -63,11 +65,15 @@ public:
     bool isInitialized() const;
     VL53L1X& getSensor();
 
-    // ==================== Future: RAM Storage Interface ====================
-    // TODO: Implement circular buffer for measurement history
-    // void enableHistory(size_t buffer_size);
-    // MeasurementData* getHistory(size_t* count);
-    // void clearHistory();
+    /// @brief Initialize SD card for logging
+    /// @param cs_pin Chip select pin for SD card
+    /// @return true if initialization successful
+    bool initSD(uint32_t cs_pin);
+
+    /// @brief Enable or disable measurement logging to SD card
+    /// @param enable true to start writing to SD card, false to stop
+    /// @param clear true to clear the octomap.txt file before logging
+    void enableLogging(bool enable, bool clear = false);
 
 private:
     VL53L1X _sensor;
@@ -75,4 +81,12 @@ private:
     bool _initialized;
     uint32_t _sample_period_ms;
     MeasurementData _last_measurement;
+
+    bool _sd_initialized;
+    bool _is_logging_enabled;
+    uint32_t _sd_cs_pin;
+
+    // Performance improvement variables for SD writing
+    File _dataFile;
+    uint8_t _flush_counter;
 };
