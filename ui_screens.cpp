@@ -48,6 +48,31 @@ void drawRPY(LiquidCrystal_I2C& lcd, float r, float p, float y, const char* pair
   lcd.print(pair);
 }
 
+void drawJOINTS(LiquidCrystal_I2C& lcd, float* t, int mode)
+{
+  int i1 = mode * 2;
+  int i2 = mode * 2 + 1;
+
+  lcd.setCursor(0,0);
+  lcd.print("T");
+  lcd.print(i1+1);
+  lcd.print(":");
+  lcd.print(t[i1],1);
+  lcd.print("   ");
+
+  lcd.setCursor(8,0);
+  lcd.print("T");
+  lcd.print(i2+1);
+  lcd.print(":");
+  lcd.print(t[i2],1);
+  lcd.print("   ");
+
+  lcd.setCursor(0,1);
+  lcd.print("PAIR:");
+  lcd.print(i1+1);
+  lcd.print(i2+1);
+}
+
 void TaskUI(void* pvParameters) {
 
   LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -73,7 +98,7 @@ void TaskUI(void* pvParameters) {
     Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, 4, 4);
   #endif
 
-  int screen = 0;
+  int screen = 0; // 0=XYZ, 1=RPY, 2=JOINTS
   int mode = 0;
 
   static bool lastA = false;
@@ -90,6 +115,11 @@ void TaskUI(void* pvParameters) {
   float roll  = 0;
   float pitch = 0;
   float yaw   = 0;
+
+  float t[6] = {0,0,0,0,0,0};
+
+  const float joint_min[6] = {-180,-90,-90,-180,-120,-180};
+  const float joint_max[6] = { 180, 90, 90, 180, 120, 180};
 
   while (1) {
     // ---- JOYSTICK ----
@@ -130,7 +160,7 @@ void TaskUI(void* pvParameters) {
     #endif
 
     if (!lastA && btnA) {
-      screen = !screen;
+      screen = (screen + 1) % 3;
       lcd.clear();
     }
 
@@ -142,46 +172,40 @@ void TaskUI(void* pvParameters) {
     lastB = btnB;
 
     // ---- SCREEN ----
-    if (screen == 0) {
-      switch(mode)
-      {
-        case 0: // XY
-          x += dx;
-          y += dy;
-        break;
-
-        case 1: // YZ
-          y += dx;
-          z += dy;
-        break;
-
-        case 2: // ZX
-          z += dx;
-          x += dy;
-        break;
-      }
-      drawXYZ(lcd, x, y, z, pairXYZ[mode]);
-    } 
-    else {
-      switch(mode)
-      {
-        case 0: // RP
-          roll  += dx;
-          pitch += dy;
-        break;
-
-        case 1: // PY
-          pitch += dx;
-          yaw   += dy;
-        break;
-
-        case 2: // YR
-          yaw  += dx;
-          roll += dy;
-        break;
-      }
-      drawRPY(lcd, roll, pitch, yaw, pairRPY[mode]);
+  if (screen == 0) {
+    // XYZ
+    switch(mode)
+    {
+      case 0: x += dx; y += dy; break;
+      case 1: y += dx; z += dy; break;
+      case 2: z += dx; x += dy; break;
     }
+    drawXYZ(lcd, x, y, z, pairXYZ[mode]);
+  }
+  else if (screen == 1) {
+    // RPY
+    switch(mode)
+    {
+      case 0: roll += dx; pitch += dy; break;
+      case 1: pitch += dx; yaw += dy; break;
+      case 2: yaw += dx; roll += dy; break;
+    }
+    drawRPY(lcd, roll, pitch, yaw, pairRPY[mode]);
+  }
+  else {
+    // JOINTS
+    switch(mode)
+    {
+      case 0: t[0] += dx; t[1] += dy; break;
+      case 1: t[2] += dx; t[3] += dy; break;
+      case 2: t[4] += dx; t[5] += dy; break;
+    }
+
+    for(int i=0;i<6;i++)
+      t[i] = constrain(t[i], joint_min[i], joint_max[i]);
+
+    drawJOINTS(lcd, t, mode);
+  }
 
     vTaskDelay(pdMS_TO_TICKS(100));
   }

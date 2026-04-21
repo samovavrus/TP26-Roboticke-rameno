@@ -3,4 +3,5 @@
 
 void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair);
 void drawRPY(LiquidCrystal_I2C& lcd, float r, float p, float y, const char* pair);
+void drawJOINTS(LiquidCrystal_I2C& lcd, float* t, const char* pair);
 void TaskUI(void* pvParameters);
