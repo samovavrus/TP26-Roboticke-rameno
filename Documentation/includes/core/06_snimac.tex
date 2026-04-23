@@ -1,0 +1,82 @@
+\section{RangingSensor}
+
+Prehľad implementácie triedy \textbf{RangingSensor}, ktorá služí ako wrapper pre senzor VL53L1X a rozširuje jeho funkcionalitu o 3D mapovanie a logovanie dát na SD kartu.
+
+\subsection{Čo bolo implementované}
+
+\begin{itemize}
+	\item Wrapper trieda pre senzor VL53L1X.
+	\item Podpora 3D mapovania priestoru.
+	\item Štruktúra SensorPose (x, y, z, roll, pitch, yaw).
+	\item Štruktúra MeasurementData (meranie + aktuálna poloha).
+	\item SPI inicializácia SD karty.
+	\item Zápis nameranych dát do súboru octomap.txt pre neskorší rekonštrukciu mapy.
+\end{itemize}
+
+\subsection{Verejné funkcie triedy}
+
+\subsubsection{Konštruktor}
+
+\texttt{RangingSensor(TwoWire\& wire)}
+
+Pripraví inštanciu senzora naviazanú na konkrétnu I2C zbernicu (napr. Wire3).
+
+\subsubsection{Inicializácia}
+
+\texttt{bool init(uint32\_t sample\_period\_ms, DistanceMode mode)}
+
+Inicializuje senzor, nastavý časový rozpočet a režim merania.
+
+\begin{itemize}
+	\item \texttt{sample\_period\_ms} -- perióda merania v milisekundách.
+	\item \texttt{mode} -- režim senzora: Short / Medium / Long.
+	\item Návratová hodnota: true pri úspechu, false pri chybe.
+\end{itemize}
+
+\subsubsection{Kontinuálne meranie}
+
+\texttt{void startContinuous() / void stopContinuous()}
+
+Spustenie alebo zastavenie kontinuálneho snímania vzdialenosti.
+
+\subsubsection{SD karta a logovanie}
+
+\texttt{bool initSD(uint32\_t cs\_pin)}
+
+Inicializuje SD kartu cez SPI rozhranie.
+
+\texttt{void enableLogging(bool enable, bool clear = false)}
+
+Zapína alebo vypína zápis do súboru octomap.txt. Obsahuje buffer manažment (flush\_counter).
+
+\begin{itemize}
+	\item \texttt{enable} -- true zapne logovanie, false vypne logovanie.
+	\item \texttt{clear} -- true vymaže predchádzajúci súbor.
+\end{itemize}
+
+\subsubsection{Získavanie meraní}
+
+\texttt{MeasurementData read(float x, float y, float z, float roll, float pitch, float yaw)}
+
+Načítá najnovšiu vzdialenosť a priradí k nej aktuálnu polohu/orientáciu senzora. Pri zapnutom logovaní automaticky prepočíta lúč do 3D tela a uloží výsledok na SD kartu.
+
+\subsection{Implementácia v robot\_arm\_servo.ino}
+
+\begin{enumerate}
+	\item Vytvorenie objektu: \texttt{RangingSensor rangingSensor(Wire3);}
+	\item Inicializácia senzora v setup(): 
+	
+    \texttt{rangingSensor.init(Ts\_ms, RangingSensor::DistanceMode::Short);}
+	\item Inicializácia SD karty: \texttt{rangingSensor.initSD(PE4);}
+	\item Zapnutie logovania a vymazanie starých dát: 
+    
+    \texttt{rangingSensor.enableLogging(true, true);}
+	\item Spustenie kontinuálneho režimu: \texttt{rangingSensor.startContinuous();}
+	\item V hlavnej slučke čítanie meraní: 
+    
+    \texttt{MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);}
+\end{enumerate}
+
+\subsection{Záver}
+
+Trieda RangingSensor zabezpečuje kompletnú integráciu senzora VL53L1X do robotického ramena. Spája meranie vzdialenosti, informácie o polohe a orientácii ramena a vytvárajúci dátový základ pre 3D rekonštrukciu priestoru.
