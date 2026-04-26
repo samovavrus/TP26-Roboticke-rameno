@@ -3,26 +3,15 @@
 #undef B0
 #undef F
 
-#include "Eigen/Dense"
-
 #include <STM32FreeRTOS.h>
 #include "STM32FreeRTOSConfig.h"
+#include "src\Control\Control.h"
 #include "src\UI\ui_screens.h"
-#include "src\LiquidMenu\LiquidCrystal_I2C.h"
-#include "src\LiquidMenu\LiquidMenu.h"
-#include "src\Button.h"
-#include "src\Joystick.h"
-#include "src\Keypad\Keypad.h"
 #include "src\DistanceSensor\RangingSensor.h"
 
-#include "ServoActuator.h"
-#include "robot.h"
 
-
-TaskHandle_t HandleTaskControl;
 TaskHandle_t HandleTaskUI;
 TaskHandle_t HandleTaskSensor;
-QueueHandle_t gDesiredPoseQueue = NULL;
 
 
 void setup(void) {
@@ -30,9 +19,14 @@ void setup(void) {
   Serial.begin(250000);
   Wire.begin();
 
-  gDesiredPoseQueue = xQueueCreate(5, sizeof(DesiredPoseMessage));
-  if (gDesiredPoseQueue == NULL) {
-    Serial.println("Failed to create desired-pose queue");
+  gUiToControlQueue = xQueueCreate(1, sizeof(UiControlCommandMessage));
+  if (gUiToControlQueue == NULL) {
+    Serial.println("Failed to create UI->Control queue");
+  }
+
+  gControlToUiQueue = xQueueCreate(1, sizeof(UiControlStateMessage));
+  if (gControlToUiQueue == NULL) {
+    Serial.println("Failed to create Control->UI queue");
   }
 
   xTaskCreate(TaskControl,
@@ -61,201 +55,6 @@ vTaskStartScheduler();
 }
 
 void loop(void) {
-}
-
-
-void TaskControl(void* pvParameters) {
-
-  TwoWire Wire2(PF0, PF1);
-  Wire2.begin();
-  Wire2.setClock(400000);
-
-  std::vector<actuator_parameters> servo_parameters;
-  servo_parameters.resize(6);
-  servo_parameters[0] = { -6.0 / 10.0 * PI, 6.0 / 10.0 * PI, 2.0 / 3.0, 0 };
-  servo_parameters[1] = { -5.0 / 10.0 * PI, 5.2 / 10.0 * PI, 2.0 / 3.0, 0.015 };
-  servo_parameters[2] = { -8.2 / 10.0 * PI, 5.0 / 10.0 * PI, -2.0 / 3.0, 0.12 };
-  servo_parameters[3] = { -7.0 / 10.0 * PI, 6.0 / 10.0 * PI, 2.0 / 3.0, -0.2 };
-  servo_parameters[4] = { -6.0 / 10.0 * PI, 6.0 / 10.0 * PI, 2.0 / 3.0, 0.0 };
-  servo_parameters[5] = { -6.0 / 10.0 * PI, 6.0 / 10.0 * PI, -2.0 / 3.0, 0.0 };
-
-  RobotServoController servo_controller(Wire2, servo_parameters);
-  servo_controller.init();
-
-  // --- Definícia kinematiky robota ---
-  // Rotačné osi každého kĺbu (uprav podľa konštrukcie robota)
-  static const RotationZ R1;  // kĺb 1 – otáča v základni
-  static const RotationX R2;  // kĺb 2 – zdvíha rameno
-  static const RotationX R3;  // kĺb 3 – ohýba rameno
-  static const RotationX R4;  // kĺb 4 – rotuje predlaktie
-  static const RotationZ R5;  // kĺb 5 – ohýba zápästie
-  static const RotationY R6;  // kĺb 6 – rotuje efektor
-
-  const std::array<const RotationMatrix*, 6> joint_axes = { &R1, &R2, &R3, &R4, &R5, &R6 };
-
-  // 3D Translačné vektory podľa výkresu. 
-  const std::array<Matrix<3, 1>, 6> link_translations = {
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.094f).finished(),  // rotacia okolo Z (servo1) a rotacia okolo X (servo2)
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.105f).finished(),  // rotacia okolo X (servo3)
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.147f).finished(),  // rotacia okolo X (servo4)
-    (Matrix<3,1>() << 0.0f, 0.009f, 0.097f).finished(),  // rotacia okolo Z (servo5)
-    // offset zápästia. Ak je mimo osi do boku v smere X, zmeň 0.0 na 0.0125 atd...
-    (Matrix<3,1>() << 0.015f, -0.0215f, 0.0f).finished(), // rotacia okolo X (servo6)
-    (Matrix<3,1>() << 0.0f, 0.0f, 0.070f).finished()   // efektor
-  };
-
-  // Vytvorenie objektu kinematiky - ZMENIŤ link_lengths na link_translations!
-  Robot::RobotKinematics<6> kinematics(link_translations, joint_axes);
-
-  // --- Test priamej kinematiky ---
-  Matrix<6,1> theta = Matrix<6,1>::Zero();  // všetky kĺby v nulovej polohe
-  theta(0) = 0.0f;  // servo1
-  theta(1) = M_PI/4.0f;  // servo2
-  theta(2) = M_PI/4.0f;  // servo3
-  theta(3) = 0.0f;  // servo4
-  theta(4) = 0.0f;  // servo5
-  theta(5) = 0.0f;  // servo6
-
-  auto result = kinematics.forwardKinematics(theta);
-  Matrix<3,1> pos = result.first;
-  Matrix<3,3> rot = result.second;
-
-  Serial.print("FK x="); Serial.println(pos(0), 4);
-  Serial.print("FK y="); Serial.println(pos(1), 4);
-  Serial.print("FK z="); Serial.println(pos(2), 4);
-  // Očakávané pri theta=0: x=0, y=0, z=sum(L) = 0.455 m
-  auto J = kinematics.getJacobian(theta);   // 3x6 pozicny Jacobian
-
-  Serial.println("J:");
-  for (int r = 0; r < 3; ++r) {
-    for (int c = 0; c < 6; ++c) {
-      Serial.print(J(r, c), 6);
-      if (c < 5) Serial.print(" ");
-    }
-    Serial.println();
-  }
-
-    // 1. Zadefinovanie cieľovej polohy pr (napríklad [X, Y, Z] v metroch)
-  Matrix<3, 1> target_pos;
-  target_pos << 0.0150f,  // X
-                -0.3882f,   // Y
-                0.1557f;  // Z
-
-  // 2. Zadefinovanie cieľovej orientácie Rr (napríklad len identita = rovnaká orientácia ako v nulovej polohe)
-  Matrix<3, 3> target_rot = rot; 
-
-  // 3. Počiatočný odhad kĺbov 'theta'
-  // Najlepšie je sem dať AKTUÁLNE natočenie (teraz pre test dáme samé nuly)
-  Matrix<6, 1> current_theta = theta;
-
-  // 4. Pripravenie parametrov pre solver
-  float tol_pos = 1e-4f;  // Tolerancia polohy (napr. 0.1 mm)
-  float tol_ori = 1e-3f;  // Tolerancia orientácie 
-  float lambda = 0.01f;   // Regularizačný/tlmiaci faktor (damping factor)
-  int max_iter = 50;      // Maximálny počet iterácií
-
-  // 5. Samotné zavolanie funkcie
-  bool success = kinematics.SolveIK(
-      target_pos, 
-      target_rot, 
-      current_theta, // Pozor, táto premenná sa vo vnútri funkcie upraví na výsledok!
-      tol_pos, 
-      tol_ori, 
-      lambda, 
-      max_iter
-  );
-
-  // 6. Kontrola výsledku
-  if (success) {
-      Serial.println("IK úspešne našla riešenie!");
-      Serial.println("Nové uhly kĺbov (v radiánoch):");
-      for(int i = 0; i < 6; i++) {
-          Serial.println(current_theta(i), 4);
-      }
-  } else {
-      Serial.println("IK zlyhala / nekonvergovala.");
-  }
-  // Lokálne pole pre prevod z matice na primitívny typ
-  float target_angles_array[6];
-
-  // Initialize UI/message RPY from target_rot so startup orientation is consistent.
-  const float init_pitch = asinf(-target_rot(2, 0));
-  const float init_roll = atan2f(target_rot(2, 1), target_rot(2, 2));
-  const float init_yaw = atan2f(target_rot(1, 0), target_rot(0, 0));
-
-  DesiredPoseMessage latest_pose = {
-    target_pos(0),
-    target_pos(1),
-    target_pos(2),
-    init_roll,
-    init_pitch,
-    init_yaw
-  };
-  
-  while (1) {
-    if (gDesiredPoseQueue != NULL) {
-      DesiredPoseMessage msg;
-      while (xQueueReceive(gDesiredPoseQueue, &msg, 0) == pdPASS) {
-        latest_pose = msg;
-      }
-    }
-
-    target_pos << latest_pose.x, latest_pose.y, latest_pose.z;
-    
-
-    // Roll-Pitch-Yaw -> rotation matrix (ZYX order: Rz(yaw) * Ry(pitch) * Rx(roll))
-    const float cr = cosf(latest_pose.roll);
-    const float sr = sinf(latest_pose.roll);
-    const float cp = cosf(latest_pose.pitch);
-    const float sp = sinf(latest_pose.pitch);
-    const float cy = cosf(latest_pose.yaw);
-    const float sy = sinf(latest_pose.yaw);
-
-    target_rot <<
-      cy * cp,              cy * sp * sr - sy * cr,   cy * sp * cr + sy * sr,
-      sy * cp,              sy * sp * sr + cy * cr,   sy * sp * cr - cy * sr,
-      -sp,                  cp * sr,                  cp * cr;
-
-
-    // 1. Aktualizácia cieľovej pozície `target_pos` a `target_rot`.
-    // V budúcnosti tu budeš čítať premenné, ktoré ti prichádzajú napr. z TaskUI, z joysticku a podobne.
-    // target_pos(0) += ... (napr. posun cez joystick)
-
-    // 2. Riešenie inverznej kinematiky z existujúcej polohy
-    // current_theta slúži ako vstup (odhad) a rovno do neho skočí vyriešený výsledok
-    bool success = kinematics.SolveIK(
-        target_pos, 
-        target_rot, 
-        current_theta, 
-        tol_pos, 
-        tol_ori, 
-        lambda, 
-        max_iter
-    );
-
-    // 3. Bezpečný zápis na na fyzické servá cez PCA9685
-    if (success) {
-        // Konverzia typu z Eigen matice na obyčajné pole plavucích radových čísel C++ 
-        for(int i = 0; i < 6; i++) {
-            target_angles_array[i] = current_theta(i);
-        }
-
-        // Zápis do Servo Actuatorov, funkcia vracia 'false' ak to presiahne konfigurované min/max uhly serv
-        bool in_limits = servo_controller.writeAngles(target_angles_array, 6);
-        
-        if (!in_limits) {
-            Serial.println("Výstraha: Vypočítané IK uhly prekračujú zadané limity serv! Preskakujem zápis.");
-            while(1) vTaskDelay(pdMS_TO_TICKS(50));
-        }
-    } else {
-        Serial.println("IK nenašla riešenie: Zvolená poloha je pravdepodobne nedosiahnuteľná.");
-        while(1) vTaskDelay(pdMS_TO_TICKS(50));
-    }
-
-    // 4. Pauza medzi iteráciami, typicky 20 Hz (50 ms) alebo 50 Hz (20 ms). 
-    // Nutné pre správne fungovanie FreeRTOS.
-    vTaskDelay(pdMS_TO_TICKS(50));
-  }
 }
 
 void TaskSensor(void* pvParameters) {
@@ -287,14 +86,14 @@ void TaskSensor(void* pvParameters) {
   while (1) {
     MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);
     
-    if (measurement.valid) {
+ /*   if (measurement.valid) {
       Serial.print("Distance: ");
       Serial.print(measurement.distance_mm);
       Serial.print(" mm | Pose: (");
       Serial.print(measurement.pose.x, 3); Serial.print(", ");
       Serial.print(measurement.pose.y, 3); Serial.print(", ");
       Serial.print(measurement.pose.z, 3); Serial.println(")");
-    }
+    }*/
 
     vTaskDelay(pdMS_TO_TICKS(Ts_ms));
   }

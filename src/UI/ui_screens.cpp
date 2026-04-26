@@ -6,6 +6,47 @@
 
 #define USE_KEYPAD  1   // 0 = dev buttons (pins 2,3), 1 = keypad buttons
 
+static void applyControlStateToUi(const UiControlStateMessage& state,
+                                  float& x,
+                                  float& y,
+                                  float& z,
+                                  float& roll,
+                                  float& pitch,
+                                  float& yaw,
+                                  float* servoAngles)
+{
+  x = state.x * 1000.0f;
+  y = state.y * 1000.0f;
+  z = state.z * 1000.0f;
+  roll = state.roll * RAD_TO_DEG;
+  pitch = state.pitch * RAD_TO_DEG;
+  yaw = state.yaw * RAD_TO_DEG;
+
+  for (int i = 0; i < 6; ++i) {
+    servoAngles[i] = state.joint_rad[i] * RAD_TO_DEG;
+  }
+}
+
+static void showFatalControlError(LiquidCrystal_I2C& lcd, uint8_t status)
+{
+  const bool isIkError = (status == UI_CONTROL_STATUS_IK_FAILED);
+
+  lcd.clear();
+  while (1) {
+    lcd.setCursor(0, 0);
+    lcd.print("CONTROL ERROR   ");
+
+    lcd.setCursor(0, 1);
+    if (isIkError) {
+      lcd.print("IK FAILED       ");
+    } else {
+      lcd.print("OUT OF LIMITS   ");
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(200));
+  }
+}
+
 void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair)
 {
   lcd.setCursor(0,0);
@@ -107,21 +148,53 @@ void TaskUI(void* pvParameters) {
   const char* pairXYZ[3] = {"XY","YZ","ZX"};
   const char* pairRPY[3] = {"RP","PY","YR"};
 
-  // Test variables
-  float x = 15.0f;
-  float y = -388.2f;
-  float z = 155.7f;
+  float x = 0.0f;
+  float y = 0.0f;
+  float z = 0.0f;
 
-  float roll  = 90.0f;
+  float roll  = 0.0f;
   float pitch = 0.0f;
   float yaw   = 0.0f;
 
-  float t[6] = {0,0,0,0,0,0};
+  float servoAngles[6] = {0,0,0,0,0,0};
+  UiControlStateMessage latestState = {};
+  bool hasState = false;
+
+  if (gControlToUiQueue != NULL) {
+    UiControlStateMessage startupState;
+    // Block UI startup until TaskControl publishes the first state snapshot.
+    while (xQueueReceive(gControlToUiQueue, &startupState, pdMS_TO_TICKS(100)) != pdPASS) {
+    }
+
+    latestState = startupState;
+    hasState = true;
+    if (startupState.status == UI_CONTROL_STATUS_IK_FAILED || startupState.status == UI_CONTROL_STATUS_OUT_OF_LIMITS) {
+      showFatalControlError(lcd, startupState.status);
+    }
+    applyControlStateToUi(startupState, x, y, z, roll, pitch, yaw, servoAngles);
+  }
 
   const float joint_min[6] = {-180,-90,-90,-180,-120,-180};
   const float joint_max[6] = { 180, 90, 90, 180, 120, 180};
 
   while (1) {
+    if (gControlToUiQueue != NULL) {
+      UiControlStateMessage rxState;
+      bool updated = false;
+      while (xQueueReceive(gControlToUiQueue, &rxState, 0) == pdPASS) {
+        latestState = rxState;
+        updated = true;
+      }
+
+      if (updated) {
+        hasState = true;
+        if (latestState.status == UI_CONTROL_STATUS_IK_FAILED || latestState.status == UI_CONTROL_STATUS_OUT_OF_LIMITS) {
+          showFatalControlError(lcd, latestState.status);
+        }
+        applyControlStateToUi(latestState, x, y, z, roll, pitch, yaw, servoAngles);
+      }
+    }
+
     // ---- JOYSTICK ----
     int joyX = analogRead(A0);
     int joyY = analogRead(A1);
@@ -158,7 +231,13 @@ void TaskUI(void* pvParameters) {
     #endif
 
     if (!lastA && btnA) {
+      const int previousScreen = screen;
       screen = (screen + 1) % 3;
+      if (hasState && ((previousScreen == 2) != (screen == 2))) {
+        // On JOINT <-> POSE mode switches, refresh from last confirmed control state.
+        applyControlStateToUi(latestState, x, y, z, roll, pitch, yaw, servoAngles);
+      }
+      mode = 0;
       lcd.clear();
     }
 
@@ -194,27 +273,32 @@ void TaskUI(void* pvParameters) {
     // JOINTS
     switch(mode)
     {
-      case 0: t[0] += dx; t[1] += dy; break;
-      case 1: t[2] += dx; t[3] += dy; break;
-      case 2: t[4] += dx; t[5] += dy; break;
+      case 0: servoAngles[0] += dx; servoAngles[1] += dy; break;
+      case 1: servoAngles[2] += dx; servoAngles[3] += dy; break;
+      case 2: servoAngles[4] += dx; servoAngles[5] += dy; break;
     }
 
     for(int i=0;i<6;i++)
-      t[i] = constrain(t[i], joint_min[i], joint_max[i]);
+      servoAngles[i] = constrain(servoAngles[i], joint_min[i], joint_max[i]);
 
-    drawJOINTS(lcd, t, mode);
+    drawJOINTS(lcd, servoAngles, mode);
   }
 
-    if (gDesiredPoseQueue != NULL) {
-      DesiredPoseMessage msg = {
-        x / 1000.0f,
-        y / 1000.0f,
-        z / 1000.0f,
-        roll * DEG_TO_RAD,
-        pitch * DEG_TO_RAD,
-        yaw * DEG_TO_RAD
-      };
-      (void)xQueueSend(gDesiredPoseQueue, &msg, 0);
+    if (gUiToControlQueue != NULL) {
+      UiControlCommandMessage msg = {};
+      msg.mode = (screen == 2) ? UI_CONTROL_MODE_JOINT : UI_CONTROL_MODE_POSE;
+      for (int i = 0; i < 6; ++i) {
+        msg.joint_rad[i] = servoAngles[i] * DEG_TO_RAD;
+      }
+
+      msg.x = x / 1000.0f;
+      msg.y = y / 1000.0f;
+      msg.z = z / 1000.0f;
+      msg.roll = roll * DEG_TO_RAD;
+      msg.pitch = pitch * DEG_TO_RAD;
+      msg.yaw = yaw * DEG_TO_RAD;
+
+      (void)xQueueOverwrite(gUiToControlQueue, &msg);
     }
 
     vTaskDelay(pdMS_TO_TICKS(100));
