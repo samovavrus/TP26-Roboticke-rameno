@@ -116,7 +116,7 @@ void TaskUI(void* pvParameters) {
   float pitch = 0.0f;
   float yaw   = 0.0f;
 
-  float t[6] = {0,0,0,0,0,0};
+  float servoAngles[6] = {0,0,0,0,0,0};
 
   const float joint_min[6] = {-180,-90,-90,-180,-120,-180};
   const float joint_max[6] = { 180, 90, 90, 180, 120, 180};
@@ -194,15 +194,15 @@ void TaskUI(void* pvParameters) {
     // JOINTS
     switch(mode)
     {
-      case 0: t[0] += dx; t[1] += dy; break;
-      case 1: t[2] += dx; t[3] += dy; break;
-      case 2: t[4] += dx; t[5] += dy; break;
+      case 0: servoAngles[0] += dx; servoAngles[1] += dy; break;
+      case 1: servoAngles[2] += dx; servoAngles[3] += dy; break;
+      case 2: servoAngles[4] += dx; servoAngles[5] += dy; break;
     }
 
     for(int i=0;i<6;i++)
-      t[i] = constrain(t[i], joint_min[i], joint_max[i]);
+      servoAngles[i] = constrain(servoAngles[i], joint_min[i], joint_max[i]);
 
-    drawJOINTS(lcd, t, mode);
+    drawJOINTS(lcd, servoAngles, mode);
   }
 
     if (gDesiredPoseQueue != NULL) {

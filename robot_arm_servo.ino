@@ -4,6 +4,7 @@
 #undef F
 
 #include "Eigen/Dense"
+#include "Eigen/Geometry"
 
 #include <STM32FreeRTOS.h>
 #include "STM32FreeRTOSConfig.h"
@@ -176,8 +177,6 @@ void TaskControl(void* pvParameters) {
       Serial.println("IK zlyhala / nekonvergovala.");
   }
   // Lokálne pole pre prevod z matice na primitívny typ
-  float target_angles_array[6];
-
   // Initialize UI/message RPY from target_rot so startup orientation is consistent.
   const float init_pitch = asinf(-target_rot(2, 0));
   const float init_roll = atan2f(target_rot(2, 1), target_rot(2, 2));
@@ -204,17 +203,11 @@ void TaskControl(void* pvParameters) {
     
 
     // Roll-Pitch-Yaw -> rotation matrix (ZYX order: Rz(yaw) * Ry(pitch) * Rx(roll))
-    const float cr = cosf(latest_pose.roll);
-    const float sr = sinf(latest_pose.roll);
-    const float cp = cosf(latest_pose.pitch);
-    const float sp = sinf(latest_pose.pitch);
-    const float cy = cosf(latest_pose.yaw);
-    const float sy = sinf(latest_pose.yaw);
-
-    target_rot <<
-      cy * cp,              cy * sp * sr - sy * cr,   cy * sp * cr + sy * sr,
-      sy * cp,              sy * sp * sr + cy * cr,   sy * sp * cr - cy * sr,
-      -sp,                  cp * sr,                  cp * cr;
+    target_rot = (
+      Eigen::AngleAxisf(latest_pose.yaw, Eigen::Vector3f::UnitZ()) *
+      Eigen::AngleAxisf(latest_pose.pitch, Eigen::Vector3f::UnitY()) *
+      Eigen::AngleAxisf(latest_pose.roll, Eigen::Vector3f::UnitX())
+    ).toRotationMatrix();
 
 
     // 1. Aktualizácia cieľovej pozície `target_pos` a `target_rot`.
@@ -235,13 +228,8 @@ void TaskControl(void* pvParameters) {
 
     // 3. Bezpečný zápis na na fyzické servá cez PCA9685
     if (success) {
-        // Konverzia typu z Eigen matice na obyčajné pole plavucích radových čísel C++ 
-        for(int i = 0; i < 6; i++) {
-            target_angles_array[i] = current_theta(i);
-        }
-
         // Zápis do Servo Actuatorov, funkcia vracia 'false' ak to presiahne konfigurované min/max uhly serv
-        bool in_limits = servo_controller.writeAngles(target_angles_array, 6);
+      bool in_limits = servo_controller.writeAngles(current_theta.data(), 6);
         
         if (!in_limits) {
             Serial.println("Výstraha: Vypočítané IK uhly prekračujú zadané limity serv! Preskakujem zápis.");
@@ -287,14 +275,14 @@ void TaskSensor(void* pvParameters) {
   while (1) {
     MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);
     
-    if (measurement.valid) {
+ /*   if (measurement.valid) {
       Serial.print("Distance: ");
       Serial.print(measurement.distance_mm);
       Serial.print(" mm | Pose: (");
       Serial.print(measurement.pose.x, 3); Serial.print(", ");
       Serial.print(measurement.pose.y, 3); Serial.print(", ");
       Serial.print(measurement.pose.z, 3); Serial.println(")");
-    }
+    }*/
 
     vTaskDelay(pdMS_TO_TICKS(Ts_ms));
   }
