@@ -69,12 +69,12 @@ void TaskControl(void* pvParameters) {
   Robot::RobotKinematics<6> kinematics(link_translations, joint_axes);
 
   Matrix<6,1> current_theta = Matrix<6,1>::Zero();
-  current_theta(0) = 0.0f;
-  current_theta(1) = M_PI / 4.0f;
-  current_theta(2) = M_PI / 4.0f;
-  current_theta(3) = 0.0f;
-  current_theta(4) = 0.0f;
-  current_theta(5) = 0.0f;
+  current_theta(0) = CONTROL_START_THETA_0_RAD;
+  current_theta(1) = CONTROL_START_THETA_1_RAD;
+  current_theta(2) = CONTROL_START_THETA_2_RAD;
+  current_theta(3) = CONTROL_START_THETA_3_RAD;
+  current_theta(4) = CONTROL_START_THETA_4_RAD;
+  current_theta(5) = CONTROL_START_THETA_5_RAD;
 
   Matrix<3, 1> current_pos = Matrix<3, 1>::Zero();
   Matrix<3, 3> current_rot = Matrix<3, 3>::Identity();
@@ -91,10 +91,10 @@ void TaskControl(void* pvParameters) {
     Serial.println("Startup pose is outside configured servo limits.");
   }
 
-  float tol_pos = 1e-4f;
-  float tol_ori = 1e-3f;
-  float lambda = 0.01f;
-  int max_iter = 50;
+  float tol_pos = CONTROL_IK_TOL_POS;
+  float tol_ori = CONTROL_IK_TOL_ORI;
+  float lambda = CONTROL_IK_LAMBDA;
+  int max_iter = CONTROL_IK_MAX_ITER;
 
   UiControlCommandMessage latest_command = {};
   latest_command.mode = UI_CONTROL_MODE_POSE;
