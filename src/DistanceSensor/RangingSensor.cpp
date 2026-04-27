@@ -1,4 +1,5 @@
 #include "RangingSensor.h"
+#include "../../geometry.h"
 
 RangingSensor::RangingSensor(TwoWire& wire) 
     : _wire(&wire), _initialized(false), _sample_period_ms(100), _last_measurement{},
@@ -74,30 +75,26 @@ MeasurementData RangingSensor::read(float x, float y, float z, float roll, float
     if (_is_logging_enabled && _sd_initialized && data.valid) {
         const float d_m = data.distance_mm * 0.001f;
 
-        const float cx = cosf(data.pose.yaw) * cosf(data.pose.pitch);
-        const float cy = sinf(data.pose.yaw) * cosf(data.pose.pitch);
-        const float cz = -sinf(data.pose.pitch);
-        const float ox = data.pose.x;
-        const float oy = data.pose.y;
-        const float oz = data.pose.z;
-        const float ex = ox + d_m * cx;
-        const float ey = oy + d_m * cy;
-        const float ez = oz + d_m * cz;
+        Eigen::Vector3f origin(data.pose.x, data.pose.y, data.pose.z);
+        Eigen::Vector3f direction(d_m, 0.0f, 0.0f);
+        
+        Eigen::Matrix3f R = rotZ(data.pose.yaw) * rotY(data.pose.pitch) * rotX(data.pose.roll);
+        Eigen::Vector3f target = origin + R * direction;
 
         if (_dataFile) {
             _dataFile.print(data.timestamp_ms);
             _dataFile.print(",");
-            _dataFile.print(ox, 6);
+            _dataFile.print(origin.x(), 6);
             _dataFile.print(",");
-            _dataFile.print(oy, 6);
+            _dataFile.print(origin.y(), 6);
             _dataFile.print(",");
-            _dataFile.print(oz, 6);
+            _dataFile.print(origin.z(), 6);
             _dataFile.print(",");
-            _dataFile.print(ex, 6);
+            _dataFile.print(target.x(), 6);
             _dataFile.print(",");
-            _dataFile.print(ey, 6);
+            _dataFile.print(target.y(), 6);
             _dataFile.print(",");
-            _dataFile.println(ez, 6);
+            _dataFile.println(target.z(), 6);
 
             _flush_counter++;
             if (_flush_counter >= 20) { 
@@ -157,9 +154,9 @@ void RangingSensor::enableLogging(bool enable, bool clear) {
         if (enable) {
             if (!_is_logging_enabled) {
                 if (clear) {
-                    SD.remove("octomap.txt");
+                    SD.remove("pointcloud.ply");
                 }
-                _dataFile = SD.open("octomap.txt", FILE_WRITE);
+                _dataFile = SD.open("pointcloud.ply", FILE_WRITE);
                 _flush_counter = 0;
                 _is_logging_enabled = true;
             } else if (clear) {
@@ -167,8 +164,8 @@ void RangingSensor::enableLogging(bool enable, bool clear) {
                     _dataFile.flush();
                     _dataFile.close();
                 }
-                SD.remove("octomap.txt");
-                _dataFile = SD.open("octomap.txt", FILE_WRITE);
+                SD.remove("pointcloud.ply");
+                _dataFile = SD.open("pointcloud.ply", FILE_WRITE);
                 _flush_counter = 0;
             }
         } else {
