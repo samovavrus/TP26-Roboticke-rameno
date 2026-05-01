@@ -12,6 +12,7 @@
 #include "../UI/ui_screens.h"
 #include "../../ServoActuator.h"
 #include "../../robot.h"
+#include "../Trajectory/Trajectory.h"
 
 TaskHandle_t HandleTaskControl;
 QueueHandle_t gUiToControlQueue = NULL;
@@ -135,6 +136,21 @@ void TaskControl(void* pvParameters) {
         latest_command = msg;
       }
     }
+
+
+    // --- Trajectory override ---
+    if (gTrajectoryTargetPose.valid && gTrajectoryTargetPose.active) {
+      latest_command.mode = UI_CONTROL_MODE_POSE;
+
+      latest_command.x = gTrajectoryTargetPose.x;
+      latest_command.y = gTrajectoryTargetPose.y;
+      latest_command.z = gTrajectoryTargetPose.z;
+
+      latest_command.roll  = gTrajectoryTargetPose.roll;
+      latest_command.pitch = gTrajectoryTargetPose.pitch;
+      latest_command.yaw   = gTrajectoryTargetPose.yaw;
+    }
+
 
     const uint8_t activeMode = (latest_command.mode == UI_CONTROL_MODE_JOINT)
       ? UI_CONTROL_MODE_JOINT

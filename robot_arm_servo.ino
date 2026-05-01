@@ -8,7 +8,7 @@
 #include "src\Control\Control.h"
 #include "src\UI\ui_screens.h"
 #include "src\DistanceSensor\RangingSensor.h"
-
+#include "src\Trajectory\Trajectory.h"
 
 TaskHandle_t HandleTaskUI;
 TaskHandle_t HandleTaskSensor;
@@ -35,6 +35,13 @@ void setup(void) {
               NULL,
               tskIDLE_PRIORITY + 4,
               &HandleTaskControl);
+  
+  xTaskCreate(TaskTrajectory,
+            "Trajectory",
+            1500,
+            NULL,
+            tskIDLE_PRIORITY + 1,
+            &HandleTaskTrajectory);
 
   xTaskCreate(TaskUI,
               "UI",
