@@ -43,7 +43,7 @@ public:
     /// @param sample_period_ms Measurement period in milliseconds
     /// @param mode Distance mode (Short/Medium/Long)
     /// @return true if initialization successful
-    bool init(uint32_t sample_period_ms = 100, DistanceMode mode = DistanceMode::Short);
+    bool init(uint32_t sample_period_ms = 80, DistanceMode mode = DistanceMode::Short);
 
     void startContinuous();
     void stopContinuous();
@@ -90,3 +90,6 @@ private:
     File _dataFile;
     uint8_t _flush_counter;
 };
+
+void TaskSensor(void* pvParameters);
+

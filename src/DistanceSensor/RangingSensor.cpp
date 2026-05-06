@@ -1,8 +1,8 @@
 #include "RangingSensor.h"
-#include "../../geometry.h"
+#include <STM32FreeRTOS.h>
 
 RangingSensor::RangingSensor(TwoWire& wire) 
-    : _wire(&wire), _initialized(false), _sample_period_ms(100), _last_measurement{},
+    : _wire(&wire), _initialized(false), _sample_period_ms(80), _last_measurement{},
       _sd_initialized(false), _is_logging_enabled(false), _sd_cs_pin(0), _flush_counter(0) {}
 
 bool RangingSensor::init(uint32_t sample_period_ms, DistanceMode mode) {
@@ -73,28 +73,22 @@ MeasurementData RangingSensor::read(float x, float y, float z, float roll, float
 
 
     if (_is_logging_enabled && _sd_initialized && data.valid) {
-        const float d_m = data.distance_mm * 0.001f;
-
-        Eigen::Vector3f origin(data.pose.x, data.pose.y, data.pose.z);
-        Eigen::Vector3f direction(d_m, 0.0f, 0.0f);
-        
-        Eigen::Matrix3f R = rotZ(data.pose.yaw) * rotY(data.pose.pitch) * rotX(data.pose.roll);
-        Eigen::Vector3f target = origin + R * direction;
-
         if (_dataFile) {
             _dataFile.print(data.timestamp_ms);
             _dataFile.print(",");
-            _dataFile.print(origin.x(), 6);
+            _dataFile.print(data.pose.x, 6);
             _dataFile.print(",");
-            _dataFile.print(origin.y(), 6);
+            _dataFile.print(data.pose.y, 6);
             _dataFile.print(",");
-            _dataFile.print(origin.z(), 6);
+            _dataFile.print(data.pose.z, 6);
             _dataFile.print(",");
-            _dataFile.print(target.x(), 6);
+            _dataFile.print(data.pose.roll, 6);
             _dataFile.print(",");
-            _dataFile.print(target.y(), 6);
+            _dataFile.print(data.pose.pitch, 6);
             _dataFile.print(",");
-            _dataFile.println(target.z(), 6);
+            _dataFile.print(data.pose.yaw, 6);
+            _dataFile.print(",");
+            _dataFile.println(data.distance_mm);
 
             _flush_counter++;
             if (_flush_counter >= 20) { 
@@ -179,3 +173,46 @@ void RangingSensor::enableLogging(bool enable, bool clear) {
         }
     }
 }
+
+void TaskSensor(void* pvParameters) {
+    float x = 0.0f, y = 0.0f, z = 0.0f;
+    float roll = 0.0f, pitch = 0.0f, yaw = 0.0f;
+    
+    const uint32_t Ts_ms = 80; 
+    // I2C bus: SDA=PB4 (D5), SCL=PA8 (D7)
+    TwoWire Wire3(PB4, PA8);
+    Wire3.begin();
+    Wire3.setClock(400000);
+    RangingSensor rangingSensor(Wire3);
+    if (!rangingSensor.init(Ts_ms, RangingSensor::DistanceMode::Short)) {
+        Serial.println("RangingSensor init failed!");
+        vTaskDelete(NULL);
+        return;
+    }
+
+    if (rangingSensor.initSD(PE4)) {
+        Serial.println("SD Card initialized for RangingSensor!");
+        rangingSensor.enableLogging(true, true);
+    } else {
+        Serial.println("SD Card init failed! Logging disabled.");
+    }
+
+    rangingSensor.startContinuous();
+    Serial.println("RangingSensor initialized");
+
+    while (1) {
+        MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);
+        
+        if (measurement.valid) {
+            Serial.print("Distance: ");
+            Serial.print(measurement.distance_mm);
+            Serial.print(" mm | Pose: (");
+            Serial.print(measurement.pose.x, 3); Serial.print(", ");
+            Serial.print(measurement.pose.y, 3); Serial.print(", ");
+            Serial.print(measurement.pose.z, 3); Serial.println(")");
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(Ts_ms));
+    }
+}
+
