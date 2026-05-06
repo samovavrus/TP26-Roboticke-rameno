@@ -27,6 +27,22 @@ static void applyControlStateToUi(const UiControlStateMessage& state,
   }
 }
 
+float applyDeadzone(int value, int center, int deadzone, float scale)
+{
+  float delta = (float)value - center;
+
+  if (fabs(delta) < deadzone)
+    return 0.0f;
+
+  float sign = (delta > 0) ? 1.0f : -1.0f;
+  float magnitude = fabs(delta) - deadzone;
+
+  float maxRange = 512.0f - deadzone;
+  float normalized = magnitude / maxRange;
+
+  return sign * normalized * scale;
+}
+
 static void showFatalControlError(LiquidCrystal_I2C& lcd, uint8_t status)
 {
   const bool isIkError = (status == UI_CONTROL_STATUS_IK_FAILED);
@@ -202,20 +218,8 @@ void TaskUI(void* pvParameters) {
     const int CENTER = 520;
     const int DEADZONE = 20;
 
-    float dx = 0;
-    float dy = 0;
-
-    if (joyX > CENTER + DEADZONE)
-      dx = (joyX - (CENTER + DEADZONE)) * 0.05;
-
-    else if (joyX < CENTER - DEADZONE)
-      dx = (joyX - (CENTER - DEADZONE)) * 0.05;
-
-    if (joyY > CENTER + DEADZONE)
-      dy = (joyY - (CENTER + DEADZONE)) * 0.05;
-
-    else if (joyY < CENTER - DEADZONE)
-      dy = (joyY - (CENTER - DEADZONE)) * 0.05;
+    float dx = applyDeadzone(joyX, CENTER, DEADZONE, 0.05f);
+    float dy = applyDeadzone(joyY, CENTER, DEADZONE, 0.05f);
 
     // ---- BUTTONS ----
     bool btnA = false;
