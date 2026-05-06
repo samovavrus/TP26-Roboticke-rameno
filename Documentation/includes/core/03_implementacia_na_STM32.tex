@@ -1,0 +1,49 @@
+\section{Implementácia softvéru na mikrokontroléri}
+
+\subsection{Implementácia priamej a inverznej kinematiky manipulátora}
+
+Riešenie vychádza z pôvodných pseudokódov, ktoré boli prenesené do programovej formy pre 6-stupňový manipulátor.
+
+Kinematický model je definovaný pomocou:
+\begin{itemize}
+	\item osi rotácie jednotlivých kĺbov,
+	\item translačných vektorov medzi kĺbmi podľa mechanickej konštrukcie,
+	\item aktuálneho vektora kĺbových uhlov.
+\end{itemize}
+
+\subsubsection{Priama kinematika}
+
+Služí na výpočet polohy a orientácie efektora zo známych kĺbových uhlov.
+
+Výstupom je:
+\begin{itemize}
+	\item polohový vektor efektora $p \in \mathbb{R}^3$,
+	\item rotačná matica efektora $R \in \mathbb{R}^{3 \times 3}$.
+\end{itemize}
+
+Poloha je počítaná rekurzívne od konca članka smerom k základni. Orientácia efektora vzniká ako súčin rotačných matíc všetkých kĺbov v poradí od základne po efektor.
+
+\subsubsection{Inverzná kinematika}
+
+Hľadá požadované kĺbové uhly iteratívnou Newtonovou metódou. Cieľom je nájsť také kĺbové uhly, aby efektor dosiahol požadovanú polohu a orientáciu.
+
+\begin{itemize}
+	\item \textbf{Výpočet chyby:} V každom kroku sa určuje polohová a orientačná chyba (reziduum) oproti požadovanému stavu.
+	\item \textbf{Riešenie sústavy:} Zmena kĺbových uhlov sa počítá cez úplný Jakobián riešením lineárnej sústavy $J\Delta\theta = -r$, kde $r$ je spojený vektor chýb.
+	\item \textbf{Regularizácia:} Na zabezpečenie numerickej stability pri horšej podmienenosti Jakobiánu a v singularitách sa používa tlmiací parameter $\lambda$.
+	\item \textbf{Normalizácia:} Po každej iterácii sa vypočítané uhly zarovnávajú do intervalu $[-\pi,\pi]$, čím sa bráni ich nekončenému pretáčaniu.
+\end{itemize}
+
+\subsubsection{Podmienky ukončenia a robustnosť}
+
+Iterácie sa ukončia pri splnení oboch podmienok:
+\begin{itemize}
+	\item polohová chyba je menšia ako zadaná tolerancia,
+	\item orientačná chyba je menšia ako zadaná tolerancia.
+\end{itemize}
+
+Ak sa riešenie nenájde v definovanom maximálnom počte iterácií, stav sa vyhodnotí ako nekonvergentný. Tento mechanizmus chráni systém pred nekonečnou iteráciou pri nedosiahnuteľných cieľoch.
+
+\subsubsection{Prevádzka v reálnom čase}
+
+IK beží v periodickej riadiacej slučke. Táto slučka neustále prijíma požadovanú pozíciu, prepočítava ju na nové uhly, overuje fyzické limity pohonov a až po ich validácii odošle dáta do servopohonov. Tým je zaistený plynulý a bezpečný pohyb ramena.
