@@ -13,6 +13,8 @@
 TaskHandle_t HandleTaskUI;
 TaskHandle_t HandleTaskSensor;
 
+// Vytvorenie globálnej premennej fronty
+QueueHandle_t gUiToTrajectoryQueue = NULL;
 
 void setup(void) {
 
@@ -28,6 +30,13 @@ void setup(void) {
   if (gControlToUiQueue == NULL) {
     Serial.println("Failed to create Control->UI queue");
   }
+
+    // Fronta s dĺžkou 1 správa s veľkosťou jedného uint8_t
+  gUiToTrajectoryQueue = xQueueCreate(1, sizeof(uint8_t));
+  if (gUiToTrajectoryQueue == NULL) {
+    Serial.println("Failed to create UI->Trajectory queue");
+  }
+
 
   xTaskCreate(TaskControl,
               "Control",
@@ -57,6 +66,7 @@ xTaskCreate(TaskSensor,
               NULL,
               tskIDLE_PRIORITY + 1,
               &HandleTaskSensor);
+
 
 vTaskStartScheduler();
 }

@@ -63,57 +63,34 @@ bool Trajectory_IsRunning(void) {
 void TaskTrajectory(void* pvParameters) {
   const uint32_t Ts_ms = 50;
 
-  const Waypoint path[] = {
-    // x       y       z       roll           pitch            yaw             time
+const Waypoint path[] = {
+    // Stred – neutrál
+    {0.12f, 0.00f, 0.38f, DEG2RAD(0),  DEG2RAD(0),   DEG2RAD(0),   2000},
 
-    // Bezpečná stredová pozícia pred skenovaním
-    {0.12f,  0.00f,  0.38f,  DEG2RAD(0),    DEG2RAD(0),      DEG2RAD(0),     2000},
+    // Ľavý kraj – dole
+    {0.12f, 0.00f, 0.35f, DEG2RAD(0),  DEG2RAD(-10), DEG2RAD(-35), 2000},
 
-    // Ľavý kraj, pohľad nižšie
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(-45),   2000},
+    // Ľavý kraj – hore
+    {0.12f, 0.00f, 0.40f, DEG2RAD(0),  DEG2RAD(20),  DEG2RAD(-35), 3000},
 
-    // Ľavý kraj, plynulo hore
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(-45),   3500},
+    // Medziľavý
+    {0.12f, 0.00f, 0.40f, DEG2RAD(0),  DEG2RAD(20),  DEG2RAD(-20), 1200},
+    {0.12f, 0.00f, 0.35f, DEG2RAD(0),  DEG2RAD(-10), DEG2RAD(-20), 3000},
 
-    // Pootocenie okolo Z
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(-30),   1200},
+    // Stred
+    {0.12f, 0.00f, 0.40f, DEG2RAD(0),  DEG2RAD(20),  DEG2RAD(0),   1200},
+    {0.12f, 0.00f, 0.35f, DEG2RAD(0),  DEG2RAD(-10), DEG2RAD(0),   3000},
 
-    // Skenovanie smerom dole
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(-30),   3500},
+    // Medzipravý
+    {0.12f, 0.00f, 0.40f, DEG2RAD(0),  DEG2RAD(20),  DEG2RAD(20),  1200},
+    {0.12f, 0.00f, 0.35f, DEG2RAD(0),  DEG2RAD(-10), DEG2RAD(20),  3000},
 
-    // Pootocenie okolo Z
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(-15),   1200},
-
-    // Skenovanie smerom hore
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(-15),   3500},
-
-    // Pootocenie do stredu
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(0),     1200},
-
-    // Skenovanie smerom dole
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(0),     3500},
-
-    // Pootocenie doprava
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(15),    1200},
-
-    // Skenovanie smerom hore
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(15),    3500},
-
-    // Pootocenie doprava
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(30),    1200},
-
-    // Skenovanie smerom dole
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(30),    3500},
-
-    // Pootocenie na pravý kraj
-    {0.12f,  0.00f,  0.34f,  DEG2RAD(0),    DEG2RAD(-15),    DEG2RAD(45),    1200},
-
-    // Pravý kraj, smerom hore
-    {0.12f,  0.00f,  0.42f,  DEG2RAD(0),    DEG2RAD(30),     DEG2RAD(45),    3500},
+    // Pravý kraj
+    {0.12f, 0.00f, 0.40f, DEG2RAD(0),  DEG2RAD(20),  DEG2RAD(35),  3000},
 
     // Návrat do stredu
-    {0.12f,  0.00f,  0.38f,  DEG2RAD(0),    DEG2RAD(0),      DEG2RAD(0),     2500}
-  };
+    {0.12f, 0.00f, 0.38f, DEG2RAD(0),  DEG2RAD(0),   DEG2RAD(0),   2000}
+};
 
   const int N = sizeof(path) / sizeof(path[0]);
 
@@ -121,60 +98,74 @@ void TaskTrajectory(void* pvParameters) {
   vTaskDelay(pdMS_TO_TICKS(2000));
 
   while (1) {
-    // Čakáme na požiadavku z UI
-    if (!gTrajectoryStartRequested) {
-      vTaskDelay(pdMS_TO_TICKS(50));
-      continue;
-    }
+    uint8_t cmd = TRAJ_CMD_NONE;
+    
+    // Zablokuj task a čakaj (task "spí", kým mu nepríde hlavička TRAJ_CMD_START)
+    if (xQueueReceive(gUiToTrajectoryQueue, &cmd, portMAX_DELAY) == pdPASS) {
+      
+      if (cmd == TRAJ_CMD_START) {
+        Serial.println("Trajectory START received");
+        gTrajectoryRunning = 1;
+        gTrajectoryStopRequested = 0;
+        
+        // Signalizujeme Control tasku, že preberáme moc
+        taskENTER_CRITICAL();
+        gTrajectoryTargetPose.active = 1;
+        taskEXIT_CRITICAL();
+        
+        Serial.println("Trajectory running");
 
-    gTrajectoryStartRequested = 0;
-    gTrajectoryStopRequested = 0;
-    gTrajectoryRunning = 1;
+        for (int i = 0; i < N - 1; i++) {
+          if (gTrajectoryStopRequested) {
+              break; // Preruš celý cyklus vonkajších bodov pri stope
+          }
+          
+          const Waypoint& a = path[i];
+          const Waypoint& b = path[i + 1];
 
-    Serial.println("Trajectory scan started");
+          uint32_t steps = b.duration_ms / Ts_ms;
+          if (steps == 0) steps = 1;
 
-    for (int i = 0; i < N - 1; i++) {
-      if (gTrajectoryStopRequested) {
-        break;
-      }
+          for (uint32_t s = 0; s <= steps; s++) {
+            
+            // Okamžité non-blocking načítanie STOP príkazu počas krokovania iterácie!
+            uint8_t abortCmd = TRAJ_CMD_NONE;
+            if (xQueueReceive(gUiToTrajectoryQueue, &abortCmd, 0) == pdPASS) {
+               if (abortCmd == TRAJ_CMD_STOP) {
+                   gTrajectoryStopRequested = 1;
+                   Serial.println("Trajectory STOP received");
+               }
+            }
 
-      const Waypoint& a = path[i];
-      const Waypoint& b = path[i + 1];
+            if (gTrajectoryStopRequested) {
+              break; // Okamžité prerušenie vnútorného cyklu cesty
+            }
 
-      uint32_t steps = b.duration_ms / Ts_ms;
-      if (steps == 0) {
-        steps = 1;
-      }
+            float t = (float)s / (float)steps;
 
-      for (uint32_t s = 0; s <= steps; s++) {
-        if (gTrajectoryStopRequested) {
-          break;
+            float x = lerp(a.x, b.x, t);
+            float y = lerp(a.y, b.y, t);
+            float z = lerp(a.z, b.z, t);
+
+            float roll  = lerp(a.roll,  b.roll,  t);
+            float pitch = lerp(a.pitch, b.pitch, t);
+            float yaw   = lerp(a.yaw,   b.yaw,   t);
+
+            setTrajectoryPose(x, y, z, roll, pitch, yaw);
+
+            vTaskDelay(pdMS_TO_TICKS(Ts_ms));
+          }
         }
+        
+        // Ukončenie / Návrat povelov do rúk UI Controlu
+        taskENTER_CRITICAL();
+        gTrajectoryTargetPose.valid = 0;
+        gTrajectoryTargetPose.active = 0;
+        taskEXIT_CRITICAL();
 
-        float t = (float)s / (float)steps;
-
-        float x = lerp(a.x, b.x, t);
-        float y = lerp(a.y, b.y, t);
-        float z = lerp(a.z, b.z, t);
-
-        float roll  = lerp(a.roll,  b.roll,  t);
-        float pitch = lerp(a.pitch, b.pitch, t);
-        float yaw   = lerp(a.yaw,   b.yaw,   t);
-
-        setTrajectoryPose(x, y, z, roll, pitch, yaw);
-
-        vTaskDelay(pdMS_TO_TICKS(Ts_ms));
+        gTrajectoryRunning = 0;
+        Serial.println("Trajectory finished");
       }
     }
-
-    // Po skončení trajektórie vypneme trajectory override
-    taskENTER_CRITICAL();
-    gTrajectoryTargetPose.valid = 0;
-    taskEXIT_CRITICAL();
-
-    gTrajectoryRunning = 0;
-    gTrajectoryStopRequested = 0;
-
-    Serial.println("Trajectory scan finished");
   }
 }

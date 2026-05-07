@@ -29,3 +29,13 @@ void Trajectory_StopScan(void);
 
 // Volitelne pre UI indikaciu
 bool Trajectory_IsRunning(void);
+
+// Definovaie správ
+enum TrajectoryCommand : uint8_t {
+    TRAJ_CMD_NONE = 0,
+    TRAJ_CMD_START = 1,
+    TRAJ_CMD_STOP = 2
+};
+
+// Deklarácia prístupu k fronte pre ostatné súbory
+extern QueueHandle_t gUiToTrajectoryQueue;

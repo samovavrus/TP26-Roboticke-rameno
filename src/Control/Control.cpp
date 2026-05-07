@@ -139,7 +139,11 @@ void TaskControl(void* pvParameters) {
 
 
     // --- Trajectory override ---
+    static bool s_wasUsingTrajectory = false;
+    bool isUsingTrajectory = false;
+
     if (gTrajectoryTargetPose.valid && gTrajectoryTargetPose.active) {
+      isUsingTrajectory = true;
       latest_command.mode = UI_CONTROL_MODE_POSE;
 
       latest_command.x = gTrajectoryTargetPose.x;
@@ -151,6 +155,12 @@ void TaskControl(void* pvParameters) {
       latest_command.yaw   = gTrajectoryTargetPose.yaw;
     }
 
+    if (isUsingTrajectory && !s_wasUsingTrajectory) {
+      Serial.println("Control using trajectory target");
+    } else if (!isUsingTrajectory && s_wasUsingTrajectory) {
+      Serial.println("Control using manual UI");
+    }
+    s_wasUsingTrajectory = isUsingTrajectory;
 
     const uint8_t activeMode = (latest_command.mode == UI_CONTROL_MODE_JOINT)
       ? UI_CONTROL_MODE_JOINT

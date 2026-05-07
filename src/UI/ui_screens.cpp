@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <STM32FreeRTOS.h>
 #include "src/Keypad/Keypad.h"
+#include "src/Trajectory/Trajectory.h" 
 
 #include "ui_screens.h"
 
@@ -220,14 +221,20 @@ void TaskUI(void* pvParameters) {
     // ---- BUTTONS ----
     bool btnA = false;
     bool btnB = false;
+    bool startTrajectory = false;
+    bool stopTrajectory = false; 
 
     #if USE_KEYPAD
       char key = keypad.getKey();
       if (key == 'A') btnA = true;
       if (key == 'B') btnB = true;
+      if (key == 'C') startTrajectory = true; 
+      if (key == 'D') stopTrajectory  = true;
     #else
       btnA = (digitalRead(2) == LOW);
       btnB = (digitalRead(3) == LOW);
+      startTrajectory = (digitalRead(12) == LOW);
+      stopTrajectory  = (digitalRead(13) == LOW);
     #endif
 
     if (!lastA && btnA) {
@@ -247,6 +254,18 @@ void TaskUI(void* pvParameters) {
 
     lastA = btnA;
     lastB = btnB;
+
+    // Spustenie trajektórie - Iba ak nebeží
+    if (startTrajectory && !Trajectory_IsRunning() && (gUiToTrajectoryQueue != NULL)) {
+      uint8_t cmd = TRAJ_CMD_START;
+      xQueueOverwrite(gUiToTrajectoryQueue, &cmd);
+    }
+
+    // Zastavenie trajektórie - Okamžitý stop
+    if (stopTrajectory && Trajectory_IsRunning() && (gUiToTrajectoryQueue != NULL)) {
+      uint8_t cmd = TRAJ_CMD_STOP;
+      xQueueOverwrite(gUiToTrajectoryQueue, &cmd);
+    }
 
     // ---- SCREEN ----
   if (screen == 0) {
