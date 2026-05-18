@@ -1,6 +1,16 @@
 \section{Návrh používateľského rozhrania}
 
-Používateľské rozhranie manipulátora slúži na zadávanie požadovanej polohy, orientácie alebo priamo kĺbových uhlov robota. 
+\subsection{Celková architektúra a princíp fungovania}
+Z hľadiska celkovej architektúry je riadenie robotického ramena implementované na vývojovej doske s mikrokontrolérom STM32. O spoľahlivý beh jednotlivých procesov sa stará operačný systém reálneho času FreeRTOS. Softvér je logicky rozdelený na nezávislé, no navzájom komunikujúce úlohy (tasky), pričom kľúčové sú najmä:
+\begin{itemize}
+    \item \textbf{Riadiaci a kinematický task (Control Task)} -- beží v striktne vyhradenej periodickej slučke. Zabezpečuje prepočet požadovanej polohy a orientácie na kĺbové súradnice pomocou inverznej kinematiky (IK), overuje fyzické limity servomotorov a stará sa o generovanie plynulej trajektórie. Následne odosiela povely priamo do servopohonov.
+    \item \textbf{Task používateľského rozhrania (UI Task)} -- stará sa o čítanie vstupov (joystick, tlačidlá), obsluhu displeja a spracovanie volieb používateľa, ktoré obratom posiela do riadiaceho tasku.
+\end{itemize}
+
+Očakávané správanie systému z používateľského hľadiska je také, že rameno po spustení funguje ako samostatný vstavaný systém (embedded device) bez nutnosti stáleho pripojenia k počítaču. Používateľ prostredníctvom ovládacieho panelu volí režim riadenia a plynule zadáva cieľovú pozíciu koncového efektora (X, Y, Z súradnice), jeho orientáciu (Roll, Pitch, Yaw), alebo natáča jednotlivé kĺby priamo. Systém následne automaticky naplánuje pohyb a manipulátor sa plynule, bezpečne a bez kolízií presunie do požadovaného stavu.
+
+\subsection{Prostriedky používateľského rozhrania}
+Používateľské rozhranie manipulátora slúži na samotné zadávanie požadovanej polohy, orientácie alebo priamo kĺbových uhlov robota. 
 Rozhranie je realizované pomocou LCD displeja 16x2 s I2C prevodníkom a joysticku s tlačidlami.
 
 Systém beží ako samostatná FreeRTOS úloha \texttt{TaskUI}, ktorá zabezpečuje:

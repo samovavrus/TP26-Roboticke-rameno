@@ -1,8 +1,22 @@
-\section{RangingSensor}
+\section{Ranging Sensor}
 
-Prehľad implementácie triedy \textbf{RangingSensor}, ktorá služí ako wrapper pre senzor VL53L1X a rozširuje jeho funkcionalitu o 3D mapovanie a logovanie dát na SD kartu.
+Súčasťou výbavy manipulátora je dištančný snímač (angl. Ranging Sensor), ktorý plní funkciu bezkontaktného merania vzdialenosti k objektom v pracovnom priestore. Na tento účel bol zvolený senzor \textbf{VL53L1X} od spoločnosti STMicroelectronics. 
 
-\subsection{Čo bolo implementované}
+\subsection{Špecifikácia a vlastnosti senzora VL53L1X}
+Senzor VL53L1X funguje na pokročilom princípe Time-of-Flight (ToF). Vyžaruje neviditeľný infračervený laserový lúč a meria absolútny čas letu fotónov (od vyslania po návrat), čím poskytuje presnú vzdialenosť úplne nezávisle od farby či povrchovej odrazivosti prekážky.
+Medzi jeho kľúčové vlastnosti patrí:
+\begin{itemize}
+    \item Maximálny dosah snímania až do 4 metrov v závislosti od podmienok a režimu.
+    \item Tri prepínateľné módy (Short, Medium, Long), ktoré dovoľujú optimalizovať senzor na kratšie, no rýchlejšie merania, alebo pomalšie merania do väčších vzdialeností.
+    \item Úsporná a jednoduchá sériová komunikácia prostredníctvom I2C zbernice.
+\end{itemize}
+
+Snímač je fyzicky upevnený priamo na \textbf{koncovom efektore} robotického ramena. Vďaka tomuto umiestneniu na samom konci kinematického reťazca sa zorné pole senzora posúva a natáča spolu s efektorom. To otvára možnosti pre dynamické merania, napríklad 3D mapovanie pracovného priestoru pripojením nameranej vzdialenosti k aktuálnym kĺbovým a polohovým súradniciam ramena.
+
+\subsection{Softvérová implementácia}
+Nižšie je uvedený prehľad implementácie triedy \textbf{RangingSensor}, ktorá slúži ako konfiguračný a potvrdzovací wrapper práve pre modul VL53L1X, pričom rozširuje jeho základnú funkcionalitu o priestorové mapovanie a logovanie dát na SD kartu.
+
+\subsubsection{Čo bolo implementované}
 
 \begin{itemize}
 	\item Wrapper trieda pre senzor VL53L1X.

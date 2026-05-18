@@ -1,4 +1,43 @@
 \section{Geometria modelu ramena}
+Predtým, než pristúpime k samotnej matematickej formulácii doprednej a inverznej kinematickej úlohy, 
+je nevyhnutné bližšie predstaviť fyzickú platformu robotického ramena, ktorej vlastnosti priamo ovplyvňujú 
+návrh riadenia. Experimentálny model manipulátora použitý v tomto projekte je koncipovaný ako malá 
+mechatronická stavebnica. Celá mechanická konštrukcia ramena je postavená na báze cenovo dostupných komponentov 
+a pohyb v jednotlivých kĺboch zabezpečujú štandardné modelárske servomotory. Práve pre tento konkrétny fyzický 
+model je v nasledujúcich krokoch analyzovaná a hľadaná reálna kinematická štruktúra.
+
+tu daj obrazok
+
+Nasadenie tohto typu modelárskej stavebnice v rámci tímového projektu so sebou prináša špecifické vlastnosti, 
+ktoré môžeme rozdeliť na výhody a nevýhody:
+
+\textbf{Výhody stavebnicového riešenia:}
+\begin{itemize}
+    \item \textbf{Vysoká dostupnosť a modularita:} Umožňuje rýchle zostavenie, prípadnú modifikáciu mechanických 
+    častí a jednoduchú výmenu komponentov v laboratórnych podmienkach.
+    \item \textbf{Ekonomická efektivita:} Nízke obstarávacie náklady robia z platformy ideálny vzdelávací 
+    nástroj pre overenie teoretických kybernetických princípov v praxi.
+    \item \textbf{Bezpečnosť prevádzky:} Vzhľadom na malé rozmery, nízku hmotnosť a obmedzený krútiaci 
+    moment motorov je manipulácia s modelom bezpečná a nehrozí riziko zranenia operátora ani vážneho poškodenia 
+    hardvéru pri chybách v riadiacom algoritme.
+\end{itemize}
+
+\textbf{Nevýhody a mechanické limity:}
+\begin{itemize}
+    \item \textbf{Nízka tuhosť konštrukcie:} Spojovacie prvky vykazujú flexibilitu a konštrukcia vyrobená v 
+    domácich podmienkach nedosahuje ideálnu tuhosť profesionálnych priemyselných ramien.
+    \item \textbf{Mechanické vôle:} Prítomnosť vôlí v prevodovkách modelárskych servomotorov a 
+    v samotných spojoch konštrukcie výrazne ovplyvňuje výslednú presnosť. Tieto vôle sa kumulujú smerom od 
+    základne k efektoru, pričom v spodných kĺboch dosahujú vôľu až 5 stupňov.
+    \item \textbf{Obmedzená presnosť polohovania:} Použité servomotory majú praktickú presnosť pohybu na úrovni 
+    približne 3 stupňov. To spôsobuje odchýlky koncového efektora pri dosahovaní presných súradníc v kartézskom 
+    priestore.
+\end{itemize}
+Znalosť týchto obmedzení je kľúčová. Nelinearity, vôle a obmedzená presnosť hardvéru totiž kladú oveľa vyššie 
+nároky na robustnosť a stabilitu softvérovej implementácie numerického riadenia, ktoré musí s týmito 
+nepresnosťami počítať. Na základe fyzických rozmerov reálneho modelu bol vytvorený schematický nákres, 
+z ktorého vychádzajú všetky následné kinematické výpočty.
+
 Na Obr. \ref{fig:geometria_ramena} je nákres schematického zobrazenia rozmerov robotického ramena.
 \begin{figure}[h]
 \centering

@@ -1,1 +1,44 @@
-Úvod (ak je potrebný)
+Moderná robotika sa v súčasnosti nezaobíde bez komplexných manipulátorov schopných presne, bezpečne a efektívne
+interagovať s okolitým prostredím. 
+Tento tímový projekt sa zameriava na návrh a implementáciu vnoreného riadiaceho systému pre model robotického 
+manipulátora so šiestimi stupňami voľnosti (6 DOF). 
+Hlavnou motiváciou je vytvorenie autonómneho, stabilného a kompaktného riadiaceho riešenia, ktoré úspešne 
+spája pokročilé kinematické výpočty s priamym nízkoúrovňovým 
+riadením akčných členov v reálnom čase.
+
+Pri interpretácii zadania sme sa zamerali na jednu z najdôležitejších výziev v oblasti robotiky - 
+transformáciu požiadaviek z kartézskeho priestoru do kĺbových súradníc robota. 
+Zatiaľ čo dopredná kinematika nám umožňuje jednoducho určiť polohu a orientáciu koncového efektora na 
+základe známych kĺbových uhlov , pre praktické a intuitívne ovládanie je 
+kriticky dôležité riešiť inverznú kinematickú úlohu (IKÚ). Bez nej by robotické rameno nedokázalo autonómne 
+dosiahnuť konkrétnu cieľovú pozíciu zadanú operátorom. 
+Keďže analytické riešenie pre 6-DOF manipulátor môže byť geometricko-matematicky zložité a často 
+nejednoznačné, v tomto projekte implementujeme numerické riešenie 
+IKÚ pomocou Newtonovej metódy, pričom na efektívne maticové operácie využívame optimalizovanú knižnicu Eigen.
+
+Pre realizáciu plne vnoreného (embedded) systému bola zvolená hardvérová platforma mikrokontroléra STM32 
+v kombinácii s programovacím jazykom C++. 
+Vnorené platformy sú pre riadenie robotických modelov ideálne z dôvodu ich vysokej deterministickosti, 
+nízkej latencie, energetickej efektívnosti a možnosti 
+priamej hardvérovej integrácie periférií. Celý riadiaci softvér je postavený na operačnom systéme reálneho 
+času (RTOS). Tento prístup nám umožnil elegantne rozdeliť 
+softvérovú architektúru na samostatné, paralelne bežiace procesy - od periodických výpočtov kinematických 
+úloh, cez robustnú medziprocesovú komunikáciu pomocou frontov správ, 
+až po spracovanie používateľského rozhrania a samotné riadenie servomotorov.
+
+Okrem samotného algoritmu pohybu projekt zahŕňa aj integráciu používateľského rozhrania (LCD displej 
+a joystick s tlačidlami) na manuálne zadávanie cieľových súradníc a 
+pokročilú nadstavbu v podobe 3D mapovania priestoru pomocou laserového senzora vzdialenosti VL53L1X 
+s logovaním dát na SD kartu. 
+Naším vnútorným cieľom bolo vytvoriť ucelený mechatronický systém, ktorý dokáže spoľahlivo 
+fungovať a reagovať aj napriek fyzickým limitom a 
+mechanickým vôľam použitého hardvéru.
+
+Pre nás, ako študentov inžinierskeho študijného programu Robotika a kybernetika, predstavuje práca na tomto 
+projekte neoceniteľnú skúsenosť. 
+Ponúka nám príležitosť prejsť si celým vývojovým cyklom od analýzy geometrie fyzického modelu, cez prenos 
+matematických pseudokódov do produkčného C++ kódu, 
+až po optimalizáciu a ošetrenie numerickej stability algoritmov v singularitách pomocou regularizácie 
+(tlmiaci parameter $\lambda$). Tento projekt je vysoko relevantný, 
+pretože verne reflektuje reálne priemyselné výzvy v oblasti vývoja embedded softvéru a riadenia robotických 
+systémov v reálnom čase.
