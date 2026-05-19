@@ -2,12 +2,12 @@ Moderná robotika sa v súčasnosti nezaobíde bez komplexných manipulátorov s
 interagovať s okolitým prostredím. 
 Tento tímový projekt sa zameriava na návrh a implementáciu vnoreného riadiaceho systému pre model robotického 
 manipulátora so šiestimi stupňami voľnosti (6 DOF). 
-Hlavnou motiváciou je vytvorenie autonómneho, stabilného a kompaktného riadiaceho riešenia, ktoré úspešne 
+Hlavnou motiváciou je vytvorenie riadiacej jednotky, ktorá úspešne 
 spája pokročilé kinematické výpočty s priamym nízkoúrovňovým 
 riadením akčných členov v reálnom čase.
 
 Pri interpretácii zadania sme sa zamerali na jednu z najdôležitejších výziev v oblasti robotiky - 
-transformáciu požiadaviek z kartézskeho priestoru do kĺbových súradníc robota. 
+prepočítanie pohybu z priestoru efektora do kĺbových súradníc robota. 
 Zatiaľ čo dopredná kinematika nám umožňuje jednoducho určiť polohu a orientáciu koncového efektora na 
 základe známych kĺbových uhlov , pre praktické a intuitívne ovládanie je 
 kriticky dôležité riešiť inverznú kinematickú úlohu (IKÚ). Bez nej by robotické rameno nedokázalo autonómne 
@@ -15,6 +15,7 @@ dosiahnuť konkrétnu cieľovú pozíciu zadanú operátorom.
 Keďže analytické riešenie pre 6-DOF manipulátor môže byť geometricko-matematicky zložité a často 
 nejednoznačné, v tomto projekte implementujeme numerické riešenie 
 IKÚ pomocou Newtonovej metódy, pričom na efektívne maticové operácie využívame optimalizovanú knižnicu Eigen.
+Nepoužívame žiadne externé knižnice špecifické pre robotiku ani ROS, ale vlastnú implementáciu.
 
 Pre realizáciu plne vnoreného (embedded) systému bola zvolená hardvérová platforma mikrokontroléra STM32 
 v kombinácii s programovacím jazykom C++. 
@@ -26,9 +27,9 @@ softvérovú architektúru na samostatné, paralelne bežiace procesy - od perio
 úloh, cez robustnú medziprocesovú komunikáciu pomocou frontov správ, 
 až po spracovanie používateľského rozhrania a samotné riadenie servomotorov.
 
-Okrem samotného algoritmu pohybu projekt zahŕňa aj integráciu používateľského rozhrania (LCD displej 
+Okrem samotného algoritmu výpočtu kĺboivých premmených IKÚ projekt zahŕňa aj integráciu používateľského rozhrania (LCD displej 
 a joystick s tlačidlami) na manuálne zadávanie cieľových súradníc a 
-pokročilú nadstavbu v podobe 3D mapovania priestoru pomocou laserového senzora vzdialenosti VL53L1X 
+pokročilú nadstavbu v podobe aplikácie 3D mapovania priestoru pomocou laserového senzora vzdialenosti VL53L1X 
 s logovaním dát na SD kartu. 
 Naším vnútorným cieľom bolo vytvoriť ucelený mechatronický systém, ktorý dokáže spoľahlivo 
 fungovať a reagovať aj napriek fyzickým limitom a 

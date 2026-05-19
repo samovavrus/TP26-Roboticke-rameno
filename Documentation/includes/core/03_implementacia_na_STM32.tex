@@ -120,7 +120,7 @@ function solveIK(pr, Rr, theta, tol_pos, tol_ori, max_iter)
     begin
         [p0, R0] = forwardKinematics(theta, R);
         (3,3) rp = p0 - Pr;
-        (3,3) E = R0 + Rr.transpose();
+        (3,3) E = R0 * Rr.transpose();
         ro(0,0) = E(1,0);                         // (010) * E(100)^T
         ro(1,0) = E(2,0);                         // (001) * E(100)^T
         ro(2,0) = E(2,1);                         // (001) * E(010)^T

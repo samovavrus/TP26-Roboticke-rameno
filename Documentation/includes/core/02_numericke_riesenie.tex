@@ -5,8 +5,7 @@ kĺbov).
 
 Výstupom PKU je jednoznačné určenie polohy a orientácie koncového efektora (nástroja) vzhľadom na bázový 
 (referenčný) súradnicový systém sústavy. Pre kompletný popis polohy a orientácie v 3D priestore využívame 
-maticu homogénnej transformácie, ktorú získame postupným násobením 
-čiastkových transformačných matíc medzi susednými kĺbovými súradnicovými systémami.
+maticu rotácie a maticu translácie separátne.
 
 Keďže náš manipulátor sa skladá s 6 článkov, tak v nasledovných rovniciach budeme uvažovať 
 výpočet priamej kinematickej úlohy pre týchto 6 článkov. Všeobecne však môžeme uvažovať ľubovoľný počet
@@ -62,20 +61,33 @@ Kinematika koncového efektora manipulátora je potom daná ako (transformácia 
 p_0(\theta) = R_1(\theta_1)\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big(T_3 + R_4(\theta_4)\left(T_4 + R_5(\theta_5)\left(T_5 + R_6(\theta_6)(T_6)\right)\right)\big)\Big)\Bigg)
 \end{equation}
 
-Rotačné matice jednotlivých články robota tvoria celkovú rotačnú maticu pre súradnicový systém efektora, ktorú získame z funkcie priamej kinematiky. Táto matica nám umožní vypočítať orientáciu efektora vzhľadom na základňu manipulátora.
+Rotačné matice jednotlivých články robota tvoria celkovú rotačnú maticu pre súradnicový systém efektora, ktorú získame z funkcie priamej kinematiky. 
+Táto matica nám umožní vypočítať orientáciu efektora vzhľadom na základňu manipulátora.
 Celková rotačná matica $R_T(\theta)$ je daná súčinom rotačných matíc jednotlivých článkov:
 \begin{equation}
 R_T(\theta) = R_1(\theta_1)R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)R_6(\theta_6)
 \end{equation}
 
 \section{Inverzná kinematika}
-Úlohou inverznej kinematiky (IK) je nájsť také hodnoty kĺbových súradníc $\theta$, pre ktoré koncový efektor dosiahne požadovanú polohu a orientáciu v priestore. Nech $p_r$ predstavuje žiadanú (referenčnú) polohu a $R_r$ žiadanú orientáciu. 
+Úlohou inverznej kinematiky (IK) je nájsť také hodnoty kĺbových premenných $\theta$, pre ktoré koncový efektor dosiahne požadovanú polohu a orientáciu v priestore. 
+Nech $p_r$ predstavuje žiadanú (referenčnú) polohu a $R_r$ žiadanú orientáciu. 
 
-Základným princípom numerického riešenia je formulácia úlohy ako problému hľadania koreňov nelineárnych rovníc. Definujeme preto reziduá (odchýlky) medzi aktuálnym a požadovaným stavom, pričom cielene hľadáme také $\theta$, pre ktoré sa tieto vektory chyby rovnajú nule.
+Základným princípom numerického riešenia je formulácia úlohy ako problému hľadania koreňov nelineárnych rovníc. Definujeme preto reziduá (odchýlky) medzi aktuálnym 
+a požadovaným stavom, pričom cielene hľadáme také $\theta$, pre ktoré sa tieto vektory chyby rovnajú nule.
 
 Reziduum (chybu) pre polohu efektora vyjadríme ako rozdiel aktuálnej a žiadanej polohy:
 \begin{equation}
 r_p(\theta) = p_0(\theta) - p_r
+\end{equation}
+
+Analogicky existuje aj reziduum pre orientáciu $r_o(\theta)$, ktoré vyjadruje odchýlku aktuálnej orientácie od žiadanej orientácie $R_r$.
+Reziduum (chybu) pre orientáciu efektora vyjadríme ako:
+\begin{equation}
+r_o(\theta) = \begin{pmatrix}
+(0 \ 1 \ 0)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
+(0 \ 0 \ 1)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
+(0 \ 0 \ 1)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}
+\end{pmatrix}
 \end{equation}
 
 Náš cieľ je dosiahnúť, aby obidve rezidua boli nulové (resp. minimálne), čo znamená že polohový vektor a orientácia efektora sa zhodujú s požadovanými hodnotami $p_r$ a $R_{RPY}(\theta_R, \theta_P, \theta_Y)$.
@@ -85,8 +97,6 @@ r_p(\theta) = 0
 \begin{equation}
 r_o(\theta) = 0
 \end{equation}
-
-Analogicky existuje aj reziduum pre orientáciu $r_o(\theta)$, ktoré vyjadruje odchýlku aktuálnej orientácie od žiadanej orientácie $R_r$.
 
 Našim cieľom je dosiahnuť, aby veľkosť chybových vektorov bola minimálna, ideálne nulová, čo znamená, že poloha aj orientácia efektora sa zhoduje s požiadavkami. Na analytický popis zmeny polohy a orientácie pri zmene kĺbových premenných a následné minimalizovanie reziduí sa využíva Jakobián.
 

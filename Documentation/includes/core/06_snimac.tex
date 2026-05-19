@@ -11,7 +11,8 @@ Medzi jeho kľúčové vlastnosti patrí:
     \item Úsporná a jednoduchá sériová komunikácia prostredníctvom I2C zbernice.
 \end{itemize}
 
-Snímač je fyzicky upevnený priamo na \textbf{koncovom efektore} robotického ramena. Vďaka tomuto umiestneniu na samom konci kinematického reťazca sa zorné pole senzora posúva a natáča spolu s efektorom. To otvára možnosti pre dynamické merania, napríklad 3D mapovanie pracovného priestoru pripojením nameranej vzdialenosti k aktuálnym kĺbovým a polohovým súradniciam ramena.
+Snímač je fyzicky upevnený priamo na \textbf{koncovom efektore} robotického ramena. Vďaka tomuto umiestneniu na samom konci kinematického reťazca sa zorné pole senzora posúva a 
+natáča spolu s efektorom. To otvára možnosti pre dynamické merania, napríklad 3D mapovanie pracovného priestoru.
 
 \subsection{Softvérová implementácia}
 Nižšie je uvedený prehľad implementácie triedy \textbf{RangingSensor}, ktorá slúži ako konfiguračný a potvrdzovací wrapper práve pre modul VL53L1X, pričom rozširuje jeho základnú funkcionalitu o priestorové mapovanie a logovanie dát na SD kartu.
@@ -24,7 +25,7 @@ Nižšie je uvedený prehľad implementácie triedy \textbf{RangingSensor}, ktor
 	\item Štruktúra SensorPose (x, y, z, roll, pitch, yaw).
 	\item Štruktúra MeasurementData (meranie + aktuálna poloha).
 	\item SPI inicializácia SD karty.
-	\item Zápis nameranych dát do súboru octomap.txt pre neskorší rekonštrukciu mapy.
+	\item Zápis nameranych dát do súboru pointcloud.ply pre neskorší rekonštrukciu mapy.
 \end{itemize}
 
 \subsection{Verejné funkcie triedy}
@@ -61,7 +62,7 @@ Inicializuje SD kartu cez SPI rozhranie.
 
 \texttt{void enableLogging(bool enable, bool clear = false)}
 
-Zapína alebo vypína zápis do súboru octomap.txt. Obsahuje buffer manažment (flush\_counter).
+Zapína alebo vypína zápis do súboru pointcloud.ply. Obsahuje buffer manažment (flush\_counter).
 
 \begin{itemize}
 	\item \texttt{enable} -- true zapne logovanie, false vypne logovanie.

@@ -3,12 +3,12 @@ Predtým, než pristúpime k samotnej matematickej formulácii doprednej a inver
 je nevyhnutné bližšie predstaviť fyzickú platformu robotického ramena, ktorej vlastnosti priamo ovplyvňujú 
 návrh riadenia. Experimentálny model manipulátora použitý v tomto projekte je koncipovaný ako malá 
 mechatronická stavebnica. Celá mechanická konštrukcia ramena je postavená na báze cenovo dostupných komponentov 
-a pohyb v jednotlivých kĺboch zabezpečujú štandardné modelárske servomotory. Práve pre tento konkrétny fyzický 
+a pohyb v jednotlivých kĺboch zabezpečujú štandardné modelárske servomotory so zabudovaným spätnoväzobným riadením uhlovej polohy. Práve pre tento konkrétny fyzický 
 model je v nasledujúcich krokoch analyzovaná a hľadaná reálna kinematická štruktúra.
 
 tu daj obrazok
 
-Nasadenie tohto typu modelárskej stavebnice v rámci tímového projektu so sebou prináša špecifické vlastnosti, 
+Nasadenie tohto typu modelárskej stavebnice v rámci tímového projektu so sebou prináša špecifické faktory, 
 ktoré môžeme rozdeliť na výhody a nevýhody:
 
 \textbf{Výhody stavebnicového riešenia:}
@@ -33,9 +33,8 @@ ktoré môžeme rozdeliť na výhody a nevýhody:
     približne 3 stupňov. To spôsobuje odchýlky koncového efektora pri dosahovaní presných súradníc v kartézskom 
     priestore.
 \end{itemize}
-Znalosť týchto obmedzení je kľúčová. Nelinearity, vôle a obmedzená presnosť hardvéru totiž kladú oveľa vyššie 
-nároky na robustnosť a stabilitu softvérovej implementácie numerického riadenia, ktoré musí s týmito 
-nepresnosťami počítať. Na základe fyzických rozmerov reálneho modelu bol vytvorený schematický nákres, 
+Nesmieme teda zabúdať, že náš manipulátor bude mať kvôli týmto nevýhodám nejaké odchýlky. 
+Na základe fyzických rozmerov reálneho modelu bol vytvorený schematický nákres, 
 z ktorého vychádzajú všetky následné kinematické výpočty.
 
 Na Obr. \ref{fig:geometria_ramena} je nákres schematického zobrazenia rozmerov robotického ramena.
@@ -46,7 +45,7 @@ Na Obr. \ref{fig:geometria_ramena} je nákres schematického zobrazenia rozmerov
 \label{fig:geometria_ramena}
 \end{figure}
 
-Rozmery posunutí rotácie bolo kvôli implementácii výpočtov pre inverznú kinematiku nevyhnutné správne určiť. 
+Geometriu posunutí a rotácie bolo kvôli implementácii výpočtov pre inverznú kinematiku nevyhnutné správne určiť. 
 Na ľavej časti nákresu je rameno zobrazené „z boku“, a teda os robota X smeruje vpravo a Y smerom do obrázka.
 V pravej časti je zobrazenie ramena „spredu“, čiže os X smeruje von z obrázka a os Y smeruje vpravo.
 Tým, že tieto nákresy slúžia len na zdokumentovanie posunutí kĺbov (bodov otáčania) ramena, 
