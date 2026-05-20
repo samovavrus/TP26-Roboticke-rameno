@@ -9,7 +9,7 @@ riadením akčných členov v reálnom čase.
 Pri interpretácii zadania sme sa zamerali na jednu z najdôležitejších výziev v oblasti robotiky - 
 prepočítanie pohybu z priestoru efektora do kĺbových súradníc robota. 
 Zatiaľ čo dopredná kinematika nám umožňuje jednoducho určiť polohu a orientáciu koncového efektora na 
-základe známych kĺbových uhlov , pre praktické a intuitívne ovládanie je 
+základe známych kĺbových uhlov, pre praktické a intuitívne ovládanie je 
 kriticky dôležité riešiť inverznú kinematickú úlohu (IKÚ). Bez nej by robotické rameno nedokázalo autonómne 
 dosiahnuť konkrétnu cieľovú pozíciu zadanú operátorom. 
 Keďže analytické riešenie pre 6-DOF manipulátor môže byť geometricko-matematicky zložité a často 
@@ -27,7 +27,7 @@ softvérovú architektúru na samostatné, paralelne bežiace procesy - od perio
 úloh, cez robustnú medziprocesovú komunikáciu pomocou frontov správ, 
 až po spracovanie používateľského rozhrania a samotné riadenie servomotorov.
 
-Okrem samotného algoritmu výpočtu kĺboivých premmených IKÚ projekt zahŕňa aj integráciu používateľského rozhrania (LCD displej 
+Okrem samotného algoritmu výpočtu kĺbových premenných IKÚ projekt zahŕňa aj integráciu používateľského rozhrania (LCD displej 
 a joystick s tlačidlami) na manuálne zadávanie cieľových súradníc a 
 pokročilú nadstavbu v podobe aplikácie 3D mapovania priestoru pomocou laserového senzora vzdialenosti VL53L1X 
 s logovaním dát na SD kartu. 
@@ -39,7 +39,7 @@ Pre nás, ako študentov inžinierskeho študijného programu Robotika a kyberne
 projekte neoceniteľnú skúsenosť. 
 Ponúka nám príležitosť prejsť si celým vývojovým cyklom od analýzy geometrie fyzického modelu, cez prenos 
 matematických pseudokódov do produkčného C++ kódu, 
-až po optimalizáciu a ošetrenie numerickej stability algoritmov v singularitách pomocou regularizácie 
-(tlmiaci parameter $\lambda$). Tento projekt je vysoko relevantný, 
+až po optimalizáciu a ošetrenie numerickej stability algoritmov v singularitách pomocou regularizácie. 
+Tento projekt je vysoko relevantný, 
 pretože verne reflektuje reálne priemyselné výzvy v oblasti vývoja embedded softvéru a riadenia robotických 
 systémov v reálnom čase.

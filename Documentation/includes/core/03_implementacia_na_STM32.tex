@@ -1,6 +1,6 @@
 \section{Implementácia priamej a inverznej kinematiky manipulátora}
 
-Riešenie vychádza z pôvodných pseudokódov, ktoré boli prenesené do programovej formy pre 6-stupňový manipulátor v C++ pod knižnicou Eigen.
+Na základe pripravených vzorcov sa vytvorili pseudokódy, ktoré boli prenesené do programovej formy pre 6-stupňový manipulátor v C++ pod knižnicou Eigen.
 
 Kinematický model je definovaný pomocou:
 \begin{itemize}
@@ -9,30 +9,30 @@ Kinematický model je definovaný pomocou:
 \end{itemize}
 
 \subsection{Priama kinematika}
-Slúži na výpočet polohy a orientácie efektora zo známych kĺbových uhlov.
+Slúži na výpočet polohy a orientácie efektora zo známych kĺbových premenných.
 
 Výstupom je:
 \begin{itemize}
 	\item polohový vektor efektora $p \in \mathbb{R}^3$,
-	\item rotačná matica efektora $R \in \mathbb{R}^{3 \times 3}$.
+	\item rotačná matica efektora $R_p \in \mathbb{R}^{3 \times 3}$.
 \end{itemize}
 
 \subsubsection{Pseudokód pre priamu kinematiku}
-Nižšie je uvedený pseudo program na výpočet priamej kinematickej úlohy, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
+Nižšie je uvedený pseudo program na výpočet priamej kinematickej úlohy, ktorý zohľadňuje \textbf{n} článkov manipulátora a ich vzájomné transformácie.
 Čiže pseudo program vracia polohový vektor a rotačnú maticu koncového efektora vzhľadom na základňu manipulátora.
 
 \begin{lstlisting}[caption={Výpočet priamej kinematickej úlohy}, language=C]
 function forwardKinematics(theta[], R[])
-    vekt = 0;
-    matica = I_3x3;
+    p = 0;
+    R_p = I_3x3;
     n = size(theta[]);
     
     for (i = n; i > 0; i--) begin
-        vekt = R[i](theta[i]) * (T[i] + vekt);
-        matica = R[i](theta[i]) * matica;
+        p = R[i](theta[i]) * (T[i] + p);
+        R_p = R[i](theta[i]) * R_p;
     end
     
-    return vekt, matica;
+    return p, R_p;
 end function
 \end{lstlisting}
 
@@ -45,7 +45,7 @@ Hľadá požadované kĺbové uhly iteratívnou Newtonovou metódou. Cieľom je 
 \begin{itemize}
 	\item \textbf{Výpočet chyby:} V každom kroku sa určuje polohová a orientačná chyba (reziduum) oproti požadovanému stavu.
 	\item \textbf{Riešenie sústavy:} Zmena kĺbových uhlov sa počítá cez úplný Jakobián riešením lineárnej sústavy $J\Delta\theta = -r$, kde $r$ je spojený vektor chýb.
-	\item \textbf{Regularizácia:} Na zabezpečenie numerickej stability pri horšej podmienenosti Jakobiánu a v singularitách sa používa tlmiací parameter $\lambda$.
+	\item \textbf{Regularizácia:} Na zabezpečenie numerickej stability pri horšej podmienenosti Jakobiánu a v singularitách sa používa tlmiaci parameter $\lambda$.
 	\item \textbf{Normalizácia:} Po každej iterácii sa vypočítané uhly zarovnávajú do intervalu $[-\pi,\pi]$, čím sa bráni ich nekončenému pretáčaniu.
 \end{itemize}
 
@@ -112,7 +112,7 @@ end function
 \end{lstlisting}
 
 \subsubsection{Pseudokód pre inverznú kinematiku}
-Nižšie je uvedený pseudo program na iteratívny výpočet inverznej kinematiky pomocou Newtonovej metódy, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
+Nižšie je uvedený pseudo program na iteratívny výpočet inverznej kinematiky pomocou Newtonovej metódy \eqref{eq:newton}, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
 
 \begin{lstlisting}[caption={Iteratívny výpočet inverznej kinematiky}, language=C]
 function solveIK(pr, Rr, theta, tol_pos, tol_ori, max_iter)
@@ -161,12 +161,12 @@ end function
 
 Iterácie sa ukončia pri splnení oboch podmienok:
 \begin{itemize}
-	\item polohová chyba je menšia ako zadaná tolerancia,
-	\item orientačná chyba je menšia ako zadaná tolerancia.
+	\item polohová chyba je menšia ako zadaná tolerancia \eqref{eq:tool_pos},
+	\item orientačná chyba je menšia ako zadaná tolerancia \eqref{eq:tool_ori}.
 \end{itemize}
 
 Ak sa riešenie nenájde v definovanom maximálnom počte iterácií, stav sa vyhodnotí ako nekonvergentný. Tento mechanizmus chráni systém pred nekonečnou iteráciou pri nedosiahnuteľných cieľoch.
 
 \textbf{Prevádzka v reálnom čase}
 
-IK beží v periodickej riadiacej slučke. Táto slučka neustále prijíma požadovanú pozíciu, prepočítava ju na nové uhly, overuje fyzické limity pohonov a až po ich validácii odošle dáta do servopohonov. Tým je zaistený plynulý a bezpečný pohyb ramena.
+IK beží v periodickej riadiacej slučke s periódou 50 ms. Táto slučka neustále prijíma požadovanú pozíciu, prepočítava ju na nové uhly, overuje fyzické limity pohonov a až po ich validácii odošle dáta do servopohonov. Tým je zaistený plynulý a bezpečný pohyb ramena.

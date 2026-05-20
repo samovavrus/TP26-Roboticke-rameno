@@ -5,9 +5,9 @@ kĺbov).
 
 Výstupom PKU je jednoznačné určenie polohy a orientácie koncového efektora (nástroja) vzhľadom na bázový 
 (referenčný) súradnicový systém sústavy. Pre kompletný popis polohy a orientácie v 3D priestore využívame 
-maticu rotácie a maticu translácie separátne.
+maticu rotácie a vektor translácie separátne, pričom teda nevyužívame koncept homogénnych transformácií.
 
-Keďže náš manipulátor sa skladá s 6 článkov, tak v nasledovných rovniciach budeme uvažovať 
+Keďže náš manipulátor sa skladá z 6 článkov, tak v nasledovných rovniciach budeme uvažovať 
 výpočet priamej kinematickej úlohy pre týchto 6 článkov. Všeobecne však môžeme uvažovať ľubovoľný počet
 článkov, a teda aj ľubovoľný počet premenných.
 
@@ -57,14 +57,14 @@ p_0 &= R_1(\theta_1)(T_1 + p_1)
 \end{align}
 
 Kinematika koncového efektora manipulátora je potom daná ako (transformácia z $p_6$ do $p_0$):
-\begin{equation}
+\begin{equation} \label{eq:p0_theta}
 p_0(\theta) = R_1(\theta_1)\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big(T_3 + R_4(\theta_4)\left(T_4 + R_5(\theta_5)\left(T_5 + R_6(\theta_6)(T_6)\right)\right)\big)\Big)\Bigg)
 \end{equation}
 
-Rotačné matice jednotlivých články robota tvoria celkovú rotačnú maticu pre súradnicový systém efektora, ktorú získame z funkcie priamej kinematiky. 
+Rotačné matice jednotlivých článkov robota tvoria celkovú rotačnú maticu pre súradnicový systém efektora, ktorú získame z funkcie priamej kinematiky. 
 Táto matica nám umožní vypočítať orientáciu efektora vzhľadom na základňu manipulátora.
 Celková rotačná matica $R_T(\theta)$ je daná súčinom rotačných matíc jednotlivých článkov:
-\begin{equation}
+\begin{equation} \label{eq:RT_theta}
 R_T(\theta) = R_1(\theta_1)R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)R_6(\theta_6)
 \end{equation}
 
@@ -80,17 +80,30 @@ Reziduum (chybu) pre polohu efektora vyjadríme ako rozdiel aktuálnej a žiadan
 r_p(\theta) = p_0(\theta) - p_r
 \end{equation}
 
-Analogicky existuje aj reziduum pre orientáciu $r_o(\theta)$, ktoré vyjadruje odchýlku aktuálnej orientácie od žiadanej orientácie $R_r$.
+Analogicky existuje aj reziduum pre orientáciu $r_o(\theta)$, ktoré vyjadruje odchýlku aktuálnej orientácie od žiadanej orientácie $R_r$. 
+Ak platí:
+\begin{equation}
+R_T=R_r
+\end{equation}
+tak potom:
+\begin{equation}
+R_TR_r^{-1}=I
+\end{equation}
+Keďže každá rotačná matica je ortogonálna, tak to vieme napísať v tvare:
+\begin{equation}
+R_TR_r^T=I
+\end{equation}
+
 Reziduum (chybu) pre orientáciu efektora vyjadríme ako:
 \begin{equation}
 r_o(\theta) = \begin{pmatrix}
-(0 \ 1 \ 0)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
-(0 \ 0 \ 1)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
-(0 \ 0 \ 1)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}
+(0 \ 1 \ 0)(R_T R_r^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
+(0 \ 0 \ 1)(R_T R_r^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
+(0 \ 0 \ 1)(R_T R_r^T)\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}
 \end{pmatrix}
 \end{equation}
 
-Náš cieľ je dosiahnúť, aby obidve rezidua boli nulové (resp. minimálne), čo znamená že polohový vektor a orientácia efektora sa zhodujú s požadovanými hodnotami $p_r$ a $R_{RPY}(\theta_R, \theta_P, \theta_Y)$.
+Náš cieľ je dosiahnúť, aby obidve rezidua boli nulové (resp. minimálne), čo znamená že polohový vektor a orientácia efektora sa zhodujú s požadovanými hodnotami $p_r$ a $R_r$.
 \begin{equation}
 r_p(\theta) = 0
 \end{equation}
@@ -102,13 +115,13 @@ Našim cieľom je dosiahnuť, aby veľkosť chybových vektorov bola minimálna,
 
 \subsection{Numerické riešenie}
 Newtonova métoda bude iteratívne aktualizovať vektor kĺbových premenných $\theta$ na základe rezíduí a Jakobiánu, aby sa minimalizovali chyby polohy a orientácie efektora.
-\begin{equation}
-\scalebox{0.48}{
+\begin{equation} \label{eq:newton}
+\scalebox{0.55}{
 $\left(\left(\begin{array}{cccccc}
 \frac{\partial p_0(\theta)}{\partial \theta_1} & \frac{\partial p_0(\theta)}{\partial \theta_2} & \frac{\partial p_0(\theta)}{\partial \theta_3} & \frac{\partial p_0(\theta)}{\partial \theta_4} & \frac{\partial p_0(\theta)}{\partial \theta_5} & \frac{\partial p_0(\theta)}{\partial \theta_6} \\
-(0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
-(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
-(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix}
+(0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
+(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
+(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix}
 \end{array}\right)_{\theta=\theta(k)} + \Lambda\right) + \Delta\theta(k) = \begin{pmatrix} -r_p(\theta(k)) \\ -r_o(\theta(k)) \end{pmatrix}$
 }
 \end{equation}
@@ -117,9 +130,13 @@ $\left(\left(\begin{array}{cccccc}
 \theta(k+1) = \theta(k) + \Delta\theta(k)
 \end{equation}
 
-Algoritmus sa ukončí ak je splnená podmienka (veľkosť rezidua):
-\begin{equation}
-(r_p(\theta))^T(r_p(\theta)) + (r_o(\theta))^T(r_o(\theta)) < \epsilon
+Algoritmus sa ukončí ak sú splnené podmienky (veľkosti rezíduí):
+\begin{equation} \label{eq:tool_pos}
+||r_p(\theta)|| \leq \epsilon_{pos}
+\end{equation}
+a zároveň:
+\begin{equation} \label{eq:tool_ori}
+||r_o(\theta)|| \leq \epsilon_{ori}
 \end{equation}
 
 \subsubsection{Jakobián polohy}
@@ -131,7 +148,7 @@ Jakobiánu polohového vektora $p_0(\theta)$ možno definovať ako maticu parci�
 \end{pmatrix}
 \end{equation}
 
-Na výpočet matice budeme potrebovať vypočítať parciálne derivácie polohového vektora $p_0(\theta)$ vzhľadom na jednotlivé kĺbové premenné $\theta_i$.
+Na výpočet matice budeme potrebovať vypočítať parciálne derivácie polohového vektora $p_0(\theta)$ \eqref{eq:p0_theta} vzhľadom na jednotlivé kĺbové premenné $\theta_i$.
 \begin{equation}
 \frac{\partial p_0(\theta)}{\partial \theta_1} = \frac{\partial(R_1(\theta_1))}{\partial \theta_1}\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big(T_3 + R_4(\theta_4)\left(T_4 + R_5(\theta_5)\left(T_5 + R_6(\theta_6)(T_6)\right)\right)\big)\Big)\Bigg)
 \end{equation}
@@ -157,7 +174,7 @@ Na výpočet matice budeme potrebovať vypočítať parciálne derivácie poloho
 \end{equation}
 
 \subsubsection{Jakobián orientácie}
-Následne vypočítame derivácie $R_T(\theta)$ pre získanie rotačného Jakobiánu, ktorý nám umožní vypočítať zmenu orientácie efektora vzhľadom na zmenu kĺbových premenných:
+Následne vypočítame derivácie $R_T(\theta)$ \eqref{eq:RT_theta} pre získanie rotačného Jakobiánu, ktorý nám umožní vypočítať zmenu orientácie efektora vzhľadom na zmenu kĺbových premenných:
 
 \begin{equation}
 \frac{\partial R_T(\theta)}{\partial \theta_1} = \frac{\partial R_1(\theta_1)}{\partial \theta_1} R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)R_6(\theta_6)

@@ -1,12 +1,20 @@
 \section{Geometria modelu ramena}
 Predtým, než pristúpime k samotnej matematickej formulácii doprednej a inverznej kinematickej úlohy, 
 je nevyhnutné bližšie predstaviť fyzickú platformu robotického ramena, ktorej vlastnosti priamo ovplyvňujú 
-návrh riadenia. Experimentálny model manipulátora použitý v tomto projekte je koncipovaný ako malá 
-mechatronická stavebnica. Celá mechanická konštrukcia ramena je postavená na báze cenovo dostupných komponentov 
-a pohyb v jednotlivých kĺboch zabezpečujú štandardné modelárske servomotory so zabudovaným spätnoväzobným riadením uhlovej polohy. Práve pre tento konkrétny fyzický 
-model je v nasledujúcich krokoch analyzovaná a hľadaná reálna kinematická štruktúra.
+návrh riadenia. 
 
-tu daj obrazok
+Experimentálny model manipulátora použitý v tomto projekte je koncipovaný ako malá 
+mechatronická stavebnica. Celá mechanická konštrukcia ramena je postavená na báze cenovo dostupných komponentov 
+a pohyb v jednotlivých kĺboch zabezpečujú štandardné modelárske servomotory so zabudovaným spätnoväzobným riadením 
+uhlovej polohy. Práve pre tento konkrétny fyzický model (Obr.\ref{fig:mani})
+je v nasledujúcich krokoch odvodená reálna kinematická štruktúra.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{img/mani.jpg}
+\caption{Reálny model robotického ramena}
+\label{fig:mani}
+\end{figure}
 
 Nasadenie tohto typu modelárskej stavebnice v rámci tímového projektu so sebou prináša špecifické faktory, 
 ktoré môžeme rozdeliť na výhody a nevýhody:
@@ -33,7 +41,8 @@ ktoré môžeme rozdeliť na výhody a nevýhody:
     približne 3 stupňov. To spôsobuje odchýlky koncového efektora pri dosahovaní presných súradníc v kartézskom 
     priestore.
 \end{itemize}
-Nesmieme teda zabúdať, že náš manipulátor bude mať kvôli týmto nevýhodám nejaké odchýlky. 
+Nesmieme teda zabúdať, že náš manipulátor bude mať kvôli týmto nevýhodám odchýlky, s ktorými treba počítať, 
+napríklad pri dosahovaní želaných súradníc. 
 Na základe fyzických rozmerov reálneho modelu bol vytvorený schematický nákres, 
 z ktorého vychádzajú všetky následné kinematické výpočty.
 
