@@ -79,30 +79,37 @@ Možné módy:
 
 \subsection{Spracovanie joysticku}
 
-Joystick poskytuje analógové hodnoty v rozsahu približne 0 až 1023. 
-Stredová hodnota je približne:
+Joystick poskytuje analógové hodnoty v rozsahu približne 0 až 1023, pričom stredová hodnota je približne:
 
 \begin{equation}
-CENTER = 520
+x_0 \approx 520
 \end{equation}
 
-Kvôli odstráneniu šumu sa používa mŕtva zóna:
+Na elimináciu nežiaduceho pohybu spôsobeného mechanickým šumom je definovaná mŕtva zóna:
 
 \begin{equation}
-DEADZONE = 20
+d = 20
 \end{equation}
 
-Výpočet zmeny:
+Hodnoty vstupu v okolí stredovej polohy sú ignorované:
 
 \begin{equation}
-dx = (joyX - CENTER)\cdot k
+|x - x_0| < d \Rightarrow f(x) = 0
 \end{equation}
 
+Pre hodnoty mimo mŕtvej zóny sa používa lineárna interpolácia, ktorá zabezpečuje plynulý prechod medzi nulovou a maximálnou rýchlosťou:
+
 \begin{equation}
-dy = (joyY - CENTER)\cdot k
+f(x) =
+\begin{cases}
+0, & |x - x_0| < d \\
+\mathrm{sign}(x-x_0)\cdot (|x-x_0| - d)\cdot k, & \text{inak}
+\end{cases}
 \end{equation}
 
 kde $k$ je koeficient citlivosti.
+
+Tento prístup zabezpečuje stabilitu systému v okolí neutrálnej polohy a zároveň zachováva lineárne ovládanie v celom zostávajúcom rozsahu pohybu joysticku.
 
 \subsection{Komunikácia s riadiacou úlohou}
 
