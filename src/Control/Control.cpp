@@ -12,6 +12,7 @@
 #include "../UI/ui_screens.h"
 #include "../../ServoActuator.h"
 #include "../../robot.h"
+#include "../Trajectory/Trajectory.h"
 
 TaskHandle_t HandleTaskControl;
 QueueHandle_t gUiToControlQueue = NULL;
@@ -40,7 +41,7 @@ void TaskControl(void* pvParameters) {
   servo_parameters.resize(6);
   servo_parameters[0] = { -6.0 / 10.0 * PI, 6.0 / 10.0 * PI, 2.0 / 3.0, 0 };
   servo_parameters[1] = { -5.0 / 10.0 * PI, 5.2 / 10.0 * PI, 2.0 / 3.0, 0.015 };
-  servo_parameters[2] = { -8.2 / 10.0 * PI, 5.0 / 10.0 * PI, -2.0 / 3.0, 0.12 };
+  servo_parameters[2] = { -8.2 / 10.0 * PI, 0.636 * PI, -2.0 / 3.0, 0.12 };
   servo_parameters[3] = { -7.0 / 10.0 * PI, 6.0 / 10.0 * PI, 2.0 / 3.0, -0.2 };
   servo_parameters[4] = { -6.0 / 10.0 * PI, 6.0 / 10.0 * PI, 2.0 / 3.0, 0.0 };
   servo_parameters[5] = { -6.0 / 10.0 * PI, 6.0 / 10.0 * PI, -2.0 / 3.0, 0.0 };
@@ -135,6 +136,31 @@ void TaskControl(void* pvParameters) {
         latest_command = msg;
       }
     }
+
+
+    // --- Trajectory override ---
+    static bool s_wasUsingTrajectory = false;
+    bool isUsingTrajectory = false;
+
+    if (gTrajectoryTargetPose.valid && gTrajectoryTargetPose.active) {
+      isUsingTrajectory = true;
+      latest_command.mode = UI_CONTROL_MODE_POSE;
+
+      latest_command.x = gTrajectoryTargetPose.x;
+      latest_command.y = gTrajectoryTargetPose.y;
+      latest_command.z = gTrajectoryTargetPose.z;
+
+      latest_command.roll  = gTrajectoryTargetPose.roll;
+      latest_command.pitch = gTrajectoryTargetPose.pitch;
+      latest_command.yaw   = gTrajectoryTargetPose.yaw;
+    }
+
+    if (isUsingTrajectory && !s_wasUsingTrajectory) {
+      Serial.println("Control using trajectory target");
+    } else if (!isUsingTrajectory && s_wasUsingTrajectory) {
+      Serial.println("Control using manual UI");
+    }
+    s_wasUsingTrajectory = isUsingTrajectory;
 
     const uint8_t activeMode = (latest_command.mode == UI_CONTROL_MODE_JOINT)
       ? UI_CONTROL_MODE_JOINT

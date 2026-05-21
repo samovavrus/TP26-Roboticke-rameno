@@ -8,11 +8,13 @@
 #include "src\Control\Control.h"
 #include "src\UI\ui_screens.h"
 #include "src\DistanceSensor\RangingSensor.h"
-
+#include "src\Trajectory\Trajectory.h"
 
 TaskHandle_t HandleTaskUI;
 TaskHandle_t HandleTaskSensor;
 
+// Vytvorenie globálnej premennej fronty
+QueueHandle_t gUiToTrajectoryQueue = NULL;
 
 void setup(void) {
 
@@ -29,12 +31,26 @@ void setup(void) {
     Serial.println("Failed to create Control->UI queue");
   }
 
+    // Fronta s dĺžkou 1 správa s veľkosťou jedného uint8_t
+  gUiToTrajectoryQueue = xQueueCreate(1, sizeof(uint8_t));
+  if (gUiToTrajectoryQueue == NULL) {
+    Serial.println("Failed to create UI->Trajectory queue");
+  }
+
+
   xTaskCreate(TaskControl,
               "Control",
               5000,
               NULL,
               tskIDLE_PRIORITY + 4,
               &HandleTaskControl);
+  
+  xTaskCreate(TaskTrajectory,
+            "Trajectory",
+            1500,
+            NULL,
+            tskIDLE_PRIORITY + 1,
+            &HandleTaskTrajectory);
 
   xTaskCreate(TaskUI,
               "UI",
@@ -50,6 +66,7 @@ xTaskCreate(TaskSensor,
               NULL,
               tskIDLE_PRIORITY + 1,
               &HandleTaskSensor);
+
 
 vTaskStartScheduler();
 }
