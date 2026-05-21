@@ -1,9 +1,17 @@
-\section{Numerické riešenie}
-Keďže náš manipulátor sa skladá s 6 článkov, tak v nasledovných rovniciach budeme uvažovať 
-výpočet pre týchto 6 článkov. Všeobecne však môžeme uvažovať ľubovoľný počet článkov,
-a teda aj ľubovoľný počet premenných. Pseudo programy na výpočet týchto rovníc budú
-preto všeobecne vyjadrené.
+\section{Priama kinematická úloha}
+Priama kinematická úloha (PKU) predstavuje matematický opis geometrie manipulátora, ktorý definuje zobrazenie 
+z kĺbového priestoru do priestoru koncového efektora. Vstupom sú kĺbové premenné (uhly natočenia jednotlivých 
+kĺbov).
 
+Výstupom PKU je jednoznačné určenie polohy a orientácie koncového efektora (nástroja) vzhľadom na bázový 
+(referenčný) súradnicový systém sústavy. Pre kompletný popis polohy a orientácie v 3D priestore využívame 
+maticu rotácie a vektor translácie separátne, pričom teda nevyužívame koncept homogénnych transformácií.
+
+Keďže náš manipulátor sa skladá z 6 článkov, tak v nasledovných rovniciach budeme uvažovať 
+výpočet priamej kinematickej úlohy pre týchto 6 článkov. Všeobecne však môžeme uvažovať ľubovoľný počet
+článkov, a teda aj ľubovoľný počet premenných.
+
+\subsection{Numerické riešenie}
 Pre výpočet budeme potrebovať základné vektory a matice. Budeme uvažovať polohový vektor:
 \begin{equation}
 \mathbf{p} = \begin{pmatrix} p^x \\ p^y \\ p^z \end{pmatrix}
@@ -13,7 +21,7 @@ a vektor kĺbových premenných:
 \boldsymbol{\theta} = \begin{pmatrix} \theta_1 \\ \theta_2 \\ \theta_3 \\ \theta_4 \\ \theta_5 \\ \theta_6 \end{pmatrix}
 \end{equation}
 
-rotačné matice a translačný vektor na výpočet polohy koncového efektora:
+takzvané elementárne rotačné matice a translačný vektor na výpočet polohy koncového efektora:
 \begin{equation}
 R_x(\theta) = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos(\theta) & -\sin(\theta) \\ 0 & \sin(\theta) & \cos(\theta) \end{pmatrix}
 \end{equation}
@@ -27,11 +35,17 @@ R_z(\theta) = \begin{pmatrix} \cos(\theta) & -\sin(\theta) & 0 \\ \sin(\theta) &
 \end{equation}
 
 \begin{equation}
-T = \begin{pmatrix} 0 \\ 0 \\ L \end{pmatrix}
+T_x = \begin{pmatrix} L \\ 0 \\ 0 \end{pmatrix}
 \end{equation}
 
-\subsection{Priama kinematika}
-Priama kinematika nám umožňuje vypočítať polohu koncového efektora na základe zadaných kĺbových premenných.
+\begin{equation}
+T_y = \begin{pmatrix} 0 \\ L \\ 0 \end{pmatrix}
+\end{equation}
+
+\begin{equation}
+T_z = \begin{pmatrix} 0 \\ 0 \\ L \end{pmatrix}
+\end{equation}
+
 Medzi jednotlivými súradnicovými systémami platia transformácie:
 \begin{align}
 p_5 &= R_6(\theta_6)(T_6 + p_6) \\
@@ -43,30 +57,88 @@ p_0 &= R_1(\theta_1)(T_1 + p_1)
 \end{align}
 
 Kinematika koncového efektora manipulátora je potom daná ako (transformácia z $p_6$ do $p_0$):
-\begin{equation}
+\begin{equation} \label{eq:p0_theta}
 p_0(\theta) = R_1(\theta_1)\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big(T_3 + R_4(\theta_4)\left(T_4 + R_5(\theta_5)\left(T_5 + R_6(\theta_6)(T_6)\right)\right)\big)\Big)\Bigg)
 \end{equation}
 
-\subsubsection{Pseudokód pre priamu kinematiku}
-Nižšie je uvedený pseudo program na výpočet priamej kinematickej úlohy, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
-Čiže pseudo program vracia polohový vektor a rotačnú maticu koncového efektora vzhľadom na základňu manipulátora.
+Rotačné matice jednotlivých článkov robota tvoria celkovú rotačnú maticu pre súradnicový systém efektora, ktorú získame z funkcie priamej kinematiky. 
+Táto matica nám umožní vypočítať orientáciu efektora vzhľadom na základňu manipulátora.
+Celková rotačná matica $R_T(\theta)$ je daná súčinom rotačných matíc jednotlivých článkov:
+\begin{equation} \label{eq:RT_theta}
+R_T(\theta) = R_1(\theta_1)R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)R_6(\theta_6)
+\end{equation}
 
-\begin{lstlisting}[caption={Výpočet priamej kinematickej úlohy}, language=C]
-function forwardKinematics(theta[], R[])
-    vekt = 0;
-    matica = I_3x3;
-    n = size(theta[]);
-    
-    for (i = n; i > 0; i--) begin
-        vekt = R[i](theta[i]) * (T[i] + vekt);
-        matica = R[i](theta[i]) * matica;
-    end
-    
-    return vekt, matica;
-end function
-\end{lstlisting}
+\section{Inverzná kinematika}
+Úlohou inverznej kinematiky (IK) je nájsť také hodnoty kĺbových premenných $\theta$, pre ktoré koncový efektor dosiahne požadovanú polohu a orientáciu v priestore. 
+Nech $p_r$ predstavuje žiadanú (referenčnú) polohu a $R_r$ žiadanú orientáciu. 
 
-\subsection{Inverzná kinematika}
+Základným princípom numerického riešenia je formulácia úlohy ako problému hľadania koreňov nelineárnych rovníc. Definujeme preto reziduá (odchýlky) medzi aktuálnym 
+a požadovaným stavom, pričom cielene hľadáme také $\theta$, pre ktoré sa tieto vektory chyby rovnajú nule.
+
+Reziduum (chybu) pre polohu efektora vyjadríme ako rozdiel aktuálnej a žiadanej polohy:
+\begin{equation}
+r_p(\theta) = p_0(\theta) - p_r
+\end{equation}
+
+Analogicky existuje aj reziduum pre orientáciu $r_o(\theta)$, ktoré vyjadruje odchýlku aktuálnej orientácie od žiadanej orientácie $R_r$. 
+Ak platí:
+\begin{equation}
+R_T=R_r
+\end{equation}
+tak potom:
+\begin{equation}
+R_TR_r^{-1}=I
+\end{equation}
+Keďže každá rotačná matica je ortogonálna, tak to vieme napísať v tvare:
+\begin{equation}
+R_TR_r^T=I
+\end{equation}
+
+Reziduum (chybu) pre orientáciu efektora vyjadríme ako:
+\begin{equation}
+r_o(\theta) = \begin{pmatrix}
+(0 \ 1 \ 0)(R_T R_r^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
+(0 \ 0 \ 1)(R_T R_r^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
+(0 \ 0 \ 1)(R_T R_r^T)\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}
+\end{pmatrix}
+\end{equation}
+
+Náš cieľ je dosiahnúť, aby obidve rezidua boli nulové (resp. minimálne), čo znamená že polohový vektor a orientácia efektora sa zhodujú s požadovanými hodnotami $p_r$ a $R_r$.
+\begin{equation}
+r_p(\theta) = 0
+\end{equation}
+\begin{equation}
+r_o(\theta) = 0
+\end{equation}
+
+Našim cieľom je dosiahnuť, aby veľkosť chybových vektorov bola minimálna, ideálne nulová, čo znamená, že poloha aj orientácia efektora sa zhoduje s požiadavkami. Na analytický popis zmeny polohy a orientácie pri zmene kĺbových premenných a následné minimalizovanie reziduí sa využíva Jakobián.
+
+\subsection{Numerické riešenie}
+Newtonova métoda bude iteratívne aktualizovať vektor kĺbových premenných $\theta$ na základe rezíduí a Jakobiánu, aby sa minimalizovali chyby polohy a orientácie efektora.
+\begin{equation} \label{eq:newton}
+\scalebox{0.55}{
+$\left(\left(\begin{array}{cccccc}
+\frac{\partial p_0(\theta)}{\partial \theta_1} & \frac{\partial p_0(\theta)}{\partial \theta_2} & \frac{\partial p_0(\theta)}{\partial \theta_3} & \frac{\partial p_0(\theta)}{\partial \theta_4} & \frac{\partial p_0(\theta)}{\partial \theta_5} & \frac{\partial p_0(\theta)}{\partial \theta_6} \\
+(0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
+(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{r}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
+(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{r}^T\begin{pmatrix}0\\1\\0\end{pmatrix}
+\end{array}\right)_{\theta=\theta(k)} + \Lambda\right) + \Delta\theta(k) = \begin{pmatrix} -r_p(\theta(k)) \\ -r_o(\theta(k)) \end{pmatrix}$
+}
+\end{equation}
+
+\begin{equation}
+\theta(k+1) = \theta(k) + \Delta\theta(k)
+\end{equation}
+
+Algoritmus sa ukončí ak sú splnené podmienky (veľkosti rezíduí):
+\begin{equation} \label{eq:tool_pos}
+||r_p(\theta)|| \leq \epsilon_{pos}
+\end{equation}
+a zároveň:
+\begin{equation} \label{eq:tool_ori}
+||r_o(\theta)|| \leq \epsilon_{ori}
+\end{equation}
+
 \subsubsection{Jakobián polohy}
 Na výpočet inverznej kinematickej úlohy je potrebné poznať Jakobián polohy, ktorý nám umožní vypočítať zmenu polohy koncového efektora vzhľadom na zmenu kĺbových premenných.
 Jakobiánu polohového vektora $p_0(\theta)$ možno definovať ako maticu parciálnych derivácií $\nabla p_0(\theta) \in \mathbb{R}^{3 \times 6}$:
@@ -76,7 +148,7 @@ Jakobiánu polohového vektora $p_0(\theta)$ možno definovať ako maticu parci�
 \end{pmatrix}
 \end{equation}
 
-Na výpočet matice budeme potrebovať vypočítať parciálne derivácie polohového vektora $p_0(\theta)$ vzhľadom na jednotlivé kĺbové premenné $\theta_i$.
+Na výpočet matice budeme potrebovať vypočítať parciálne derivácie polohového vektora $p_0(\theta)$ \eqref{eq:p0_theta} vzhľadom na jednotlivé kĺbové premenné $\theta_i$.
 \begin{equation}
 \frac{\partial p_0(\theta)}{\partial \theta_1} = \frac{\partial(R_1(\theta_1))}{\partial \theta_1}\Bigg(T_1 + R_2(\theta_2)\Big(T_2 + R_3(\theta_3)\big(T_3 + R_4(\theta_4)\left(T_4 + R_5(\theta_5)\left(T_5 + R_6(\theta_6)(T_6)\right)\right)\big)\Big)\Bigg)
 \end{equation}
@@ -101,48 +173,8 @@ Na výpočet matice budeme potrebovať vypočítať parciálne derivácie poloho
 \frac{\partial p_0(\theta)}{\partial \theta_6} = R_1(\theta_1)R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)\frac{\partial(R_6(\theta_6))}{\partial \theta_6}(T_6)
 \end{equation}
 
-\subsubsection{Pseudokód pre Jakobián}
-Nižšie je uvedený pseudo program na výpočet Jakobiho matice, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
-Tento pseudo program nám umožní vypočítať Jakobián polohy efektora vzhľadom na kĺbové premenné.
-
-\begin{lstlisting}[caption={Výpočet Jakobiho matice}, language=C]
-function jacobian(theta[], R[], dR[])
-    n = size(theta[]);
-    jacob_mat = 3 x n;
-    matica = I_3x3;
-    pom_vekt = T[n];
-    
-    for(i = n-1; i > 0; i--)
-    begin
-        matica = R[i](theta[i]) * matica;
-    end
-    
-    for(j = n; j > 0; j--)
-    begin
-        vekt = T[n];
-        if(n > j)
-        begin
-            matica = matica * R[j](theta[j]) * transpose();
-            pom_vekt = T[j] + R[j+1](theta[j+1]) * pom_vekt;
-            vekt = pom_vekt;
-        end
-        
-        vekt = matica + dR[j](theta[j]) * vekt;
-        jacob_mat.col(j) = vekt;
-    end
-    
-    return jacob_mat;
-end function
-\end{lstlisting}
-
 \subsubsection{Jakobián orientácie}
-Rotačné matice jednotlivých články robota tvoria celkovú rotačnú maticu pre súradnicový systém efektora, ktorú získame z funkcie priamej kinematiky. Táto matica nám umožní vypočítať orientáciu efektora vzhľadom na základňu manipulátora.
-Celková rotačná matica $R_T(\theta)$ je daná súčinom rotačných matíc jednotlivých článkov:
-\begin{equation}
-R_T(\theta) = R_1(\theta_1)R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)R_6(\theta_6)
-\end{equation}
-
-Následne vypočítamederivácie $R_T(\theta)$ pre získanie rotačného Jakobiánu, ktorý nám umožní vypočítať zmenu orientácie efektora vzhľadom na zmenu kĺbových premenných:
+Následne vypočítame derivácie $R_T(\theta)$ \eqref{eq:RT_theta} pre získanie rotačného Jakobiánu, ktorý nám umožní vypočítať zmenu orientácie efektora vzhľadom na zmenu kĺbových premenných:
 
 \begin{equation}
 \frac{\partial R_T(\theta)}{\partial \theta_1} = \frac{\partial R_1(\theta_1)}{\partial \theta_1} R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5)R_6(\theta_6)
@@ -167,121 +199,3 @@ Následne vypočítamederivácie $R_T(\theta)$ pre získanie rotačného Jakobi�
 \begin{equation}
 \frac{\partial R_T(\theta)}{\partial \theta_6} = R_1(\theta_1)R_2(\theta_2)R_3(\theta_3)R_4(\theta_4)R_5(\theta_5) \frac{\partial R_6(\theta_6)}{\partial \theta_6}
 \end{equation}
-
-Reziduum (chybu) pre polohu efektora vyjadríme ako:
-\begin{equation}
-r_p(\theta) = p_0(\theta) - p_r
-\end{equation}
-Chceme dosiahnúť, aby veľkosť tejto chyby bola minimálna, čo znamená že polohový vektor efektora sa zhoduje s požadovaným polohovým vektorom $p_r$.
-
-\subsubsection{Pseudokód pre výpočet Jakobiánu orientácie}
-Nižšie je uvedený pseudo program na výpočet derivácií rotačných matíc, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
-\begin{lstlisting}[caption={Výpočet derivácií rotačných matíc}, language=C]
-function derRotMat(theta[], dR[], R[])
-    n = size(theta[]);
-    mat_all(n);
-    f_mat = I_3x3;
-    b_mat = f_mat;
-    
-    for(i = n-1; i > 0; i--)
-    begin
-        f_mat = R[i](theta[i]) * matica;
-    end
-    
-    for(j = n; j > 0; j--)
-    begin
-        if(n > j)
-        begin
-            b_mat = R[j+1](theta[j+1]) * b_mat;
-            f_mat = f_mat * R[j](theta[j]).transpose();
-        end
-        mat_all(j) = f_mat * dR[j](theta[j]) * b_mat;
-    end
-    
-    return mat_all;
-end function
-\end{lstlisting}
-
-Reziduum (chybu) pre orientáciu efektora vyjadríme ako:
-\begin{equation}
-r_o(\theta) = \begin{pmatrix}
-(0 \ 1 \ 0)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
-(0 \ 0 \ 1)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \\
-(0 \ 0 \ 1)(R_T(\theta)(R_{RPY}(\theta_R, \theta_P, \theta_Y))^T)\begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}
-\end{pmatrix}
-\end{equation}
-
-Náš cieľ je dosiahnúť, aby obidve rezidua boli nulové (resp. minimálne), čo znamená že polohový vektor a orientácia efektora sa zhodujú s požadovanými hodnotami $p_r$ a $R_{RPY}(\theta_R, \theta_P, \theta_Y)$.
-\begin{equation}
-r_p(\theta) = 0
-\end{equation}
-\begin{equation}
-r_o(\theta) = 0
-\end{equation}
-
-Newtonova métoda bude iteratívne aktualizovať vektor kĺbových premenných $\theta$ na základe rezíduí a Jakobiánu, aby sa minimalizovali chyby polohy a orientácie efektora.
-\begin{equation}
-\scalebox{0.48}{
-$\left(\left(\begin{array}{cccccc}
-\frac{\partial p_0(\theta)}{\partial \theta_1} & \frac{\partial p_0(\theta)}{\partial \theta_2} & \frac{\partial p_0(\theta)}{\partial \theta_3} & \frac{\partial p_0(\theta)}{\partial \theta_4} & \frac{\partial p_0(\theta)}{\partial \theta_5} & \frac{\partial p_0(\theta)}{\partial \theta_6} \\
-(0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 1 \ 0)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
-(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{RPY}^T\begin{pmatrix}1\\0\\0\end{pmatrix} \\
-(0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_1}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_2}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_3}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_4}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_5}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix} & (0 \ 0 \ 1)\frac{\partial R_T(\theta)}{\partial \theta_6}R_{RPY}^T\begin{pmatrix}0\\1\\0\end{pmatrix}
-\end{array}\right)_{\theta=\theta(k)} + \Lambda\right) + \Delta\theta(k) = \begin{pmatrix} -r_p(\theta(k)) \\ -r_o(\theta(k)) \end{pmatrix}$
-}
-\end{equation}
-
-\begin{equation}
-\theta(k+1) = \theta(k) + \Delta\theta(k)
-\end{equation}
-
-Algoritmus sa ukončí ak je splnená podmienka (veľkosť rezidua):
-\begin{equation}
-(r_p(\theta))^T(r_p(\theta)) + (r_o(\theta))^T(r_o(\theta)) < \epsilon
-\end{equation}
-
-\subsubsection{Pseudokód pre inverznú kinematiku}
-Nižšie je uvedený pseudo program na iteratívny výpočet inverznej kinematiky pomocou Newtonovej metódy, ktorý zohľadňuje všetky články manipulátora a ich vzájomné transformácie.
-
-\begin{lstlisting}[caption={Iteratívny výpočet inverznej kinematiky}, language=C]
-function solveIK(pr, Rr, theta, tol_pos, tol_ori, max_iter)
-    for(i=0; i < max_iter; i++)
-    begin
-        [p0, R0] = forwardKinematics(theta, R);
-        (3,3) rp = p0 - Pr;
-        (3,3) E = R0 + Rr.transpose();
-        ro(0,0) = E(1,0);                         // (010) * E(100)^T
-        ro(1,0) = E(2,0);                         // (001) * E(100)^T
-        ro(2,0) = E(2,1);                         // (001) * E(010)^T
-        
-        if(rp.norm < tol_pos && ro.norm < tol_ori)
-        begin
-            return 1;                              // úspešne max_iterov
-        end
-        
-        J_p = jakobian(theta, R, dR);
-        der_R = derRotMat(theta, dR, R);
-        J.block<3,6>(0,0) = J_p.block<3,6>(0,0);
-
-        for(j=0; j < DOF; ++j)
-        begin
-        (3,3) dE_j = der_R[j] * Rr.transpose();
-
-        J(3,j) = dE_j(1,0);
-        J(4,j) = dE_j(2,0);
-        J(5,j) = dE_j(2,1);
-        end
-        
-        for(k=0; k < DOF; ++k)
-        begin
-            J(k,k) += lambda;
-        end
-
-        minus_r.block<3,1>(0,0) = -rp;
-        minus_r.block<3,1>(3,0) = -ro;
-        delta_theta = vyries_sustavu_6x6(J, minus_r);
-        theta = theta + delta_theta; 
-    end
-    return false;   
-end function
-\end{lstlisting}
