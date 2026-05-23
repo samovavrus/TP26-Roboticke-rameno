@@ -1,4 +1,8 @@
 
+/**
+ * @file STM32FreeRTOSConfig.h
+ * @brief FreeRTOS configuration for STM32 targets.
+ */
 #ifndef STM32FREERTOS_CONFIG_H
 #define STM32FREERTOS_CONFIG_H
 

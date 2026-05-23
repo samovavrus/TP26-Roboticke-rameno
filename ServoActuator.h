@@ -1,6 +1,10 @@
-#include <vector>
-
+/**
+ * @file ServoActuator.h
+ * @brief Servo actuator controller using PCA9685.
+ */
 #pragma once
+
+#include <vector>
 
 #include "robot.h"
 #include "src\PCA9685\PCA9685.h"
@@ -32,9 +36,8 @@ public:
    *                    - minAngle, maxAngle: joint limits in radians
    *                    - gain, offset: calibration factors for angle-to-PWM conversion
    * 
-   * Does not take ownership of the Wire_ reference; caller must manage the I2C bus.
-   * Parameters are stored as a reference; the caller must ensure the vector
-   * remains valid for the lifetime of this object.
+  * Does not take ownership of the Wire_ reference; caller must manage the I2C bus.
+  * Parameters are copied into the controller on construction.
    */
   RobotServoController(TwoWire& Wire_, const std::vector<actuator_parameters>& parameters_)
     : Robot::JointActuators(), pwmController(Wire_), parameters(parameters_) {

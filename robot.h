@@ -1,3 +1,7 @@
+/**
+ * @file robot.h
+ * @brief Robot kinematics and actuator interfaces.
+ */
 #pragma once
 #include <cstddef>
 #include <array>

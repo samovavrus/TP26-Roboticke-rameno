@@ -30,14 +30,43 @@
 #include "src\DistanceSensor\RangingSensor.h"
 #include "src\Trajectory\Trajectory.h"
 
+/// @brief Task handle for main control task (kinematics and servo control)
+TaskHandle_t HandleTaskControl;
+
+/// @brief Task handle for UI/display task
 TaskHandle_t HandleTaskUI;
 
 /// @brief Task handle for sensor acquisition task
 TaskHandle_t HandleTaskSensor;
 
-// Vytvorenie globálnej premennej fronty
+/// @brief Task handle for trajectory generation and planning
+TaskHandle_t HandleTaskTrajectory;
+
+/// @brief Queue for communication from UI task to Trajectory task
+/// @details Used to send trajectory commands (uint8_t format) from the user interface
+/// to the trajectory generation and planning module. Queue size: 1 message.
 QueueHandle_t gUiToTrajectoryQueue = NULL;
 
+/**
+ * @brief Arduino setup() - Initializes hardware and creates FreeRTOS tasks
+ * 
+ * System initialization sequence:
+ * 1. Serial communication at 250 kbps for debug output
+ * 2. I2C bus initialization for peripheral communication
+ * 3. Create inter-task communication queues:
+ *    - gUiToControlQueue: UI → Control task commands
+ *    - gControlToUiQueue: Control → UI task state updates
+ *    - gUiToTrajectoryQueue: UI → Trajectory task commands
+ * 4. Create four concurrent FreeRTOS tasks:
+ *    - TaskControl: Main kinematics solver (5000 bytes stack, priority IDLE+4)
+ *    - TaskTrajectory: Trajectory planning (1500 bytes stack, priority IDLE+1)
+ *    - TaskUI: Display and user input (1500 bytes stack, priority IDLE+2)
+ *    - TaskSensor: Distance sensor (1000 bytes stack, priority IDLE+1)
+ * 5. Start FreeRTOS scheduler
+ * 
+ * @note This function does not return; control passes to vTaskStartScheduler().
+ *       The Arduino loop() function is never executed in this FreeRTOS-based design.
+ */
 void setup(void) {
 
   Serial.begin(250000);

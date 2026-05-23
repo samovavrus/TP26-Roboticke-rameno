@@ -1,3 +1,7 @@
+/**
+ * @file geometry.h
+ * @brief Rotation matrices and derivatives for robot kinematics.
+ */
 #pragma once
 
 #include "Eigen/Dense"

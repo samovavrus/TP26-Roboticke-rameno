@@ -1,3 +1,7 @@
+/**
+ * @file Control.cpp
+ * @brief Implementation of the main robot control task and helpers.
+ */
 #include <Arduino.h>
 #undef B1
 #undef B0
@@ -14,10 +18,20 @@
 #include "../../robot.h"
 #include "../Trajectory/Trajectory.h"
 
+/// @brief FreeRTOS task handle for the main control task.
 TaskHandle_t HandleTaskControl;
+/// @brief Queue for UI -> Control commands.
 QueueHandle_t gUiToControlQueue = NULL;
+/// @brief Queue for Control -> UI state updates.
 QueueHandle_t gControlToUiQueue = NULL;
 
+/**
+ * @brief Convert roll-pitch-yaw angles to a rotation matrix.
+ * @param roll Rotation about X axis in radians.
+ * @param pitch Rotation about Y axis in radians.
+ * @param yaw Rotation about Z axis in radians.
+ * @return 3x3 rotation matrix.
+ */
 static Matrix<3, 3> rpyToRotation(const float roll, const float pitch, const float yaw) {
   return (
     Eigen::AngleAxisf(yaw, Eigen::Vector3f::UnitZ()) *
@@ -26,12 +40,23 @@ static Matrix<3, 3> rpyToRotation(const float roll, const float pitch, const flo
   ).toRotationMatrix();
 }
 
+/**
+ * @brief Convert a rotation matrix to roll-pitch-yaw angles.
+ * @param rot 3x3 rotation matrix.
+ * @param roll Output roll angle in radians.
+ * @param pitch Output pitch angle in radians.
+ * @param yaw Output yaw angle in radians.
+ */
 static void rotationToRpy(const Matrix<3, 3>& rot, float& roll, float& pitch, float& yaw) {
   pitch = asinf(-rot(2, 0));
   roll = atan2f(rot(2, 1), rot(2, 2));
   yaw = atan2f(rot(1, 0), rot(0, 0));
 }
 
+/**
+ * @brief FreeRTOS task for kinematics, IK solving, and servo actuation.
+ * @param pvParameters Unused task parameter.
+ */
 void TaskControl(void* pvParameters) {
   TwoWire Wire2(PF0, PF1);
   Wire2.begin();
