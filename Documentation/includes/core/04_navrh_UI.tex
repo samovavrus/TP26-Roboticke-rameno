@@ -1,1 +1,171 @@
 \section{Návrh používateľského rozhrania}
+
+\subsection{Celková architektúra a princíp fungovania}
+Z hľadiska celkovej architektúry je riadenie robotického ramena implementované na vývojovej doske s mikrokontrolérom STM32. O spoľahlivý beh jednotlivých procesov sa stará operačný systém reálneho času FreeRTOS. Softvér je logicky rozdelený na nezávislé, no navzájom komunikujúce úlohy (tasky), pričom kľúčové sú najmä:
+\begin{itemize}
+    \item \textbf{Riadiaci a kinematický task (Control Task)} -- beží v striktne vyhradenej periodickej slučke. Zabezpečuje prepočet požadovanej polohy a orientácie na kĺbové súradnice pomocou inverznej kinematiky (IK), overuje fyzické limity servomotorov a stará sa o generovanie plynulej trajektórie. Následne odosiela povely priamo do servopohonov.
+    \item \textbf{Task používateľského rozhrania (UI Task)} -- stará sa o čítanie vstupov (joystick, tlačidlá), obsluhu displeja a spracovanie volieb používateľa, ktoré obratom posiela do riadiaceho tasku.
+    \item \textbf{Task na snímanie prostredia (Sensor Task)} -- zabezpečuje nepretržité vyhodnocovanie dát zo snímača vzhľadom na robotické rameno (samotný snímač a jeho integrácia budú detailne rozobraté neskôr).
+\end{itemize}
+
+Očakávané správanie systému z používateľského hľadiska je také, že rameno po spustení funguje ako samostatný 
+vstavaný systém (embedded device) bez nutnosti stáleho pripojenia k počítaču. 
+Používateľ prostredníctvom ovládacieho panelu volí režim riadenia a plynule zadáva cieľovú pozíciu koncového 
+efektora (X, Y, Z súradnice), jeho orientáciu (Roll, Pitch, Yaw), alebo natáča jednotlivé kĺby priamo. 
+Systém následne automaticky naplánuje pohyb a manipulátor sa presunie do 
+požadovaného stavu.
+
+\subsection{Prostriedky používateľského rozhrania}
+Používateľské rozhranie manipulátora slúži na samotné zadávanie požadovanej polohy, orientácie alebo priamo kĺbových uhlov robota. 
+Rozhranie je realizované pomocou LCD displeja 16x2 s I2C prevodníkom a joysticku s tlačidlami.
+
+Systém beží ako samostatná FreeRTOS úloha \texttt{TaskUI}, ktorá zabezpečuje:
+\begin{itemize}
+    \item čítanie vstupu z joysticku,
+    \item prepínanie medzi obrazovkami,
+    \item prepínanie medzi módmi ovládania,
+    \item zobrazovanie aktuálneho stavu robota,
+    \item odosielanie požiadaviek do riadiacej úlohy.
+\end{itemize}
+
+\subsection{Hardvérové prvky}
+
+Používateľské rozhranie využíva nasledovné hardvérové prvky:
+\begin{itemize}
+    \item \textbf{Joystick} -- slúži na zmenu hodnôt v dvoch osiach.
+    \item \textbf{Tlačidlo A} -- prepína medzi jednotlivými obrazovkami.
+    \item \textbf{Tlačidlo B} -- prepína medzi módmi v rámci obrazovky.
+    \item \textbf{LCD 16x2} -- zobrazuje aktuálne hodnoty.
+\end{itemize}
+
+\subsection{Obrazovky}
+
+Používateľské rozhranie obsahuje tri základné obrazovky:
+
+\subsubsection{Obrazovka polohy XYZ}
+
+Na tejto obrazovke sa nastavuje poloha koncového efektora v priestore.
+
+\begin{lstlisting}[caption={Ukážka obrazovky XYZ}]
+X:12.4   Y:8.1
+Z:4.2    XY
+\end{lstlisting}
+
+V pravom dolnom rohu sa zobrazuje aktuálny mód:
+
+\begin{itemize}
+    \item \texttt{XY} -- joystick ovláda osi X a Y
+    \item \texttt{YZ} -- joystick ovláda osi Y a Z
+    \item \texttt{ZX} -- joystick ovláda osi Z a X
+\end{itemize}
+
+\subsubsection{Obrazovka orientácie RPY}
+
+Na tejto obrazovke sa nastavuje orientácia efektora pomocou Roll, Pitch a Yaw uhlov.
+
+\begin{lstlisting}[caption={Ukážka obrazovky RPY}]
+R:15.0   P:8.2
+Y:4.1    RP
+\end{lstlisting}
+
+Možné módy:
+
+\begin{itemize}
+    \item \texttt{RP} -- joystick ovláda Roll a Pitch
+    \item \texttt{PY} -- joystick ovláda Pitch a Yaw
+    \item \texttt{YR} -- joystick ovláda Yaw a Roll
+\end{itemize}
+
+\subsubsection{Obrazovka kĺbových uhlov}
+
+Na tejto obrazovke sa nastavujú jednotlivé uhly servomotorov.
+
+\begin{lstlisting}[caption={Ukážka obrazovky JOINTS}]
+T1:20.0  T2:10.0
+PAIR:12
+\end{lstlisting}
+
+Možné módy:
+
+\begin{itemize}
+    \item \texttt{PAIR:12} -- joystick ovláda $\theta_1$ a $\theta_2$
+    \item \texttt{PAIR:34} -- joystick ovláda $\theta_3$ a $\theta_4$
+    \item \texttt{PAIR:56} -- joystick ovláda $\theta_5$ a $\theta_6$
+\end{itemize}
+
+\subsection{Spracovanie joysticku}
+
+Joystick poskytuje analógové hodnoty v rozsahu približne 0 až 1023, pričom stredová hodnota je približne:
+
+\begin{equation}
+x_0 \approx 520
+\end{equation}
+
+Na elimináciu nežiaduceho pohybu spôsobeného mechanickým šumom je definovaná mŕtva zóna:
+
+\begin{equation}
+d = 20
+\end{equation}
+
+Hodnoty vstupu v okolí stredovej polohy sú ignorované:
+
+\begin{equation}
+|x - x_0| < d \Rightarrow f(x) = 0
+\end{equation}
+
+Pre hodnoty mimo mŕtvej zóny sa používa lineárna interpolácia, ktorá zabezpečuje plynulý prechod medzi nulovou a maximálnou rýchlosťou:
+
+\begin{equation}
+f(x) =
+\begin{cases}
+0, & |x - x_0| < d \\
+\mathrm{sign}(x-x_0)\cdot (|x-x_0| - d)\cdot k, & \text{inak}
+\end{cases}
+\end{equation}
+
+kde $k$ je koeficient citlivosti.
+
+Tento prístup zabezpečuje stabilitu systému v okolí neutrálnej polohy a zároveň zachováva lineárne ovládanie v celom zostávajúcom rozsahu pohybu joysticku.
+
+\subsection{Komunikácia s riadiacou úlohou}
+
+UI komunikuje s riadiacou úlohou pomocou FreeRTOS front:
+
+\begin{itemize}
+    \item \texttt{gUiToControlQueue} -- odosielanie požadovanej polohy/orientácie/kĺbových uhlov
+    \item \texttt{gControlToUiQueue} -- prijímanie aktuálneho stavu robota
+\end{itemize}
+
+Ak je robot v režime polohy/orientácie:
+
+\begin{equation}
+[x,y,z,R,P,Y]
+\end{equation}
+
+sa odošlú do inverznej kinematiky.
+
+Ak je robot v režime kĺbového ovládania:
+
+\begin{equation}
+[\theta_1,\theta_2,\theta_3,\theta_4,\theta_5,\theta_6]
+\end{equation}
+
+sa odošlú priamo regulátoru servomotorov.
+
+\subsection{Chybové hlásenia}
+
+Pri výskyte chyby sa na displeji zobrazí chybová správa.
+
+\begin{lstlisting}[caption={Ukážka chyby}]
+CONTROL ERROR
+IK FAILED
+\end{lstlisting}
+
+alebo
+
+\begin{lstlisting}[caption={Ukážka chyby}]
+CONTROL ERROR
+OUT OF LIMITS
+\end{lstlisting}
+
+Týmto spôsobom používateľ okamžite vidí, že požadovaná poloha nie je dosiahnuteľná alebo prekračuje limity robota.

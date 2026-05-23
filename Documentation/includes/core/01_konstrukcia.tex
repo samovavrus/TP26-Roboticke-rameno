@@ -1,1 +1,71 @@
 \section{Geometria modelu ramena}
+Predtým, než pristúpime k samotnej matematickej formulácii doprednej a inverznej kinematickej úlohy, 
+je nevyhnutné bližšie predstaviť fyzickú platformu robotického ramena, ktorej vlastnosti priamo ovplyvňujú 
+návrh riadenia. 
+
+Experimentálny model manipulátora použitý v tomto projekte je koncipovaný ako malá 
+mechatronická stavebnica. Celá mechanická konštrukcia ramena je postavená na báze cenovo dostupných komponentov 
+a pohyb v jednotlivých kĺboch zabezpečujú štandardné modelárske servomotory so zabudovaným spätnoväzobným riadením 
+uhlovej polohy. Práve pre tento konkrétny fyzický model (Obr.\ref{fig:mani})
+je v nasledujúcich krokoch odvodená reálna kinematická štruktúra.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{img/mani.jpg}
+\caption{Reálny model robotického ramena}
+\label{fig:mani}
+\end{figure}
+
+Nasadenie tohto typu modelárskej stavebnice v rámci tímového projektu so sebou prináša špecifické faktory, 
+ktoré môžeme rozdeliť na výhody a nevýhody:
+
+\textbf{Výhody stavebnicového riešenia:}
+\begin{itemize}
+    \item \textbf{Vysoká dostupnosť a modularita:} Umožňuje rýchle zostavenie, prípadnú modifikáciu mechanických 
+    častí a jednoduchú výmenu komponentov v laboratórnych podmienkach.
+    \item \textbf{Ekonomická efektivita:} Nízke obstarávacie náklady robia z platformy ideálny vzdelávací 
+    nástroj pre overenie teoretických kybernetických princípov v praxi.
+    \item \textbf{Bezpečnosť prevádzky:} Vzhľadom na malé rozmery, nízku hmotnosť a obmedzený krútiaci 
+    moment motorov je manipulácia s modelom bezpečná a nehrozí riziko zranenia operátora ani vážneho poškodenia 
+    hardvéru pri chybách v riadiacom algoritme.
+\end{itemize}
+
+\textbf{Nevýhody a mechanické limity:}
+\begin{itemize}
+    \item \textbf{Nízka tuhosť konštrukcie:} Spojovacie prvky vykazujú flexibilitu a konštrukcia vyrobená v 
+    domácich podmienkach nedosahuje ideálnu tuhosť profesionálnych priemyselných ramien.
+    \item \textbf{Mechanické vôle:} Prítomnosť vôlí v prevodovkách modelárskych servomotorov a 
+    v samotných spojoch konštrukcie výrazne ovplyvňuje výslednú presnosť. Tieto vôle sa kumulujú smerom od 
+    základne k efektoru, pričom v spodných kĺboch dosahujú vôľu až 5 stupňov.
+    \item \textbf{Obmedzená presnosť polohovania:} Použité servomotory majú praktickú presnosť pohybu na úrovni 
+    približne 3 stupňov. To spôsobuje odchýlky koncového efektora pri dosahovaní presných súradníc v kartézskom 
+    priestore.
+\end{itemize}
+Nesmieme teda zabúdať, že náš manipulátor bude mať kvôli týmto nevýhodám odchýlky, s ktorými treba počítať, 
+napríklad pri dosahovaní želaných súradníc. 
+Na základe fyzických rozmerov reálneho modelu bol vytvorený schematický nákres, 
+z ktorého vychádzajú všetky následné kinematické výpočty.
+
+Na Obr. \ref{fig:geometria_ramena} je nákres schematického zobrazenia rozmerov robotického ramena.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{img/TIM-PR_rameno_vykres.pdf}
+\caption{Schematické zobrazenie rozmerov robotického ramena}
+\label{fig:geometria_ramena}
+\end{figure}
+
+Geometriu posunutí a rotácie bolo kvôli implementácii výpočtov pre inverznú kinematiku nevyhnutné správne určiť. 
+Na ľavej časti nákresu je rameno zobrazené „z boku“, a teda os robota X smeruje vpravo a Y smerom do obrázka.
+V pravej časti je zobrazenie ramena „spredu“, čiže os X smeruje von z obrázka a os Y smeruje vpravo.
+Tým, že tieto nákresy slúžia len na zdokumentovanie posunutí kĺbov (bodov otáčania) ramena, 
+nie sú zahrnuté celkové rozmery súčiastok ramena. Taktiež v pravej časti nákresu nie sú zobrazené 
+prvé dva články ramena, lebo nemalo význam ich kresliť, keďže neboli v osi Y posunuté.
+Čiarkovaná čiara oznažená ako hlavná os značí smer osi Z ramena.
+Taktiež značí stred symetrie niektorých článkov robotického ramena, 
+čo bolo vhodné využiť pri označovaní dĺžok posunutí kĺbov.
+Kruhy so šípkou na koncoch článkov ramena označujú kĺby realizujúce rotáciu v osi Y a 
+štvorce so šípkou označujú kĺby konajúce rotáciu v osi Z, prípadne kĺby realizujúce rotáciu v osi Y v inom pohľade.
+Označenia osí v nákresoch, ktoré v úvodzovkách neoznačujú reálne osi X, Y a Z, 
+resp. reálny stred súradnicového systému, ale slúžia len ako pomocné osi pre lepšiu vizualizáciu smeru,
+z ktorého je nákres ramena realizovaný. Skútočný počiatok súradníc robotického ramena je v bod,
+ kde sa pretína os označená „Z = 0“ a hlavná os.
