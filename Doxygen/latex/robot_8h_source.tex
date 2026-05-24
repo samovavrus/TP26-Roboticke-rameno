@@ -1,282 +1,297 @@
 \doxysection{robot.\+h}
 \hypertarget{robot_8h_source}{}\label{robot_8h_source}\index{TP26-\/Roboticke-\/rameno/robot.h@{TP26-\/Roboticke-\/rameno/robot.h}}
-
+\mbox{\hyperlink{robot_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstddef>}}
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <array>}}
-\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}geometry.h"{}}}
-\DoxyCodeLine{00005\ }
-\DoxyCodeLine{00006\ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ Rows,\ \textcolor{keywordtype}{int}\ Cols>}
-\DoxyCodeLine{00007\ \textcolor{keyword}{using\ }Matrix\ =\ Eigen::Matrix<float,\ Rows,\ Cols>;}
-\DoxyCodeLine{00008\ }
-\DoxyCodeLine{00016\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00017\ \{}
-\DoxyCodeLine{00018\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_ae67357f8ede8c627533696d992ebfe58}{minAngle}};\ \ }
-\DoxyCodeLine{00019\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_a4999db8b5541cd35695afd3d31b7ebc1}{maxAngle}};\ \ }
-\DoxyCodeLine{00020\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_a39f0faddfdc806d8eec51ba27fc079b7}{gain}};\ \ \ \ \ \ }
-\DoxyCodeLine{00021\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_a6ffdd95dcc98bcb813abd8656c638921}{offset}};\ \ \ \ }
-\DoxyCodeLine{00022\ \}\ \mbox{\hyperlink{structactuator__parameters}{actuator\_parameters}};}
-\DoxyCodeLine{00023\ }
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00032\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceRobot}{Robot}}\ \{}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ Matrix<3,1>\ T(\textcolor{keywordtype}{float}\ l)\ \{}
-\DoxyCodeLine{00042\ \ \ \ \ Matrix<3,1>\ t;}
-\DoxyCodeLine{00043\ \ \ \ \ t\ <<\ 0.0f,\ 0.0f,\ l;}
-\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ t;}
-\DoxyCodeLine{00045\ \ \ \}}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00056\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ DOF>}
-\DoxyCodeLine{00057\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{RobotKinematicsBase}}\ \{}
-\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00072\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase_a4ac6e581dbf0fc69ad963925b6876fcb}{SolveIK}}(}
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{const}\ Matrix<3,\ 1>\&\ pr,}
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{const}\ Matrix<3,\ 3>\&\ Rr,}
-\DoxyCodeLine{00075\ \ \ \ \ Matrix<DOF,\ 1>\&\ theta\_,}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{float}\ tol\_pos,}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{float}\ tol\_ori,}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{float}\ lambda,}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter)\ \ =\ 0;}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{virtual}\ std::pair<Matrix<3,\ 1>,\ Matrix<3,\ 3>>\ \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase_ae9062f000170b01e16e843af8ba6ad08}{forwardKinematics}}(\textcolor{keyword}{const}\ Matrix<DOF,\ 1>\&\ theta)\ \textcolor{keyword}{const}\ =\ 0;}
-\DoxyCodeLine{00087\ \};}
-\DoxyCodeLine{00088\ }
-\DoxyCodeLine{00089\ }
-\DoxyCodeLine{00090\ }
-\DoxyCodeLine{00099\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1JointActuators}{JointActuators}}\ \{}
-\DoxyCodeLine{00100\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00104\ \ \ \mbox{\hyperlink{classRobot_1_1JointActuators_a978a9226c9dab9f61eb23e234a58ea3a}{JointActuators}}()\ \{\}}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00113\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b}{writeAngles}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*,\ std::size\_t)\ =\ 0;}
-\DoxyCodeLine{00114\ \};}
-\DoxyCodeLine{00115\ }
-\DoxyCodeLine{00126\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ DOF>}
-\DoxyCodeLine{00127\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1RobotArm}{RobotArm}}\ \{}
-\DoxyCodeLine{00128\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00129\ }
-\DoxyCodeLine{00137\ \ \ \mbox{\hyperlink{classRobot_1_1RobotArm_abcdfa86b41a518c0ac875fed7ab20b59}{RobotArm}}(RobotKinematicsBase<DOF>*\ robot\_kinematics,\ \mbox{\hyperlink{classRobot_1_1JointActuators}{JointActuators}}*\ actuators)}
-\DoxyCodeLine{00138\ \ \ \ \ :\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}}(robot\_kinematics),\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}}(Matrix<DOF,\ 1>::Zero()),\ \mbox{\hyperlink{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}{actuators\_}}(actuators)\ \{}
-\DoxyCodeLine{00139\ \ \ \}}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ M\_PI}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ M\_PI\ 3.14159265358979323846f}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{geometry_8h}{geometry.h}}"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ Rows,\ \textcolor{keywordtype}{int}\ Cols>}
+\DoxyCodeLine{00018\ \textcolor{keyword}{using\ }\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}\ =\ Eigen::Matrix<float,\ Rows,\ Cols>;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_ae67357f8ede8c627533696d992ebfe58}{minAngle}};\ \ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_a4999db8b5541cd35695afd3d31b7ebc1}{maxAngle}};\ \ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_a39f0faddfdc806d8eec51ba27fc079b7}{gain}};\ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structactuator__parameters_a6ffdd95dcc98bcb813abd8656c638921}{offset}};\ \ \ \ }
+\DoxyCodeLine{00033\ \}\ \mbox{\hyperlink{structactuator__parameters}{actuator\_parameters}};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceRobot}{Robot}}\ \{}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,1>}}\ T(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{l}})\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{t}};}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{t}}\ <<\ 0.0f,\ 0.0f,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{l}};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{t}};}
+\DoxyCodeLine{00056\ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ DOF>}
+\DoxyCodeLine{00068\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{RobotKinematicsBase}}\ \{}
+\DoxyCodeLine{00069\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase_a4ac6e581dbf0fc69ad963925b6876fcb}{SolveIK}}(}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pr}},}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rr}},}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta\_}},}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{tol\_pos}},}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{tol\_ori}},}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lambda}},}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{max\_iter}})\ \ =\ 0;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{virtual}\ std::pair<Matrix<3,\ 1>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}>\ \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase_ae9062f000170b01e16e843af8ba6ad08}{forwardKinematics}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00098\ \};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00110\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1JointActuators}{JointActuators}}\ \{}
+\DoxyCodeLine{00111\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00115\ \ \ \mbox{\hyperlink{classRobot_1_1JointActuators_a978a9226c9dab9f61eb23e234a58ea3a}{JointActuators}}()\ \{\}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00124\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b}{writeAngles}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*,\ std::size\_t)\ =\ 0;}
+\DoxyCodeLine{00125\ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ DOF>}
+\DoxyCodeLine{00138\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1RobotArm}{RobotArm}}\ \{}
+\DoxyCodeLine{00139\ \textcolor{keyword}{public}:}
 \DoxyCodeLine{00140\ }
-\DoxyCodeLine{00144\ \ \ \mbox{\hyperlink{classRobot_1_1RobotArm_ae11ed0b078e47c58bb934a382e36bc4b}{\string~RobotArm}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00145\ }
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00155\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18}{setJointAngles}}(\textcolor{keyword}{const}\ Matrix<DOF,\ 1>\&\ angles)\ \{}
+\DoxyCodeLine{00148\ \ \ \mbox{\hyperlink{classRobot_1_1RobotArm_abcdfa86b41a518c0ac875fed7ab20b59}{RobotArm}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{RobotKinematicsBase<DOF>}}*\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{robot\_kinematics}},\ \mbox{\hyperlink{classRobot_1_1JointActuators}{JointActuators}}*\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{actuators}})}
+\DoxyCodeLine{00149\ \ \ \ \ :\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{robot\_kinematics}}),\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}<\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}},\ 1>::\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Zero}}()),\ \mbox{\hyperlink{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}{actuators\_}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{actuators}})\ \{}
+\DoxyCodeLine{00150\ \ \ \}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00155\ \ \ \mbox{\hyperlink{classRobot_1_1RobotArm_ae11ed0b078e47c58bb934a382e36bc4b}{\string~RobotArm}}()\ =\ \textcolor{keywordflow}{default};}
 \DoxyCodeLine{00156\ }
-\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}{actuators\_}}-\/>\mbox{\hyperlink{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b}{writeAngles}}(angles.data(),\ DOF))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00158\ \ \ \ \ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}}\ =\ angles;}
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00160\ \ \ \}}
-\DoxyCodeLine{00161\ }
-\DoxyCodeLine{00167\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8f3ee7687ad39c166edace44c9dac313}{getJointAngle}}(std::size\_t\ index)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}}(index);}
-\DoxyCodeLine{00169\ \ \ \}}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00175\ \ \ Matrix<DOF,\ 1>\ \mbox{\hyperlink{classRobot_1_1RobotArm_ac59c40b9304ceb66115bf75bff014b9a}{getJointAngles}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}};}
-\DoxyCodeLine{00177\ \ \ \}}
-\DoxyCodeLine{00178\ }
-\DoxyCodeLine{00184\ \ \ std::pair<Matrix<3,\ 1>,\ Matrix<3,\ 3>>\ \mbox{\hyperlink{classRobot_1_1RobotArm_acb86240d2bfd77e234da66c9efe275d8}{getCurrentEffectorPositionOrientation}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}}-\/>forwardKinematics(\mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}});}
-\DoxyCodeLine{00186\ \ \ \}}
-\DoxyCodeLine{00187\ }
-\DoxyCodeLine{00199\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a164ab76f17054578165f3395f2aabdb9}{goTo}}(\textcolor{keyword}{const}\ Matrix<3,\ 1>\&\ pr,\ \textcolor{keyword}{const}\ Matrix<3,\ 3>\&\ Rr)\ \{}
-\DoxyCodeLine{00200\ \ \ \ \ Matrix<DOF,\ 1>\ theta\ =\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}};}
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{bool}\ res\ =\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}}-\/>SolveIK(pr,\ Rr,\ theta,\ 1e-\/5f,\ 1e-\/3f,\ 1e-\/2,\ 50);}
-\DoxyCodeLine{00202\ \ \ \ \ }
-\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordflow}{if}\ (res)\ \{}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ res\ =\ \mbox{\hyperlink{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18}{setJointAngles}}(theta);}
-\DoxyCodeLine{00205\ \ \ \ \ \}}
-\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
-\DoxyCodeLine{00207\ \ \ \}}
-\DoxyCodeLine{00208\ }
-\DoxyCodeLine{00209\ }
-\DoxyCodeLine{00210\ }
-\DoxyCodeLine{00211\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00212\ \ \ \mbox{\hyperlink{classRobot_1_1JointActuators}{JointActuators}}*\ \mbox{\hyperlink{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}{actuators\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00213\ \ \ Matrix<DOF,\ 1>\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00214\ \ \ RobotKinematicsBase<DOF>*\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}};\ }
-\DoxyCodeLine{00215\ \};}
-\DoxyCodeLine{00216\ }
-\DoxyCodeLine{00227\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ DOF>}
-\DoxyCodeLine{00228\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1RobotKinematics}{RobotKinematics}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{RobotKinematicsBase}}<DOF>}
-\DoxyCodeLine{00229\ \{}
-\DoxyCodeLine{00230\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00231\ }
-\DoxyCodeLine{00238\ \ \ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a1c30cdb22be13ce92197d8fa384452d1}{RobotKinematics}}(\textcolor{keyword}{const}\ std::array<Matrix<3,\ 1>,\ DOF>\&\ L\_,}
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::array<const\ RotationMatrix*,\ DOF>\&\ R\_)}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ :\ L(L\_),\ R\_func(R\_)\ \{\}}
-\DoxyCodeLine{00241\ }
-\DoxyCodeLine{00249\ \ \ std::pair<Matrix<3,1>,\ Matrix<3,3>>}
-\DoxyCodeLine{00250\ \ \ \mbox{\hyperlink{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a}{forwardKinematics}}(\textcolor{keyword}{const}\ Matrix<DOF,1>\&\ theta)\textcolor{keyword}{\ const\ override}}
-\DoxyCodeLine{00251\ \textcolor{keyword}{\ \ }\{}
-\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Iterujeme\ od\ posledného\ kĺbu\ dovnútra\ smerom\ k\ základni}}
-\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ Matrix<3,1>\ vekt\ =\ Matrix<3,1>::Zero();}
-\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ (\textcolor{keywordtype}{int})DOF\ -\/\ 1;\ i\ >=\ 0;\ -\/-\/i)}
-\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ vekt\ =\ (*R\_func[i])(theta(i))\ *\ (L[i]\ +\ vekt);}
-\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00258\ }
-\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Orientácia\ efektora:\ R1\ *\ R2\ *\ ...\ *\ Rn}}
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ Matrix<3,3>\ R\_ee\ =\ Matrix<3,3>::Identity();}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ i\ =\ 0;\ i\ <\ DOF;\ ++i)}
-\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ R\_ee\ =\ R\_ee\ *\ (*R\_func[i])(theta(i));}
-\DoxyCodeLine{00263\ }
-\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ vekt,\ R\_ee\ \};}
-\DoxyCodeLine{00265\ \ \ \ \ \}}
-\DoxyCodeLine{00266\ }
-\DoxyCodeLine{00276\ \ \ std::array<Matrix<3,\ 3>,\ DOF>\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100}{getRotDerivatives}}(\textcolor{keyword}{const}\ Matrix<DOF,\ 1>\&\ theta)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00277\ \ \ \ \ std::array<Matrix<3,\ 3>,\ DOF>\ mat\_all;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pole\ pre\ výsledné\ parciálne\ derivácie}}
-\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ DOF;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00279\ \ \ \ \ Matrix<3,\ 3>\ f\_mat\ =\ Matrix<3,\ 3>::Identity();\ }
-\DoxyCodeLine{00280\ \ \ \ \ Matrix<3,\ 3>\ b\_mat\ =\ Matrix<3,\ 3>::Identity();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00281\ }
-\DoxyCodeLine{00282\ \ \ \ \ \textcolor{comment}{//\ Prvý\ cyklus:\ Výpočet\ celkového\ dopredného\ súčinu\ matíc}}
-\DoxyCodeLine{00283\ \ \ \ \ \textcolor{comment}{//\ Týmto\ f\_mat\ naakumuluje\ súčin\ R\_0\ *\ R\_1\ *\ ...\ *\ R\_\{n-\/2\}}}
-\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ n\ -\/\ 2;\ i\ >=\ 0;\ i-\/-\/)\ \{}
-\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ f\_mat\ =\ (*R\_func[i])(theta(i))\ *\ f\_mat;\ }
-\DoxyCodeLine{00286\ \ \ \ \ \}}
-\DoxyCodeLine{00287\ }
-\DoxyCodeLine{00288\ \ \ \ \ \textcolor{comment}{//\ Druhý\ cyklus:\ Výpočet\ derivácií\ smerom\ od\ konca\ k\ začiatku}}
-\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ n\ -\/\ 1;\ j\ >=\ 0;\ j-\/-\/)\ \{}
-\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j\ <\ n\ -\/\ 1)\ \{}
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ b\_mat\ =\ (*R\_func[j\ +\ 1])(theta(j\ +\ 1))\ *\ b\_mat;}
-\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ "{}Odstraňovanie"{}\ aktuálnej\ matice\ zľava\ pomocou\ transpozície\ (R\string^-\/1\ =\ R\string^T)}}
-\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ f\_mat\ =\ f\_mat\ *\ (*R\_func[j])(theta(j)).transpose();}
-\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Samotný\ výpočet\ derivácie\ pre\ j-\/ty\ kĺb}}
-\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pre\ prístup\ k\ derivácii\ voláme\ metódu\ d()\ cez\ pointer\ z\ tvojho\ poľa\ R\_func}}
-\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ mat\_all[j]\ =\ f\_mat\ *\ R\_func[j]-\/>d(theta(j))\ *\ b\_mat;}
-\DoxyCodeLine{00300\ \ \ \ \ \}}
-\DoxyCodeLine{00301\ }
-\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keywordflow}{return}\ mat\_all;}
-\DoxyCodeLine{00303\ \}}
-\DoxyCodeLine{00304\ }
-\DoxyCodeLine{00316\ \ \ Matrix<3,\ DOF>\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415}{getJacobian}}(\textcolor{keyword}{const}\ Matrix<DOF,\ 1>\&\ theta)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ DOF;\ \textcolor{comment}{//\ Počet\ kĺbov}}
-\DoxyCodeLine{00318\ \ \ \ \ Matrix<3,\ DOF>\ jakob\_mat\ =\ Matrix<3,\ DOF>::Zero();\ \textcolor{comment}{//\ Výsledná\ Jakobián\ matica\ (3\ riadky,\ n\ stĺpcov)}}
-\DoxyCodeLine{00319\ \ \ \ \ }
-\DoxyCodeLine{00320\ \ \ \ \ Matrix<3,\ 3>\ matica\ =\ Matrix<3,\ 3>::Identity();\ \textcolor{comment}{//\ [1\ 0\ 0;\ 0\ 1\ 0;\ 0\ 0\ 1]}}
-\DoxyCodeLine{00321\ \ \ \ \ Matrix<3,\ 1>\ pom\_vekt\ =\ L[n\ -\/\ 1];\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Inicializácia\ T[n]\ v\ pseudokóde}}
-\DoxyCodeLine{00322\ }
-\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{//\ Prvý\ cyklus:\ od\ i\ =\ n-\/1\ do\ 1\ (1-\/based)\ -\/>\ od\ i\ =\ n-\/2\ po\ 0\ (0-\/based)}}
-\DoxyCodeLine{00324\ \ \ \ \ \textcolor{comment}{//\ Kumuluje\ doprednú\ kinematiku\ (súčin\ rotácií\ od\ n-\/2\ po\ 0)}}
-\DoxyCodeLine{00325\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ n\ -\/\ 2;\ i\ >=\ 0;\ i-\/-\/)\ \{}
-\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ matica\ =\ (*R\_func[i])(theta(i))\ *\ matica;}
-\DoxyCodeLine{00327\ \ \ \ \ \}}
-\DoxyCodeLine{00328\ }
-\DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//\ Druhý\ cyklus:\ od\ i\ =\ n\ do\ 1\ (1-\/based)\ -\/>\ od\ i\ =\ n-\/1\ po\ 0\ (0-\/based)}}
-\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ n\ -\/\ 1;\ i\ >=\ 0;\ i-\/-\/)\ \{}
-\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ Matrix<3,\ 1>\ vekt\ =\ L[n\ -\/\ 1];\ \textcolor{comment}{//\ T[n]\ z\ pseudokódu}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00166\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18}{setJointAngles}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}})\ \{}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}{actuators\_}}-\/>\mbox{\hyperlink{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b}{writeAngles}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}}.data(),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}};}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00171\ \ \ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00178\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8f3ee7687ad39c166edace44c9dac313}{getJointAngle}}(std::size\_t\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}}(index);}
+\DoxyCodeLine{00180\ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00186\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\ \mbox{\hyperlink{classRobot_1_1RobotArm_ac59c40b9304ceb66115bf75bff014b9a}{getJointAngles}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}};}
+\DoxyCodeLine{00188\ \ \ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00195\ \ \ std::pair<Matrix<3,\ 1>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}>\ \mbox{\hyperlink{classRobot_1_1RobotArm_acb86240d2bfd77e234da66c9efe275d8}{getCurrentEffectorPositionOrientation}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}}-\/>forwardKinematics(\mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}});}
+\DoxyCodeLine{00197\ \ \ \}}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00210\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotArm_a164ab76f17054578165f3395f2aabdb9}{goTo}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pr}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rr}})\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}\ =\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}};}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{res}}\ =\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}}-\/>SolveIK(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pr}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rr}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}},\ 1e-\/5f,\ 1e-\/3f,\ 1\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{e}}-\/2,\ 50);}
+\DoxyCodeLine{00213\ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{res}})\ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{res}}\ =\ \mbox{\hyperlink{classRobot_1_1RobotArm_a095af60abd65d58a65cbced6f345da18}{setJointAngles}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00216\ \ \ \ \ \}}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{res}};}
+\DoxyCodeLine{00218\ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00223\ \ \ \mbox{\hyperlink{classRobot_1_1JointActuators}{JointActuators}}*\ \mbox{\hyperlink{classRobot_1_1RobotArm_a92dbbe45a7cbc40e176fcdd361b50528}{actuators\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00224\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\ \mbox{\hyperlink{classRobot_1_1RobotArm_af0dc83a81010f9407387ab31f4cec932}{jointAngles\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00225\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{RobotKinematicsBase<DOF>}}*\ \mbox{\hyperlink{classRobot_1_1RobotArm_a8273cfeda27dae2e863484246e785b7b}{robot\_kinematics\_}};\ }
+\DoxyCodeLine{00226\ \};}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00238\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ DOF>}
+\DoxyCodeLine{00239\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobot_1_1RobotKinematics}{RobotKinematics}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{RobotKinematicsBase}}<DOF>}
+\DoxyCodeLine{00240\ \{}
+\DoxyCodeLine{00241\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00249\ \ \ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a1c30cdb22be13ce92197d8fa384452d1}{RobotKinematics}}(\textcolor{keyword}{const}\ std::array<\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}>\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{L\_}},}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::array<const\ RotationMatrix*,\ DOF>\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R\_}})}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ :\ L(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{L\_}}),\ R\_func(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R\_}})\ \{\}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00260\ \ \ std::pair<Matrix<3,1>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}>}
+\DoxyCodeLine{00261\ \ \ \mbox{\hyperlink{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a}{forwardKinematics}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00262\ \textcolor{keyword}{\ \ }\{}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Iterujeme\ od\ posledného\ kĺbu\ dovnútra\ smerom\ k\ základni}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,1>::Zero}}();}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ (\textcolor{keywordtype}{int})\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}\ -\/\ 1;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ >=\ 0;\ -\/-\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}})}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}}\ =\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}))\ *\ (L[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}]\ +\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}});}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Orientácia\ efektora:\ R1\ *\ R2\ *\ ...\ *\ Rn}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R\_ee}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>::Identity}}();}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}};\ ++\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}})}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R\_ee}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R\_ee}}\ *\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}));}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R\_ee}}\ \};}
+\DoxyCodeLine{00276\ \ \ \ \ \}}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00287\ \ \ std::array<Matrix<3,\ 3>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}>\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100}{getRotDerivatives}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00288\ \ \ \ \ std::array<Matrix<3,\ 3>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}>\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{mat\_all}};\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pole\ pre\ výsledné\ parciálne\ derivácie}}
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00290\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f\_mat}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>::Identity}}();\ }
+\DoxyCodeLine{00291\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{b\_mat}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>::Identity}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{comment}{//\ Prvý\ cyklus:\ Výpočet\ celkového\ dopredného\ súčinu\ matíc}}
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{comment}{//\ Týmto\ f\_mat\ naakumuluje\ súčin\ R\_0\ *\ R\_1\ *\ ...\ *\ R\_\{n-\/2\}}}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 2;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ >=\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}-\/-\/)\ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f\_mat}}\ =\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}))\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f\_mat}};\ }
+\DoxyCodeLine{00297\ \ \ \ \ \}}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{comment}{//\ Druhý\ cyklus:\ Výpočet\ derivácií\ smerom\ od\ konca\ k\ začiatku}}
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 1;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ >=\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}-\/-\/)\ \{}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 1)\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{b\_mat}}\ =\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ +\ 1])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ +\ 1))\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{b\_mat}};}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ "{}Odstraňovanie"{}\ aktuálnej\ matice\ zľava\ pomocou\ transpozície\ (R\string^-\/1\ =\ R\string^T)}}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f\_mat}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f\_mat}}\ *\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}})).\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{transpose}}();}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Samotný\ výpočet\ derivácie\ pre\ j-\/ty\ kĺb}}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pre\ prístup\ k\ derivácii\ voláme\ metódu\ d()\ cez\ pointer\ z\ tvojho\ poľa\ R\_func}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{mat\_all}}[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}]\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f\_mat}}\ *\ R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}]-\/>d(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}))\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{b\_mat}};}
+\DoxyCodeLine{00311\ \ \ \ \ \}}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{mat\_all}};}
+\DoxyCodeLine{00314\ \}}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00327\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ DOF>}}\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415}{getJacobian}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}};\ \textcolor{comment}{//\ Počet\ kĺbov}}
+\DoxyCodeLine{00329\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ DOF>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{jakob\_mat}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ DOF>::Zero}}();\ \textcolor{comment}{//\ Výsledná\ Jakobián\ matica\ (3\ riadky,\ n\ stĺpcov)}}
+\DoxyCodeLine{00330\ \ \ \ \ }
+\DoxyCodeLine{00331\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{matica}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>::Identity}}();\ \textcolor{comment}{//\ [1\ 0\ 0;\ 0\ 1\ 0;\ 0\ 0\ 1]}}
+\DoxyCodeLine{00332\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pom\_vekt}}\ =\ L[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 1];\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Inicializácia\ T[n]\ v\ pseudokóde}}
 \DoxyCodeLine{00333\ }
-\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ <\ n\ -\/\ 1)\ \{\ \textcolor{comment}{//\ Podmienka\ (n\ >\ i)\ z\ pseudokódu\ v\ 0-\/based\ svete}}
-\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ "{}Odstraňovanie"{}\ rotácie\ pre\ aktuálny\ kĺb}}
-\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ matica\ =\ matica\ *\ (*R\_func[i])(theta(i)).transpose();}
-\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Akumulácia\ translačných\ vektorov\ od\ konca\ (efektora)\ ku\ kĺbu\ 'i'}}
-\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ pom\_vekt\ =\ L[i]\ +\ (*R\_func[i\ +\ 1])(theta(i\ +\ 1))\ *\ pom\_vekt;}
-\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ vekt\ =\ pom\_vekt;}
-\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ Prvý\ cyklus:\ od\ i\ =\ n-\/1\ do\ 1\ (1-\/based)\ -\/>\ od\ i\ =\ n-\/2\ po\ 0\ (0-\/based)}}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{comment}{//\ Kumuluje\ doprednú\ kinematiku\ (súčin\ rotácií\ od\ n-\/2\ po\ 0)}}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 2;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ >=\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}-\/-\/)\ \{}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{matica}}\ =\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}))\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{matica}};}
+\DoxyCodeLine{00338\ \ \ \ \ \}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{comment}{//\ Druhý\ cyklus:\ od\ i\ =\ n\ do\ 1\ (1-\/based)\ -\/>\ od\ i\ =\ n-\/1\ po\ 0\ (0-\/based)}}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 1;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ >=\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}-\/-\/)\ \{}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}}\ =\ L[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 1];\ \textcolor{comment}{//\ T[n]\ z\ pseudokódu}}
 \DoxyCodeLine{00344\ }
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Výpočet\ samotného\ stĺpca\ Jakobiánu}}
-\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ matica:\ (R\_1\ *\ R\_2\ ...\ *\ R\_\{i-\/1\})}}
-\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ dR\_i:\ parciálna\ derivácia\ i-\/teho\ kĺbu}}
-\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ vekt:\ (T\_i\ +\ R\_\{i+1\}\ *\ (T\_\{i+1\}\ +\ ...))}}
-\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ vekt\ =\ matica\ *\ R\_func[i]-\/>d(theta(i))\ *\ vekt;}
-\DoxyCodeLine{00350\ }
-\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Uloženie\ výsledného\ vektora\ do\ i-\/teho\ stĺpca\ matice\ Jakobiánu}}
-\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ jakob\_mat.col(i)\ =\ vekt;}
-\DoxyCodeLine{00353\ \ \ \ \ \}}
-\DoxyCodeLine{00354\ }
-\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordflow}{return}\ jakob\_mat;}
-\DoxyCodeLine{00356\ \}}
-\DoxyCodeLine{00357\ }
-\DoxyCodeLine{00379\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a4e50d08914bdff03560b2c107265a6ee}{SolveIK}}(}
-\DoxyCodeLine{00380\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Matrix<3,\ 1>\&\ pr,\ }
-\DoxyCodeLine{00381\ \ \ \ \ \ \ \textcolor{keyword}{const}\ Matrix<3,\ 3>\&\ Rr,}
-\DoxyCodeLine{00382\ \ \ \ \ \ \ Matrix<DOF,\ 1>\&\ theta,\ }
-\DoxyCodeLine{00383\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ tol\_pos,\ }
-\DoxyCodeLine{00384\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ tol\_ori,\ }
-\DoxyCodeLine{00385\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ lambda,\ }
-\DoxyCodeLine{00386\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max\_iter)\textcolor{keyword}{\ override}}
-\DoxyCodeLine{00387\ \textcolor{keyword}{\ \ \ \ }\{}
-\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ max\_iter;\ i++)}
-\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1.\ Dopredná\ kinematika\ (aktuálny\ stav)}}
-\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ fk\_res\ =\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a}{forwardKinematics}}(theta);}
-\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ 1>\ p0\ =\ fk\_res.first;}
-\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ 3>\ R0\ =\ fk\_res.second;}
-\DoxyCodeLine{00394\ }
-\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2.\ Výpočet\ reziduí\ (chyby)}}
-\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ 1>\ rp\ =\ p0\ -\/\ pr;}
-\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Výpočet\ matice\ chyby\ orientácie\ E\ =\ R0\ *\ Rr\string^T}}
-\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ 3>\ E\ =\ R0\ *\ Rr.transpose();}
-\DoxyCodeLine{00400\ }
-\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Extrakcia\ chyby\ orientácie\ podľa\ tvojho\ pseudokódu}}
-\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ 1>\ r0;}
-\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ r0(0)\ =\ E(1,\ 0);\ }
-\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ r0(1)\ =\ E(2,\ 0);\ }
-\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ r0(2)\ =\ E(2,\ 1);\ }
-\DoxyCodeLine{00406\ }
-\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3.\ Kontrola\ ukončenia\ (ak\ sme\ v\ tolerancii)}}
-\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rp.norm()\ <\ tol\_pos\ \&\&\ r0.norm()\ <\ tol\_ori)\ \{}
-\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ }
-\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}}\ -\/\ 1)\ \{\ \textcolor{comment}{//\ Podmienka\ (n\ >\ i)\ z\ pseudokódu\ v\ 0-\/based\ svete}}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ "{}Odstraňovanie"{}\ rotácie\ pre\ aktuálny\ kĺb}}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{matica}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{matica}}\ *\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}})).\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{transpose}}();}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Akumulácia\ translačných\ vektorov\ od\ konca\ (efektora)\ ku\ kĺbu\ 'i'}}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pom\_vekt}}\ =\ L[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}]\ +\ (*R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ +\ 1])(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ +\ 1))\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pom\_vekt}};}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pom\_vekt}};}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Výpočet\ samotného\ stĺpca\ Jakobiánu}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ matica:\ (R\_1\ *\ R\_2\ ...\ *\ R\_\{i-\/1\})}}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ dR\_i:\ parciálna\ derivácia\ i-\/teho\ kĺbu}}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ vekt:\ (T\_i\ +\ R\_\{i+1\}\ *\ (T\_\{i+1\}\ +\ ...))}}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{matica}}\ *\ R\_func[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}]-\/>d(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}))\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}};}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Uloženie\ výsledného\ vektora\ do\ i-\/teho\ stĺpca\ matice\ Jakobiánu}}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{jakob\_mat}}.col(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}})\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{vekt}};}
+\DoxyCodeLine{00364\ \ \ \ \ \}}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{jakob\_mat}};}
+\DoxyCodeLine{00367\ \}}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00390\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a4e50d08914bdff03560b2c107265a6ee}{SolveIK}}(}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pr}},\ }
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rr}},}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}},\ }
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{tol\_pos}},\ }
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{tol\_ori}},\ }
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lambda}},\ }
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{max\_iter}})\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00398\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{max\_iter}};\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}++)}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1.\ Dopredná\ kinematika\ (aktuálny\ stav)}}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{fk\_res}}\ =\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_aff1e5b4567544a48a2d1e16326d7544a}{forwardKinematics}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{p0}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{fk\_res}}.first;}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R0}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{fk\_res}}.second;}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2.\ Výpočet\ reziduí\ (chyby)}}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{rp}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{p0}}\ -\/\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{pr}};}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Výpočet\ matice\ chyby\ orientácie\ E\ =\ R0\ *\ Rr\string^T}}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{E}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R0}}\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rr}}.transpose();}
 \DoxyCodeLine{00411\ }
-\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4.\ Získanie\ Jakobiánov\ (tieto\ funkcie\ už\ v\ robot.h\ máš)}}
-\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ DOF>\ J\_p\ =\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415}{getJacobian}}(theta);}
-\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Matrix<3,\ 3>,\ DOF>\ dEr\_R\ =\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100}{getRotDerivatives}}(theta);}
-\DoxyCodeLine{00415\ }
-\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Zostavenie\ plného\ Jakobiánu\ 6xDOF}}
-\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<6,\ DOF>\ J\ =\ Matrix<6,\ DOF>::Zero();}
-\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Horná\ časť\ (poloha)}}
-\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ J.template\ block<3,\ DOF>(0,\ 0)\ =\ J\_p;}
-\DoxyCodeLine{00421\ }
-\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Dolná\ časť\ (orientácia\ -\/\ podľa\ dE\_j\ =\ dR\_j\ *\ Rr\string^T)}}
-\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ j\ =\ 0;\ j\ <\ DOF;\ j++)\ \{}
-\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<3,\ 3>\ dE\_j\ =\ dEr\_R[j]\ *\ Rr.transpose();}
-\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J(3,\ j)\ =\ dE\_j(1,\ 0);}
-\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J(4,\ j)\ =\ dE\_j(2,\ 0);}
-\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J(5,\ j)\ =\ dE\_j(2,\ 1);}
-\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00430\ }
-\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5.\ Regularizácia\ (Levenberg-\/Marquardt\ štýl)}}
-\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ k\ =\ 0;\ k\ <\ DOF;\ k++)\ \{}
-\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ J(k,\ k)\ +=\ lambda;}
-\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00435\ }
-\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6.\ Zostavenie\ vektora\ záporných\ reziduí}}
-\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<6,\ 1>\ minus\_r;}
-\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ minus\_r.template\ block<3,\ 1>(0,\ 0)\ =\ -\/rp;}
-\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ minus\_r.template\ block<3,\ 1>(3,\ 0)\ =\ -\/r0;}
-\DoxyCodeLine{00440\ }
-\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 7.\ Výpočet\ zmeny\ uhlov\ (Riešenie\ sústavy\ J\ *\ delta\_theta\ =\ minus\_r)}}
-\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pre\ 6x6\ maticu\ je\ ColPivHouseholderQR\ veľmi\ stabilná\ voľba}}
-\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ Matrix<DOF,\ 1>\ delta\_theta\ =\ J.colPivHouseholderQr().solve(minus\_r);}
-\DoxyCodeLine{00444\ }
-\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8.\ Update}}
-\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \ \ \ \ theta\ +=\ delta\_theta;}
-\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00448\ }
-\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Nepodarilo\ sa\ nájsť\ riešenie\ v\ rámci\ max\_iter}}
-\DoxyCodeLine{00450\ \ \ \ \ \}}
-\DoxyCodeLine{00451\ \ \ \ \ }
-\DoxyCodeLine{00452\ }
-\DoxyCodeLine{00453\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00454\ \ \ std::array<Matrix<3,\ 1>,\ DOF>\ L;\ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00455\ \ \ std::array<const\ RotationMatrix*,\ DOF>\ R\_func;\ }
-\DoxyCodeLine{00456\ \};}
-\DoxyCodeLine{00457\ }
-\DoxyCodeLine{00458\ \}\ \textcolor{comment}{//\ namespace\ Robot}}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Extrakcia\ chyby\ orientácie\ podľa\ tvojho\ pseudokódu}}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r0}};}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r0}}(0)\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{E}}(1,\ 0);\ }
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r0}}(1)\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{E}}(2,\ 0);\ }
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r0}}(2)\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{E}}(2,\ 1);\ }
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3.\ Kontrola\ ukončenia\ (ak\ sme\ v\ tolerancii)}}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{rp}}.norm()\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{tol\_pos}}\ \&\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r0}}.norm()\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{tol\_ori}})\ \{}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ }
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4.\ Získanie\ Jakobiánov\ (tieto\ funkcie\ už\ v\ robot.h\ máš)}}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ DOF>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J\_p}}\ =\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a02411573f8e7ce4f575d571715d6e415}{getJacobian}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ std::array<Matrix<3,\ 3>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}>\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dEr\_R}}\ =\ \mbox{\hyperlink{classRobot_1_1RobotKinematics_a373a3ddc3a0a60c9dae2662551c89100}{getRotDerivatives}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Zostavenie\ plného\ Jakobiánu\ 6xDOF}}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<6,\ DOF>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<6,\ DOF>::Zero}}();}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Horná\ časť\ (poloha)}}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}.template\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{block<3,\ DOF>}}(0,\ 0)\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J\_p}};}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Dolná\ časť\ (orientácia\ -\/\ podľa\ dE\_j\ =\ dR\_j\ *\ Rr\string^T)}}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ =\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}};\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}++)\ \{}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dE\_j}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dEr\_R}}[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}]\ *\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rr}}.transpose();}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}(3,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}})\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dE\_j}}(1,\ 0);}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}(4,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}})\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dE\_j}}(2,\ 0);}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}(5,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}})\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dE\_j}}(2,\ 1);}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 5.\ Regularizácia\ (Levenberg-\/Marquardt\ štýl)}}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{k}}\ =\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{k}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}};\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{k}}++)\ \{}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{k}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{k}})\ +=\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lambda}};}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00446\ }
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 6.\ Zostavenie\ vektora\ záporných\ reziduí}}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<6,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{minus\_r}};}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{minus\_r}}.template\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{block<3,\ 1>}}(0,\ 0)\ =\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{rp}};}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{minus\_r}}.template\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{block<3,\ 1>}}(3,\ 0)\ =\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r0}};}
+\DoxyCodeLine{00451\ }
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 7.\ Výpočet\ zmeny\ uhlov\ (Riešenie\ sústavy\ J\ *\ delta\_theta\ =\ minus\_r)}}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pre\ 6x6\ maticu\ je\ ColPivHouseholderQR\ veľmi\ stabilná\ voľba}}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<DOF,\ 1>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{delta\_theta}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{J}}.colPivHouseholderQr().solve(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{minus\_r}});}
+\DoxyCodeLine{00455\ }
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 8.\ Update}}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}\ +=\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{delta\_theta}};}
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ PRIDANÉ:\ Normalizácia\ uhlov\ do\ intervalu\ [-\/pi,\ pi]\ na\ záver\ iterácie\ -\/-\/-\/}}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ =\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}};\ ++\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}})\ \{}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::remainder\ vráti\ zvyšok\ po\ delení,\ centrovaný\ okolo\ 0}}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}})\ =\ std::remainder(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{j}}),\ 2.0f\ *\ M\_PI);}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00466\ }
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Nepodarilo\ sa\ nájsť\ riešenie\ v\ rámci\ max\_iter}}
+\DoxyCodeLine{00468\ \ \ \ \ \}}
+\DoxyCodeLine{00469\ \ \ \ \ }
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00472\ \ \ std::array<Matrix<3,\ 1>,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{DOF}}>\ L;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00473\ \ \ std::array<const\ RotationMatrix*,\ DOF>\ R\_func;\ }
+\DoxyCodeLine{00474\ \};}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \}\ \textcolor{comment}{//\ namespace\ Robot}}
 
 \end{DoxyCode}

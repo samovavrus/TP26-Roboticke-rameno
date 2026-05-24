@@ -1,42 +1,43 @@
 \doxysection{Servo\+Actuator.\+h}
 \hypertarget{ServoActuator_8h_source}{}\label{ServoActuator_8h_source}\index{TP26-\/Roboticke-\/rameno/ServoActuator.h@{TP26-\/Roboticke-\/rameno/ServoActuator.h}}
-
+\mbox{\hyperlink{ServoActuator_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <vector>}}
-\DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00004\ }
-\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}robot.h"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}src\(\backslash\)PCA9685\(\backslash\)PCA9685.h"{}}}
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobotServoController}{RobotServoController}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRobot_1_1JointActuators}{Robot::JointActuators}}\ \{}
-\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00039\ \ \ \mbox{\hyperlink{classRobotServoController_a9faa8b9b8b1b13143288f798133077f8}{RobotServoController}}(TwoWire\&\ Wire\_,\ \textcolor{keyword}{const}\ std::vector<actuator\_parameters>\&\ parameters\_)}
-\DoxyCodeLine{00040\ \ \ \ \ :\ \mbox{\hyperlink{namespaceRobot}{Robot}}::\mbox{\hyperlink{classRobot_1_1JointActuators_a978a9226c9dab9f61eb23e234a58ea3a}{JointActuators}}(),\ pwmController(Wire\_),\ parameters(parameters\_)\ \{}
-\DoxyCodeLine{00041\ \ \ \ \ \}}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00054\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRobotServoController_a61daddb588674b8e424cf95f6d540ab1}{init}}()\ \{}
-\DoxyCodeLine{00055\ \ \ \ \ pwmController.resetDevices();}
-\DoxyCodeLine{00056\ \ \ \ \ pwmController.init();}
-\DoxyCodeLine{00057\ \ \ \ \ pwmController.setPWMFreqServo();}
-\DoxyCodeLine{00058\ \ \ \}}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobotServoController_adffab91bbab34d2c30efd7a073773600}{writeAngles}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ angles,\ std::size\_t\ n)\ \{}
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ i++)\ \{}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (angles[i]\ >\ parameters[i].maxAngle\ ||\ angles[i]\ <\ parameters[i].minAngle)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ degrees\ =\ (angles[i]\ -\/\ parameters[i].offset)\ *\ parameters[i].gain\ *\ 180.0f\ /\ PI;}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ pwmController.setChannelPWM(i,\ pwmServo.pwmForAngle(degrees));}
-\DoxyCodeLine{00083\ \ \ \ \ \}}
-\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00085\ \ \ \}}
-\DoxyCodeLine{00086\ }
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00089\ \ \ PCA9685\ pwmController;\ \ \ \ \ \ \ }
-\DoxyCodeLine{00090\ \ \ PCA9685\_ServoEval\ pwmServo;\ \ }
-\DoxyCodeLine{00091\ \ \ std::vector<actuator\_parameters>\ parameters;\ }
-\DoxyCodeLine{00092\ \};}
-\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{robot_8h}{robot.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}src\(\backslash\)PCA9685\(\backslash\)PCA9685.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRobotServoController}{RobotServoController}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRobot_1_1JointActuators}{Robot::JointActuators}}\ \{}
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00042\ \ \ \mbox{\hyperlink{classRobotServoController_a9faa8b9b8b1b13143288f798133077f8}{RobotServoController}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{TwoWire}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Wire\_}},\ \textcolor{keyword}{const}\ std::vector<actuator\_parameters>\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{parameters\_}})}
+\DoxyCodeLine{00043\ \ \ \ \ :\ \mbox{\hyperlink{namespaceRobot}{Robot}}::\mbox{\hyperlink{classRobot_1_1JointActuators_a978a9226c9dab9f61eb23e234a58ea3a}{JointActuators}}(),\ pwmController(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Wire\_}}),\ parameters(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{parameters\_}})\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRobotServoController_a61daddb588674b8e424cf95f6d540ab1}{init}}()\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ pwmController.resetDevices();}
+\DoxyCodeLine{00059\ \ \ \ \ pwmController.init();}
+\DoxyCodeLine{00060\ \ \ \ \ pwmController.setPWMFreqServo();}
+\DoxyCodeLine{00061\ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRobotServoController_adffab91bbab34d2c30efd7a073773600}{writeAngles}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}},\ std::size\_t\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}})\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ =\ 0;\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}\ <\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}};\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}++)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}}[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}]\ >\ parameters[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}].maxAngle\ ||\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}}[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}]\ <\ parameters[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}].minAngle)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{degrees}}\ =\ (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}}[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}]\ -\/\ parameters[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}].offset)\ *\ parameters[\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}}].gain\ *\ 180.0f\ /\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{PI}};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ pwmController.setChannelPWM(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{i}},\ pwmServo.pwmForAngle(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{degrees}}));}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00088\ \ \ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00092\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{PCA9685}}\ pwmController;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{PCA9685\_ServoEval}}\ pwmServo;\ \ }
+\DoxyCodeLine{00094\ \ \ std::vector<actuator\_parameters>\ parameters;\ }
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
 
 \end{DoxyCode}

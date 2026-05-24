@@ -98,26 +98,26 @@ Collaboration diagram for Robot::RobotArm&lt; DOF &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abcdfa86b41a518c0ac875fed7ab20b59" id="r_abcdfa86b41a518c0ac875fed7ab20b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#abcdfa86b41a518c0ac875fed7ab20b59">RobotArm</a> (<a class="el" href="classRobot_1_1RobotKinematicsBase.html">RobotKinematicsBase</a>&lt; DOF &gt; *robot_kinematics, <a class="el" href="classRobot_1_1JointActuators.html">JointActuators</a> *actuators)</td></tr>
+<tr class="memitem:abcdfa86b41a518c0ac875fed7ab20b59" id="r_abcdfa86b41a518c0ac875fed7ab20b59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#abcdfa86b41a518c0ac875fed7ab20b59">RobotArm</a> (<a class="el" href="classRobot_1_1RobotKinematicsBase.html">RobotKinematicsBase</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; *<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">robot_kinematics</a>, <a class="el" href="classRobot_1_1JointActuators.html">JointActuators</a> *<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">actuators</a>)</td></tr>
 <tr class="memdesc:abcdfa86b41a518c0ac875fed7ab20b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes robot arm with kinematics solver and actuator hardware.  <br /></td></tr>
 <tr class="separator:abcdfa86b41a518c0ac875fed7ab20b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae11ed0b078e47c58bb934a382e36bc4b" id="r_ae11ed0b078e47c58bb934a382e36bc4b"><td class="memItemLeft" align="right" valign="top"><a id="ae11ed0b078e47c58bb934a382e36bc4b" name="ae11ed0b078e47c58bb934a382e36bc4b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>~RobotArm</b> ()=default</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~RobotArm</b> ()=<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">default</a></td></tr>
 <tr class="memdesc:ae11ed0b078e47c58bb934a382e36bc4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:ae11ed0b078e47c58bb934a382e36bc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a095af60abd65d58a65cbced6f345da18" id="r_a095af60abd65d58a65cbced6f345da18"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#a095af60abd65d58a65cbced6f345da18">setJointAngles</a> (const Matrix&lt; DOF, 1 &gt; &amp;angles)</td></tr>
+<tr class="memitem:a095af60abd65d58a65cbced6f345da18" id="r_a095af60abd65d58a65cbced6f345da18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#a095af60abd65d58a65cbced6f345da18">setJointAngles</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">angles</a>)</td></tr>
 <tr class="memdesc:a095af60abd65d58a65cbced6f345da18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets and commits joint angles to hardware actuators.  <br /></td></tr>
 <tr class="separator:a095af60abd65d58a65cbced6f345da18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f3ee7687ad39c166edace44c9dac313" id="r_a8f3ee7687ad39c166edace44c9dac313"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#a8f3ee7687ad39c166edace44c9dac313">getJointAngle</a> (std::size_t index) const</td></tr>
+<tr class="memitem:a8f3ee7687ad39c166edace44c9dac313" id="r_a8f3ee7687ad39c166edace44c9dac313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#a8f3ee7687ad39c166edace44c9dac313">getJointAngle</a> (std::size_t index) <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a></td></tr>
 <tr class="memdesc:a8f3ee7687ad39c166edace44c9dac313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets current angle of a single joint.  <br /></td></tr>
 <tr class="separator:a8f3ee7687ad39c166edace44c9dac313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac59c40b9304ceb66115bf75bff014b9a" id="r_ac59c40b9304ceb66115bf75bff014b9a"><td class="memItemLeft" align="right" valign="top">Matrix&lt; DOF, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#ac59c40b9304ceb66115bf75bff014b9a">getJointAngles</a> () const</td></tr>
+<tr class="memitem:ac59c40b9304ceb66115bf75bff014b9a" id="r_ac59c40b9304ceb66115bf75bff014b9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#ac59c40b9304ceb66115bf75bff014b9a">getJointAngles</a> () <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a></td></tr>
 <tr class="memdesc:ac59c40b9304ceb66115bf75bff014b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets current angles of all joints.  <br /></td></tr>
 <tr class="separator:ac59c40b9304ceb66115bf75bff014b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb86240d2bfd77e234da66c9efe275d8" id="r_acb86240d2bfd77e234da66c9efe275d8"><td class="memItemLeft" align="right" valign="top">std::pair&lt; Matrix&lt; 3, 1 &gt;, Matrix&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#acb86240d2bfd77e234da66c9efe275d8">getCurrentEffectorPositionOrientation</a> () const</td></tr>
+<tr class="memitem:acb86240d2bfd77e234da66c9efe275d8" id="r_acb86240d2bfd77e234da66c9efe275d8"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#acb86240d2bfd77e234da66c9efe275d8">getCurrentEffectorPositionOrientation</a> () <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a></td></tr>
 <tr class="memdesc:acb86240d2bfd77e234da66c9efe275d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes current end-effector pose from joint state.  <br /></td></tr>
 <tr class="separator:acb86240d2bfd77e234da66c9efe275d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a164ab76f17054578165f3395f2aabdb9" id="r_a164ab76f17054578165f3395f2aabdb9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#a164ab76f17054578165f3395f2aabdb9">goTo</a> (const Matrix&lt; 3, 1 &gt; &amp;pr, const Matrix&lt; 3, 3 &gt; &amp;Rr)</td></tr>
+<tr class="memitem:a164ab76f17054578165f3395f2aabdb9" id="r_a164ab76f17054578165f3395f2aabdb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotArm.html#a164ab76f17054578165f3395f2aabdb9">goTo</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">pr</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Rr</a>)</td></tr>
 <tr class="memdesc:a164ab76f17054578165f3395f2aabdb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves robot end-effector to desired position and orientation.  <br /></td></tr>
 <tr class="separator:a164ab76f17054578165f3395f2aabdb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -128,11 +128,11 @@ Protected Attributes</h2></td></tr>
 <tr class="memdesc:a92dbbe45a7cbc40e176fcdd361b50528"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to joint actuator hardware interface. <br /></td></tr>
 <tr class="separator:a92dbbe45a7cbc40e176fcdd361b50528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0dc83a81010f9407387ab31f4cec932" id="r_af0dc83a81010f9407387ab31f4cec932"><td class="memItemLeft" align="right" valign="top"><a id="af0dc83a81010f9407387ab31f4cec932" name="af0dc83a81010f9407387ab31f4cec932"></a>
-Matrix&lt; DOF, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>jointAngles_</b></td></tr>
+<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>jointAngles_</b></td></tr>
 <tr class="memdesc:af0dc83a81010f9407387ab31f4cec932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current joint angles in radians. <br /></td></tr>
 <tr class="separator:af0dc83a81010f9407387ab31f4cec932"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8273cfeda27dae2e863484246e785b7b" id="r_a8273cfeda27dae2e863484246e785b7b"><td class="memItemLeft" align="right" valign="top"><a id="a8273cfeda27dae2e863484246e785b7b" name="a8273cfeda27dae2e863484246e785b7b"></a>
-<a class="el" href="classRobot_1_1RobotKinematicsBase.html">RobotKinematicsBase</a>&lt; DOF &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>robot_kinematics_</b></td></tr>
+<a class="el" href="classRobot_1_1RobotKinematicsBase.html">RobotKinematicsBase</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>robot_kinematics_</b></td></tr>
 <tr class="memdesc:a8273cfeda27dae2e863484246e785b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to kinematics solver. <br /></td></tr>
 <tr class="separator:a8273cfeda27dae2e863484246e785b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -159,9 +159,9 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; DOF &gt;::RobotArm </td>
+          <td class="memname"><a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::RobotArm </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classRobot_1_1RobotKinematicsBase.html">RobotKinematicsBase</a>&lt; DOF &gt; *&#160;</td>
+          <td class="paramtype"><a class="el" href="classRobot_1_1RobotKinematicsBase.html">RobotKinematicsBase</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; *&#160;</td>
           <td class="paramname"><em>robot_kinematics</em>, </td>
         </tr>
         <tr>
@@ -208,7 +208,7 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt; Matrix&lt; 3, 1 &gt;, Matrix&lt; 3, 3 &gt; &gt; <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; DOF &gt;::getCurrentEffectorPositionOrientation </td>
+          <td class="memname">std::pair&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &gt; <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::getCurrentEffectorPositionOrientation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -238,7 +238,7 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; DOF &gt;::getJointAngle </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::getJointAngle </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
@@ -275,7 +275,7 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Matrix&lt; DOF, 1 &gt; <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; DOF &gt;::getJointAngles </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::getJointAngles </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -305,15 +305,15 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; DOF &gt;::goTo </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a> <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::goTo </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; 3, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>pr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Matrix&lt; 3, 3 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &amp;&#160;</td>
           <td class="paramname"><em>Rr</em>&#160;</td>
         </tr>
         <tr>
@@ -354,9 +354,9 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; DOF &gt;::setJointAngles </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a> <a class="el" href="classRobot_1_1RobotArm.html">Robot::RobotArm</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::setJointAngles </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>angles</em></td><td>)</td>
           <td></td>
         </tr>

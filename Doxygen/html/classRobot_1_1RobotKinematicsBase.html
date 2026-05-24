@@ -97,10 +97,10 @@ Inheritance diagram for Robot::RobotKinematicsBase&lt; DOF &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4ac6e581dbf0fc69ad963925b6876fcb" id="r_a4ac6e581dbf0fc69ad963925b6876fcb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematicsBase.html#a4ac6e581dbf0fc69ad963925b6876fcb">SolveIK</a> (const Matrix&lt; 3, 1 &gt; &amp;pr, const Matrix&lt; 3, 3 &gt; &amp;Rr, Matrix&lt; DOF, 1 &gt; &amp;theta_, float tol_pos, float tol_ori, float lambda, int max_iter)=0</td></tr>
+<tr class="memitem:a4ac6e581dbf0fc69ad963925b6876fcb" id="r_a4ac6e581dbf0fc69ad963925b6876fcb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">virtual</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematicsBase.html#a4ac6e581dbf0fc69ad963925b6876fcb">SolveIK</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">pr</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Rr</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">theta_</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">tol_pos</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">tol_ori</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lambda</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">int</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">max_iter</a>)=0</td></tr>
 <tr class="memdesc:a4ac6e581dbf0fc69ad963925b6876fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solves inverse kinematics using numerical optimization.  <br /></td></tr>
 <tr class="separator:a4ac6e581dbf0fc69ad963925b6876fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9062f000170b01e16e843af8ba6ad08" id="r_ae9062f000170b01e16e843af8ba6ad08"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; Matrix&lt; 3, 1 &gt;, Matrix&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematicsBase.html#ae9062f000170b01e16e843af8ba6ad08">forwardKinematics</a> (const Matrix&lt; DOF, 1 &gt; &amp;theta) const =0</td></tr>
+<tr class="memitem:ae9062f000170b01e16e843af8ba6ad08" id="r_ae9062f000170b01e16e843af8ba6ad08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">virtual</a> std::pair&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematicsBase.html#ae9062f000170b01e16e843af8ba6ad08">forwardKinematics</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">theta</a>) <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> =0</td></tr>
 <tr class="memdesc:ae9062f000170b01e16e843af8ba6ad08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes end-effector position and orientation from joint angles.  <br /></td></tr>
 <tr class="separator:ae9062f000170b01e16e843af8ba6ad08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -127,9 +127,9 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::pair&lt; Matrix&lt; 3, 1 &gt;, Matrix&lt; 3, 3 &gt; &gt; <a class="el" href="classRobot_1_1RobotKinematicsBase.html">Robot::RobotKinematicsBase</a>&lt; DOF &gt;::forwardKinematics </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">virtual</a> std::pair&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &gt; <a class="el" href="classRobot_1_1RobotKinematicsBase.html">Robot::RobotKinematicsBase</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::forwardKinematics </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>theta</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -166,45 +166,45 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool <a class="el" href="classRobot_1_1RobotKinematicsBase.html">Robot::RobotKinematicsBase</a>&lt; DOF &gt;::SolveIK </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">virtual</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a> <a class="el" href="classRobot_1_1RobotKinematicsBase.html">Robot::RobotKinematicsBase</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::SolveIK </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; 3, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>pr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Matrix&lt; 3, 3 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &amp;&#160;</td>
           <td class="paramname"><em>Rr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>theta_</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td>
           <td class="paramname"><em>tol_pos</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td>
           <td class="paramname"><em>tol_ori</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td>
           <td class="paramname"><em>lambda</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">int</a>&#160;</td>
           <td class="paramname"><em>max_iter</em>&#160;</td>
         </tr>
         <tr>

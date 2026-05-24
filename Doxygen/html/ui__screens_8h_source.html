@@ -86,40 +86,41 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;src\LiquidMenu\LiquidCrystal_I2C.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="ui__screens_8h.html#a889f9e6c2533095b3a7986d3092a4359">   38</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ui__screens_8h.html#a889f9e6c2533095b3a7986d3092a4359">drawXYZ</a>(LiquidCrystal_I2C&amp; lcd, <span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> z) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  lcd.clear();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="ui__screens_8h.html#a889f9e6c2533095b3a7986d3092a4359">   38</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ui__screens_8h.html#a889f9e6c2533095b3a7986d3092a4359">drawXYZ</a>(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">LiquidCrystal_I2C</a>&amp; <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>, <span class="keywordtype">float</span> <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">x</a>, <span class="keywordtype">float</span> <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">y</a>, <span class="keywordtype">float</span> <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">z</a>) {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.clear();</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  lcd.setCursor(0,0);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  lcd.print(<span class="stringliteral">&quot;X:&quot;</span>);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  lcd.print(x,1);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.setCursor(0,0);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<span class="stringliteral">&quot;X:&quot;</span>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">x</a>,1);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  lcd.setCursor(8,0);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  lcd.print(<span class="stringliteral">&quot;Y:&quot;</span>);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  lcd.print(y,1);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.setCursor(8,0);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<span class="stringliteral">&quot;Y:&quot;</span>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">y</a>,1);</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  lcd.setCursor(0,1);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  lcd.print(<span class="stringliteral">&quot;Z:&quot;</span>);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  lcd.print(z,1);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.setCursor(0,1);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<span class="stringliteral">&quot;Z:&quot;</span>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">z</a>,1);</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
 </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="foldopen" id="foldopen00080" data-start="{" data-end="}">
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="ui__screens_8h.html#a644f2a3b017d1fcb3c419c53fcd437a0">   80</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ui__screens_8h.html#a644f2a3b017d1fcb3c419c53fcd437a0">drawRPY</a>(LiquidCrystal_I2C&amp; lcd, <span class="keywordtype">float</span> r, <span class="keywordtype">float</span> p, <span class="keywordtype">float</span> y) {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  lcd.clear();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="ui__screens_8h.html#a644f2a3b017d1fcb3c419c53fcd437a0">   80</a></span><span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="ui__screens_8h.html#a644f2a3b017d1fcb3c419c53fcd437a0">drawRPY</a>(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">LiquidCrystal_I2C</a>&amp; <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>, <span class="keywordtype">float</span> <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">r</a>, <span class="keywordtype">float</span> <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">p</a>, <span class="keywordtype">float</span> <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">y</a>) {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.clear();</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  lcd.setCursor(0,0);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  lcd.print(<span class="stringliteral">&quot;R:&quot;</span>);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  lcd.print(r,1);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.setCursor(0,0);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<span class="stringliteral">&quot;R:&quot;</span>);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">r</a>,1);</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  lcd.setCursor(8,0);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  lcd.print(<span class="stringliteral">&quot;P:&quot;</span>);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  lcd.print(p,1);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.setCursor(8,0);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<span class="stringliteral">&quot;P:&quot;</span>);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">p</a>,1);</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  lcd.setCursor(0,1);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  lcd.print(<span class="stringliteral">&quot;Y:&quot;</span>);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  lcd.print(y,1);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.setCursor(0,1);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<span class="stringliteral">&quot;Y:&quot;</span>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lcd</a>.print(<a class="code hl_typedef" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">y</a>,1);</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
 </div>
+<div class="ttc" id="ageometry_8h_html_aaa94f4c08bde77534dd5876511aa20ef"><div class="ttname"><a href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a></div><div class="ttdeci">Eigen::Matrix&lt; float, Rows, Cols &gt; Matrix</div><div class="ttdoc">Type alias for fixed-size Eigen matrix of floats.</div><div class="ttdef"><b>Definition</b> geometry.h:14</div></div>
 <div class="ttc" id="aui__screens_8h_html_a644f2a3b017d1fcb3c419c53fcd437a0"><div class="ttname"><a href="ui__screens_8h.html#a644f2a3b017d1fcb3c419c53fcd437a0">drawRPY</a></div><div class="ttdeci">void drawRPY(LiquidCrystal_I2C &amp;lcd, float r, float p, float y)</div><div class="ttdoc">Displays end-effector orientation (Roll-Pitch-Yaw) on LCD screen.</div><div class="ttdef"><b>Definition</b> ui_screens.h:80</div></div>
 <div class="ttc" id="aui__screens_8h_html_a889f9e6c2533095b3a7986d3092a4359"><div class="ttname"><a href="ui__screens_8h.html#a889f9e6c2533095b3a7986d3092a4359">drawXYZ</a></div><div class="ttdeci">void drawXYZ(LiquidCrystal_I2C &amp;lcd, float x, float y, float z)</div><div class="ttdoc">Displays end-effector position (X, Y, Z) on LCD screen.</div><div class="ttdef"><b>Definition</b> ui_screens.h:38</div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -6,8 +6,7 @@ User interface display functions for LCD output.
 
 
 {\ttfamily \#include "{}src\textbackslash{}\+Liquid\+Menu\textbackslash{}\+Liquid\+Crystal\+\_\+\+I2\+C.\+h"{}}\newline
-Include dependency graph for ui\+\_\+screens.\+h\+:
-\nopagebreak
+Include dependency graph for ui\+\_\+screens.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -17,9 +16,9 @@ Include dependency graph for ui\+\_\+screens.\+h\+:
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359}{draw\+XYZ}} (Liquid\+Crystal\+\_\+\+I2C \&lcd, float x, float y, float z)
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{void}} \mbox{\hyperlink{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359}{draw\+XYZ}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Liquid\+Crystal\+\_\+\+I2C}} \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{x}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{y}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{z}})
 \begin{DoxyCompactList}\small\item\em Displays end-\/effector position (X, Y, Z) on LCD screen. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0}{draw\+RPY}} (Liquid\+Crystal\+\_\+\+I2C \&lcd, float r, float p, float y)
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{void}} \mbox{\hyperlink{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0}{draw\+RPY}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Liquid\+Crystal\+\_\+\+I2C}} \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{p}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{y}})
 \begin{DoxyCompactList}\small\item\em Displays end-\/effector orientation (Roll-\/\+Pitch-\/\+Yaw) on LCD screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -41,7 +40,7 @@ All values are formatted to 1 decimal place for readability on small displays.
 \index{ui\_screens.h@{ui\_screens.h}!drawRPY@{drawRPY}}
 \index{drawRPY@{drawRPY}!ui\_screens.h@{ui\_screens.h}}
 \doxysubsubsection{\texorpdfstring{drawRPY()}{drawRPY()}}
-{\footnotesize\ttfamily void draw\+RPY (\begin{DoxyParamCaption}\item[{Liquid\+Crystal\+\_\+\+I2C \&}]{lcd,  }\item[{float}]{r,  }\item[{float}]{p,  }\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{void}} draw\+RPY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Liquid\+Crystal\+\_\+\+I2C}} \&}]{lcd,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{r,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{p,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -60,8 +59,8 @@ Displays end-\/effector orientation (Roll-\/\+Pitch-\/\+Yaw) on LCD screen.
 \end{DoxyParams}
 Display layout (16×2 character LCD)\+: 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{Row\ 0:\ \textcolor{stringliteral}{"{}R:rrr.r\ \ P:ppp.p"{}}}
-\DoxyCodeLine{Row\ 1:\ \textcolor{stringliteral}{"{}Y:yyy.y"{}}}
+\DoxyCodeLine{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Row}}\ 0:\ \textcolor{stringliteral}{"{}R:rrr.r\ \ P:ppp.p"{}}}
+\DoxyCodeLine{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Row}}\ 1:\ \textcolor{stringliteral}{"{}Y:yyy.y"{}}}
 
 \end{DoxyCode}
 
@@ -82,7 +81,7 @@ Used during manual control and end-\/effector orientation monitoring modes. Angl
 \index{ui\_screens.h@{ui\_screens.h}!drawXYZ@{drawXYZ}}
 \index{drawXYZ@{drawXYZ}!ui\_screens.h@{ui\_screens.h}}
 \doxysubsubsection{\texorpdfstring{drawXYZ()}{drawXYZ()}}
-{\footnotesize\ttfamily void draw\+XYZ (\begin{DoxyParamCaption}\item[{Liquid\+Crystal\+\_\+\+I2C \&}]{lcd,  }\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{void}} draw\+XYZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Liquid\+Crystal\+\_\+\+I2C}} \&}]{lcd,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{x,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{y,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -101,8 +100,8 @@ Displays end-\/effector position (X, Y, Z) on LCD screen.
 \end{DoxyParams}
 Display layout (16×2 character LCD)\+: 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{Row\ 0:\ \textcolor{stringliteral}{"{}X:xxx.x\ \ Y:yyy.y"{}}}
-\DoxyCodeLine{Row\ 1:\ \textcolor{stringliteral}{"{}Z:zzz.z"{}}}
+\DoxyCodeLine{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Row}}\ 0:\ \textcolor{stringliteral}{"{}X:xxx.x\ \ Y:yyy.y"{}}}
+\DoxyCodeLine{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Row}}\ 1:\ \textcolor{stringliteral}{"{}Z:zzz.z"{}}}
 
 \end{DoxyCode}
 

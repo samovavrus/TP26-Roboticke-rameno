@@ -107,19 +107,19 @@ Collaboration diagram for Robot::RobotKinematics&lt; DOF &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1c30cdb22be13ce92197d8fa384452d1" id="r_a1c30cdb22be13ce92197d8fa384452d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a1c30cdb22be13ce92197d8fa384452d1">RobotKinematics</a> (const std::array&lt; Matrix&lt; 3, 1 &gt;, DOF &gt; &amp;L_, const std::array&lt; const <a class="el" href="classRotationMatrix.html">RotationMatrix</a> *, DOF &gt; &amp;R_)</td></tr>
+<tr class="memitem:a1c30cdb22be13ce92197d8fa384452d1" id="r_a1c30cdb22be13ce92197d8fa384452d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a1c30cdb22be13ce92197d8fa384452d1">RobotKinematics</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> std::array&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">L_</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> std::array&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="classRotationMatrix.html">RotationMatrix</a> *, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">R_</a>)</td></tr>
 <tr class="memdesc:a1c30cdb22be13ce92197d8fa384452d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes kinematics solver with robot link parameters.  <br /></td></tr>
 <tr class="separator:a1c30cdb22be13ce92197d8fa384452d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff1e5b4567544a48a2d1e16326d7544a" id="r_aff1e5b4567544a48a2d1e16326d7544a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; Matrix&lt; 3, 1 &gt;, Matrix&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#aff1e5b4567544a48a2d1e16326d7544a">forwardKinematics</a> (const Matrix&lt; DOF, 1 &gt; &amp;theta) const override</td></tr>
+<tr class="memitem:aff1e5b4567544a48a2d1e16326d7544a" id="r_aff1e5b4567544a48a2d1e16326d7544a"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#aff1e5b4567544a48a2d1e16326d7544a">forwardKinematics</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">theta</a>) <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">override</a></td></tr>
 <tr class="memdesc:aff1e5b4567544a48a2d1e16326d7544a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes end-effector position and orientation from joint angles.  <br /></td></tr>
 <tr class="separator:aff1e5b4567544a48a2d1e16326d7544a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a373a3ddc3a0a60c9dae2662551c89100" id="r_a373a3ddc3a0a60c9dae2662551c89100"><td class="memItemLeft" align="right" valign="top">std::array&lt; Matrix&lt; 3, 3 &gt;, DOF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a373a3ddc3a0a60c9dae2662551c89100">getRotDerivatives</a> (const Matrix&lt; DOF, 1 &gt; &amp;theta) const</td></tr>
+<tr class="memitem:a373a3ddc3a0a60c9dae2662551c89100" id="r_a373a3ddc3a0a60c9dae2662551c89100"><td class="memItemLeft" align="right" valign="top">std::array&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a373a3ddc3a0a60c9dae2662551c89100">getRotDerivatives</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">theta</a>) <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a></td></tr>
 <tr class="memdesc:a373a3ddc3a0a60c9dae2662551c89100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes partial derivatives of rotation matrices with respect to joint angles.  <br /></td></tr>
 <tr class="separator:a373a3ddc3a0a60c9dae2662551c89100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02411573f8e7ce4f575d571715d6e415" id="r_a02411573f8e7ce4f575d571715d6e415"><td class="memItemLeft" align="right" valign="top">Matrix&lt; 3, DOF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a02411573f8e7ce4f575d571715d6e415">getJacobian</a> (const Matrix&lt; DOF, 1 &gt; &amp;theta) const</td></tr>
+<tr class="memitem:a02411573f8e7ce4f575d571715d6e415" id="r_a02411573f8e7ce4f575d571715d6e415"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a02411573f8e7ce4f575d571715d6e415">getJacobian</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">theta</a>) <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a></td></tr>
 <tr class="memdesc:a02411573f8e7ce4f575d571715d6e415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes 3×DOF geometric Jacobian for end-effector linear velocity.  <br /></td></tr>
 <tr class="separator:a02411573f8e7ce4f575d571715d6e415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e50d08914bdff03560b2c107265a6ee" id="r_a4e50d08914bdff03560b2c107265a6ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a4e50d08914bdff03560b2c107265a6ee">SolveIK</a> (const Matrix&lt; 3, 1 &gt; &amp;pr, const Matrix&lt; 3, 3 &gt; &amp;Rr, Matrix&lt; DOF, 1 &gt; &amp;theta, float tol_pos, float tol_ori, float lambda, int max_iter) override</td></tr>
+<tr class="memitem:a4e50d08914bdff03560b2c107265a6ee" id="r_a4e50d08914bdff03560b2c107265a6ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRobot_1_1RobotKinematics.html#a4e50d08914bdff03560b2c107265a6ee">SolveIK</a> (<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">pr</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Rr</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">theta</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">tol_pos</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">tol_ori</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">lambda</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">int</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">max_iter</a>) <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">override</a></td></tr>
 <tr class="memdesc:a4e50d08914bdff03560b2c107265a6ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solves inverse kinematics using Levenberg-Marquardt optimization.  <br /></td></tr>
 <tr class="separator:a4e50d08914bdff03560b2c107265a6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -149,15 +149,15 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; DOF &gt;::RobotKinematics </td>
+          <td class="memname"><a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::RobotKinematics </td>
           <td>(</td>
-          <td class="paramtype">const std::array&lt; Matrix&lt; 3, 1 &gt;, DOF &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> std::array&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>L_</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::array&lt; const <a class="el" href="classRotationMatrix.html">RotationMatrix</a> *, DOF &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> std::array&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="classRotationMatrix.html">RotationMatrix</a> *, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>R_</em>&#160;</td>
         </tr>
         <tr>
@@ -177,7 +177,7 @@ template&lt;std::size_t DOF&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">L_</td><td>Array of link translation vectors (DH parameter d) </td></tr>
-    <tr><td class="paramname">R_</td><td>Array of rotation function pointers for each joint Each RotationMatrix* implements R(theta) = rotation matrix for that joint </td></tr>
+    <tr><td class="paramname">R_</td><td>Array of rotation function pointers for each joint Each RotationMatrix* implements <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef" title="Type alias for fixed-size Eigen matrix of floats.">R(theta)</a> = rotation matrix for that joint </td></tr>
   </table>
   </dd>
 </dl>
@@ -197,9 +197,9 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt; Matrix&lt; 3, 1 &gt;, Matrix&lt; 3, 3 &gt; &gt; <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; DOF &gt;::forwardKinematics </td>
+          <td class="memname">std::pair&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &gt; <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::forwardKinematics </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>theta</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -237,9 +237,9 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Matrix&lt; 3, DOF &gt; <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; DOF &gt;::getJacobian </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::getJacobian </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>theta</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -276,9 +276,9 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::array&lt; Matrix&lt; 3, 3 &gt;, DOF &gt; <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; DOF &gt;::getRotDerivatives </td>
+          <td class="memname">std::array&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt;, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt; <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::getRotDerivatives </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>theta</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -314,45 +314,45 @@ template&lt;std::size_t DOF&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; DOF &gt;::SolveIK </td>
+          <td class="memname"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">bool</a> <a class="el" href="classRobot_1_1RobotKinematics.html">Robot::RobotKinematics</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a> &gt;::SolveIK </td>
           <td>(</td>
-          <td class="paramtype">const Matrix&lt; 3, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>pr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Matrix&lt; 3, 3 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">const</a> <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; 3, 3 &gt; &amp;&#160;</td>
           <td class="paramname"><em>Rr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Matrix&lt; DOF, 1 &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">Matrix</a>&lt; <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">DOF</a>, 1 &gt; &amp;&#160;</td>
           <td class="paramname"><em>theta</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td>
           <td class="paramname"><em>tol_pos</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td>
           <td class="paramname"><em>tol_ori</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">float&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">float</a>&#160;</td>
           <td class="paramname"><em>lambda</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype"><a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef">int</a>&#160;</td>
           <td class="paramname"><em>max_iter</em>&#160;</td>
         </tr>
         <tr>
@@ -385,7 +385,7 @@ template&lt;std::size_t DOF&gt; </div>
 <p>Algorithm:</p><ol type="1">
 <li>Compute forward kinematics for current pose</li>
 <li>Calculate position error: rp = p_current - p_desired</li>
-<li>Calculate orientation error from rotation matrix: r0 = [R_err(1,0), R_err(2,0), R_err(2,1)]</li>
+<li>Calculate orientation error from rotation matrix: r0 = [<a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef" title="Type alias for fixed-size Eigen matrix of floats.">R_err(1,0)</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef" title="Type alias for fixed-size Eigen matrix of floats.">R_err(2,0)</a>, <a class="el" href="geometry_8h.html#aaa94f4c08bde77534dd5876511aa20ef" title="Type alias for fixed-size Eigen matrix of floats.">R_err(2,1)</a>]</li>
 <li>Build 6×DOF Jacobian combining position and orientation derivatives</li>
 <li>Apply Levenberg-Marquardt damping to Jacobian diagonal</li>
 <li>Solve for joint angle updates: delta_theta = J^-1 * (-residuals)</li>

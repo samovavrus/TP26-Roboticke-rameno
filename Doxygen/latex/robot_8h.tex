@@ -1,0 +1,60 @@
+\doxysection{TP26-\/\+Roboticke-\/rameno/robot.h File Reference}
+\hypertarget{robot_8h}{}\label{robot_8h}\index{TP26-\/Roboticke-\/rameno/robot.h@{TP26-\/Roboticke-\/rameno/robot.h}}
+
+
+\doxylink{namespaceRobot}{Robot} kinematics and actuator interfaces.  
+
+
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include "{}geometry.\+h"{}}\newline
+Include dependency graph for robot.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{robot_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{robot_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structactuator__parameters}{actuator\+\_\+parameters}}
+\begin{DoxyCompactList}\small\item\em Joint actuator configuration and calibration parameters. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRobot_1_1RobotKinematicsBase}{Robot\+::\+Robot\+Kinematics\+Base$<$ DOF $>$}}
+\begin{DoxyCompactList}\small\item\em Abstract base class for robot kinematics solvers. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRobot_1_1JointActuators}{Robot\+::\+Joint\+Actuators}}
+\begin{DoxyCompactList}\small\item\em Abstract base class for joint actuation hardware. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRobot_1_1RobotArm}{Robot\+::\+Robot\+Arm$<$ DOF $>$}}
+\begin{DoxyCompactList}\small\item\em High-\/level robot arm control interface. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRobot_1_1RobotKinematics}{Robot\+::\+Robot\+Kinematics$<$ DOF $>$}}
+\begin{DoxyCompactList}\small\item\em Concrete kinematics solver using Jacobian-\/based inverse kinematics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceRobot}{Robot}}
+\begin{DoxyCompactList}\small\item\em Core robotics control and kinematics namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{robot_8h_ae71449b1cc6e6250b91f539153a7a0d3}\label{robot_8h_ae71449b1cc6e6250b91f539153a7a0d3} 
+\#\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{define}} {\bfseries M\+\_\+\+PI}~3.\+14159265358979323846\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{f}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{robot_8h_aaa94f4c08bde77534dd5876511aa20ef}\label{robot_8h_aaa94f4c08bde77534dd5876511aa20ef} 
+{\footnotesize template$<$\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{int}} Rows, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{int}} Cols$>$ }\\\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{using}} {\bfseries Matrix} = Eigen\+::\+Matrix$<$ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rows}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Cols}} $>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{namespaceRobot}{Robot} kinematics and actuator interfaces. 
+

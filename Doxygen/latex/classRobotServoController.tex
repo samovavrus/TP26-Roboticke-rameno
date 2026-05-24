@@ -30,11 +30,11 @@ Collaboration diagram for Robot\+Servo\+Controller\+:\nopagebreak
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classRobotServoController_a9faa8b9b8b1b13143288f798133077f8}{Robot\+Servo\+Controller}} (Two\+Wire \&Wire\+\_\+, const std\+::vector$<$ \mbox{\hyperlink{structactuator__parameters}{actuator\+\_\+parameters}} $>$ \&parameters\+\_\+)
+\mbox{\hyperlink{classRobotServoController_a9faa8b9b8b1b13143288f798133077f8}{Robot\+Servo\+Controller}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Two\+Wire}} \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Wire\+\_\+}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{const}} std\+::vector$<$ \mbox{\hyperlink{structactuator__parameters}{actuator\+\_\+parameters}} $>$ \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{parameters\+\_\+}})
 \begin{DoxyCompactList}\small\item\em Initializes servo controller with I2C bus and calibration parameters. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classRobotServoController_a61daddb588674b8e424cf95f6d540ab1}{init}} ()
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{void}} \mbox{\hyperlink{classRobotServoController_a61daddb588674b8e424cf95f6d540ab1}{init}} ()
 \begin{DoxyCompactList}\small\item\em Initializes PWM driver hardware and configures servo frequency. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{classRobotServoController_adffab91bbab34d2c30efd7a073773600}{write\+Angles}} (const float \texorpdfstring{$\ast$}{*}angles, std\+::size\+\_\+t n)
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{bool}} \mbox{\hyperlink{classRobotServoController_adffab91bbab34d2c30efd7a073773600}{write\+Angles}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{const}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{angles}}, std\+::size\+\_\+t \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{n}})
 \begin{DoxyCompactList}\small\item\em Writes joint angles to all servo actuators. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classRobot_1_1JointActuators}{Robot\+::\+Joint\+Actuators}}}
 \begin{DoxyCompactItemize}
@@ -66,7 +66,7 @@ Works with STM32 and I2\+C-\/based PCA9685 16-\/channel PWM expander for simulta
 \index{RobotServoController@{RobotServoController}!RobotServoController@{RobotServoController}}
 \index{RobotServoController@{RobotServoController}!RobotServoController@{RobotServoController}}
 \doxysubsubsection{\texorpdfstring{RobotServoController()}{RobotServoController()}}
-{\footnotesize\ttfamily Robot\+Servo\+Controller\+::\+Robot\+Servo\+Controller (\begin{DoxyParamCaption}\item[{Two\+Wire \&}]{Wire\+\_\+,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{structactuator__parameters}{actuator\+\_\+parameters}} $>$ \&}]{parameters\+\_\+ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily Robot\+Servo\+Controller\+::\+Robot\+Servo\+Controller (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Two\+Wire}} \&}]{Wire\+\_\+,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{const}} std\+::vector$<$ \mbox{\hyperlink{structactuator__parameters}{actuator\+\_\+parameters}} $>$ \&}]{parameters\+\_\+ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -83,14 +83,14 @@ Initializes servo controller with I2C bus and calibration parameters.
 \end{DoxyItemize}\\
 \hline
 \end{DoxyParams}
-Does not take ownership of the Wire\+\_\+ reference; caller must manage the I2C bus. Parameters are stored as a reference; the caller must ensure the vector remains valid for the lifetime of this object. 
+Does not take ownership of the Wire\+\_\+ reference; caller must manage the I2C bus. Parameters are copied into the controller on construction. 
 
 \doxysubsection{Member Function Documentation}
 \Hypertarget{classRobotServoController_a61daddb588674b8e424cf95f6d540ab1}\label{classRobotServoController_a61daddb588674b8e424cf95f6d540ab1} 
 \index{RobotServoController@{RobotServoController}!init@{init}}
 \index{init@{init}!RobotServoController@{RobotServoController}}
 \doxysubsubsection{\texorpdfstring{init()}{init()}}
-{\footnotesize\ttfamily void Robot\+Servo\+Controller\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{void}} Robot\+Servo\+Controller\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -103,11 +103,11 @@ Operations performed\+:
 \item Set PWM frequency to standard servo frequency (typically 50 Hz)
 \end{DoxyEnumerate}
 
-Must be called once during system initialization before sending commands to servos. Typically invoked in the main setup() or initialization task. \Hypertarget{classRobotServoController_adffab91bbab34d2c30efd7a073773600}\label{classRobotServoController_adffab91bbab34d2c30efd7a073773600} 
+Must be called once during system initialization before sending commands to servos. Typically invoked in the main \doxylink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{setup()} or initialization task. \Hypertarget{classRobotServoController_adffab91bbab34d2c30efd7a073773600}\label{classRobotServoController_adffab91bbab34d2c30efd7a073773600} 
 \index{RobotServoController@{RobotServoController}!writeAngles@{writeAngles}}
 \index{writeAngles@{writeAngles}!RobotServoController@{RobotServoController}}
 \doxysubsubsection{\texorpdfstring{writeAngles()}{writeAngles()}}
-{\footnotesize\ttfamily bool Robot\+Servo\+Controller\+::write\+Angles (\begin{DoxyParamCaption}\item[{const float \texorpdfstring{$\ast$}{*}}]{angles,  }\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{bool}} Robot\+Servo\+Controller\+::write\+Angles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{const}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \texorpdfstring{$\ast$}{*}}]{angles,  }\item[{std\+::size\+\_\+t}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
 
 
 
@@ -127,7 +127,7 @@ Conversion process for each joint i\+:
 \begin{DoxyEnumerate}
 \item Check\+: angle\+\_\+min $\leq$ angles\mbox{[}i\mbox{]} $\leq$ angle\+\_\+max
 \item If violated\+: abort and return false (fail-\/safe behavior)
-\item If valid\+: convert to degrees\+: $deg\_i = (angles[i] - offset\_i) \ast gain\_i \ast 180/\pi$
+\item If valid\+: convert to degrees\+: deg\+\_\+i = (angles\mbox{[}i\mbox{]} -\/ offset\+\_\+i) \texorpdfstring{$\ast$}{*} gain\+\_\+i \texorpdfstring{$\ast$}{*} $180/\pi$
 \item Map degrees to PWM pulse width using servo calibration
 \item Write PWM value to PCA9685 channel i
 \end{DoxyEnumerate}
@@ -143,4 +143,4 @@ Implements \mbox{\hyperlink{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-TP26-\/\+Roboticke-\/rameno/Servo\+Actuator.\+h\end{DoxyCompactItemize}
+TP26-\/\+Roboticke-\/rameno/\mbox{\hyperlink{ServoActuator_8h}{Servo\+Actuator.\+h}}\end{DoxyCompactItemize}
