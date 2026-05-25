@@ -1,0 +1,5 @@
+<map id="Robot::RobotKinematicsBase&lt; DOF &gt;" name="Robot::RobotKinematicsBase&lt; DOF &gt;">
+<area shape="rect" id="Node000001" title="Abstract base class for robot kinematics solvers." alt="" coords="5,5,216,45"/>
+<area shape="rect" id="Node000002" href="$classRobot_1_1RobotKinematics.html" title="Concrete kinematics solver using Jacobian&#45;based inverse kinematics." alt="" coords="21,93,200,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,59,113,93,108,93,108,59"/>
+</map>
