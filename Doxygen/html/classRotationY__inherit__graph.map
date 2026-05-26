@@ -1,0 +1,5 @@
+<map id="RotationY" name="RotationY">
+<area shape="rect" id="Node000001" title="Rotation in Y&#45;axis (right&#45;hand rule: thumb along +Y)" alt="" coords="22,79,107,104"/>
+<area shape="rect" id="Node000002" href="$classRotationMatrix.html" title="Abstract base class for joint rotation matrix generation." alt="" coords="5,5,124,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="67,44,67,79,62,79,62,44"/>
+</map>

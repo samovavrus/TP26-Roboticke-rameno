@@ -22,4 +22,5 @@ _____
 
 ___
 ### Dokumentácia
-[thesis.pdf](Documentation/thesis.pdf)
+- dokumentácia k zadaniu - [thesis.pdf](Documentation/thesis.pdf)
+- Doxygen dokumentácia ku zdrojovému kódu - TU TREBA NASTAVIT GITHUB PAGES ABY FUNGOVAL PRELINK NA DOXYGEN[github.com/samovavrus/TP26-Roboticke-rameno/.../index.html](https://github.com/samovavrus/TP26-Roboticke-rameno/blob/doxygen/Doxygen/html/index.html)

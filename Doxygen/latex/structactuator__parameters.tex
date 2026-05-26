@@ -1,0 +1,36 @@
+\doxysection{actuator\+\_\+parameters Struct Reference}
+\hypertarget{structactuator__parameters}{}\label{structactuator__parameters}\index{actuator\_parameters@{actuator\_parameters}}
+
+
+Joint actuator configuration and calibration parameters.  
+
+
+
+
+{\ttfamily \#include $<$robot.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structactuator__parameters_ae67357f8ede8c627533696d992ebfe58}\label{structactuator__parameters_ae67357f8ede8c627533696d992ebfe58} 
+float {\bfseries min\+Angle}
+\begin{DoxyCompactList}\small\item\em Minimum joint angle in radians. \end{DoxyCompactList}\item 
+\Hypertarget{structactuator__parameters_a4999db8b5541cd35695afd3d31b7ebc1}\label{structactuator__parameters_a4999db8b5541cd35695afd3d31b7ebc1} 
+float {\bfseries max\+Angle}
+\begin{DoxyCompactList}\small\item\em Maximum joint angle in radians. \end{DoxyCompactList}\item 
+\Hypertarget{structactuator__parameters_a39f0faddfdc806d8eec51ba27fc079b7}\label{structactuator__parameters_a39f0faddfdc806d8eec51ba27fc079b7} 
+float {\bfseries gain}
+\begin{DoxyCompactList}\small\item\em Scaling factor for angle-\/to-\/\+PWM conversion. \end{DoxyCompactList}\item 
+\Hypertarget{structactuator__parameters_a6ffdd95dcc98bcb813abd8656c638921}\label{structactuator__parameters_a6ffdd95dcc98bcb813abd8656c638921} 
+float {\bfseries offset}
+\begin{DoxyCompactList}\small\item\em Offset applied to joint angles during conversion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Joint actuator configuration and calibration parameters. 
+
+Stores calibration and limit parameters for a single joint actuator. Used to convert between joint angle space and PWM control signals. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+TP26-\/\+Roboticke-\/rameno/\mbox{\hyperlink{robot_8h}{robot.\+h}}\end{DoxyCompactItemize}

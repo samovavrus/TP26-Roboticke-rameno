@@ -1,0 +1,172 @@
+\doxysection{geometry.\+h}
+\hypertarget{geometry_8h_source}{}\label{geometry_8h_source}\index{TP26-\/Roboticke-\/rameno/geometry.h@{TP26-\/Roboticke-\/rameno/geometry.h}}
+\mbox{\hyperlink{geometry_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}Eigen/Dense"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ Rows,\ \textcolor{keywordtype}{int}\ Cols>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{using\ }\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}\ =\ Eigen::Matrix<float,\ Rows,\ Cols>;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00036\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_ada99a649951af8b02d738aca229c74d1}{rotX}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}})}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ <<\ 1.0,\ \ \ \ \ 0,\ \ \ \ \ \ 0,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ 0,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ 0,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}};}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00050\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_ada99a649951af8b02d738aca229c74d1}{rotX}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})}
+\DoxyCodeLine{00051\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_ada99a649951af8b02d738aca229c74d1}{rotX}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}));}
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00064\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}{drotX}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}})}
+\DoxyCodeLine{00065\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ <<\ 0,\ 0,\ 0,}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ 0,\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ 0,\ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}};}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00078\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}{drotX}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})}
+\DoxyCodeLine{00079\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}{drotX}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}));}
+\DoxyCodeLine{00081\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00091\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}{rotY}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}})}
+\DoxyCodeLine{00092\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ <<\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ 0,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ 1.0,\ 0,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ 0,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}};}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00105\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}{rotY}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})}
+\DoxyCodeLine{00106\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}{rotY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}));}
+\DoxyCodeLine{00108\ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00119\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}{drotY}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}})}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00122\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ <<\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ 0,\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ 0,\ 0,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ 0,\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}};}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00126\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00133\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}{drotY}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})}
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}{drotY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}));}
+\DoxyCodeLine{00136\ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00146\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}{rotZ}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}})}
+\DoxyCodeLine{00147\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};\ }
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ <<\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ 0,}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ 0,}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ 1.0;}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};\ \ \ }
+\DoxyCodeLine{00153\ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00160\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}{rotZ}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})}
+\DoxyCodeLine{00161\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}{rotZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}));}
+\DoxyCodeLine{00163\ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00174\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}{drotZ}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}})}
+\DoxyCodeLine{00175\ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,\ 3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};}
+\DoxyCodeLine{00177\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ <<\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ 0,}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\_theta}},\ -\/\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\_theta}},\ 0,}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ \ 0,\ \ \ \ \ \ \ 0;}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00181\ \}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00188\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}{drotZ}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})}
+\DoxyCodeLine{00189\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}{drotZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}));}
+\DoxyCodeLine{00191\ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00207\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classRotationMatrix_a9686bac4de9c1be6381e0afba6983ba4}{\string~RotationMatrix}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationMatrix_ab7c5b6849623ba90f7ded86677b9c9f4}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationMatrix_afdd7cf9e618bb18572c6b6dd43d72fdc}{d}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationMatrix_a66c4ea61c94d09b1b74a73b094be9f26}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}})\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00238\ \};}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00247\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationX}{RotationX}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00248\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00254\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationX_ae8657cf8b66c77e4619de2e23da37cc1}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_ada99a649951af8b02d738aca229c74d1}{rotX}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00257\ \ \ \ \ \}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00264\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationX_a45ce5bd0f2fdfbb5456903475d1859a5}{d}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}{drotX}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00267\ \ \ \ \ \}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationX_a59895240b765e21d21b7ae086ce0b14c}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ =\ \mbox{\hyperlink{geometry_8h_ada99a649951af8b02d738aca229c74d1}{rotX}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}}\ =\ \mbox{\hyperlink{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}{drotX}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00279\ \ \ \ \ \}}
+\DoxyCodeLine{00280\ \};}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00289\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationY}{RotationY}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00290\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00296\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationY_ad239da37a65e6c7c2209a9eacf25e0fd}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}{rotY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00299\ \ \ \ \ \}}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00306\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationY_a967930ab28ae07566d84f13678d4863b}{d}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}{drotY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00309\ \ \ \ \ \}}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationY_a2fe58d392c1b2edee2381785a03bf807}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ =\ \mbox{\hyperlink{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}{rotY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}}\ =\ \mbox{\hyperlink{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}{drotY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00321\ \ \ \ \ \}}
+\DoxyCodeLine{00322\ \};}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00331\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRotationZ}{RotationZ}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classRotationMatrix}{RotationMatrix}}\ \{}
+\DoxyCodeLine{00332\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00338\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationZ_a439cad583ec0ce7099afabffbe5bda01}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}{rotZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00341\ \ \ \ \ \}}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00348\ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{classRotationZ_ae9a01928e4336177d50500a1ce389d44}{d}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}{drotZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00351\ \ \ \ \ \}}
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRotationZ_a9261617a9c71e41c22a229beab6a9a50}{operator()}}(\textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix<3,3>}}\ \&\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}})\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{sin}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}}),\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}}\ =\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{cos}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}});}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{R}}\ =\ \mbox{\hyperlink{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}{rotZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{dR}}\ =\ \mbox{\hyperlink{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}{drotZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s}},\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c}});}
+\DoxyCodeLine{00363\ \ \ \ \ \}}
+\DoxyCodeLine{00364\ \};}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ }
+
+\end{DoxyCode}

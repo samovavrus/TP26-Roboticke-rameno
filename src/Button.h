@@ -1,7 +1,20 @@
+/**
+ * @file Button.h
+ * @brief Debounced digital button helper for Arduino-style inputs.
+ */
 #pragma once
 
+/**
+ * @brief Debounces a digital button and detects state changes.
+ */
 class Button {
 public:
+	/**
+	 * @brief Create a button reader on a digital pin.
+	 * @param pin Digital input pin number.
+	 * @param pullup Enable internal pull-up when true.
+	 * @param debounceDelay Debounce time in milliseconds.
+	 */
 	Button (uint8_t pin, bool pullup = false, uint16_t debounceDelay = 50)
 		: _pin(pin), _state(LOW), _lastState(LOW),
 		  _lastMillis(0), _debounceDelay(debounceDelay),
@@ -13,7 +26,12 @@ public:
 		}
 	}
 
-	// Debounces the button and returns the state if it was just changed.
+	/**
+	 * @brief Debounce the button and return its state when it changes.
+	 * @param triggerState The active state to consider as a press (default LOW).
+	 * @return The new state when a change is detected; otherwise returns the
+	 *         non-trigger state.
+	 */
 	bool check(bool triggerState = LOW) {
 		bool reading = digitalRead(_pin);
 		// Checks if the buttons has changed state

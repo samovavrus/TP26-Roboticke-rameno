@@ -1,10 +1,16 @@
+/**
+ * @file Trajectory.cpp
+ * @brief Trajectory generation task implementation.
+ */
 #include <Arduino.h>
 #include <STM32FreeRTOS.h>
 #include "Trajectory.h"
 
+/// @brief FreeRTOS task handle for the trajectory task.
 TaskHandle_t HandleTaskTrajectory;
 
 // Globálna cieľová póza pre Control task
+/// @brief Global trajectory target pose shared with Control task.
 volatile TrajectoryTargetPose gTrajectoryTargetPose = {0};
 
 // Riadiace flagy pre spustenie/zastavenie trajektórie z UI
@@ -14,6 +20,9 @@ static volatile uint8_t gTrajectoryRunning        = 0;
 
 #define DEG2RAD(x) ((x) * 0.01745329252f)
 
+/**
+ * @brief Trajectory waypoint with pose and segment duration.
+ */
 struct Waypoint {
   float x;
   float y;
@@ -24,10 +33,26 @@ struct Waypoint {
   uint32_t duration_ms;
 };
 
+/**
+ * @brief Linear interpolation helper.
+ * @param a Start value.
+ * @param b End value.
+ * @param t Interpolation factor in [0, 1].
+ * @return Interpolated value.
+ */
 static float lerp(float a, float b, float t) {
   return a + t * (b - a);
 }
 
+/**
+ * @brief Update the shared trajectory pose in a critical section.
+ * @param x Position X in meters.
+ * @param y Position Y in meters.
+ * @param z Position Z in meters.
+ * @param roll Roll angle in radians.
+ * @param pitch Pitch angle in radians.
+ * @param yaw Yaw angle in radians.
+ */
 static void setTrajectoryPose(float x, float y, float z,
                               float roll, float pitch, float yaw) {
   taskENTER_CRITICAL();
@@ -47,19 +72,32 @@ static void setTrajectoryPose(float x, float y, float z,
   taskEXIT_CRITICAL();
 }
 
+/**
+ * @brief Request the trajectory task to start scanning.
+ */
 void Trajectory_StartScan(void) {
   gTrajectoryStartRequested = 1;
   gTrajectoryStopRequested = 0;
 }
 
+/**
+ * @brief Request the trajectory task to stop scanning.
+ */
 void Trajectory_StopScan(void) {
   gTrajectoryStopRequested = 1;
 }
 
+/**
+ * @brief Return whether the trajectory task is currently running.
+ */
 bool Trajectory_IsRunning(void) {
   return gTrajectoryRunning != 0;
 }
 
+/**
+ * @brief FreeRTOS task for trajectory planning and pose streaming.
+ * @param pvParameters Unused task parameter.
+ */
 void TaskTrajectory(void* pvParameters) {
   const uint32_t Ts_ms = 50;
 

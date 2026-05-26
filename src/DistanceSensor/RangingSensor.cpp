@@ -1,3 +1,7 @@
+/**
+ * @file RangingSensor.cpp
+ * @brief Implementation of the VL53L1X ranging sensor wrapper.
+ */
 #include "RangingSensor.h"
 #include <STM32FreeRTOS.h>
 
@@ -174,6 +178,10 @@ void RangingSensor::enableLogging(bool enable, bool clear) {
     }
 }
 
+/**
+ * @brief FreeRTOS task for periodic VL53L1X ranging and optional logging.
+ * @param pvParameters Unused task parameter.
+ */
 void TaskSensor(void* pvParameters) {
     float x = 0.0f, y = 0.0f, z = 0.0f;
     float roll = 0.0f, pitch = 0.0f, yaw = 0.0f;
