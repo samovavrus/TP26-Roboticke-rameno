@@ -1,0 +1,311 @@
+\doxysection{TP26-\/\+Roboticke-\/rameno/geometry.h File Reference}
+\hypertarget{geometry_8h}{}\label{geometry_8h}\index{TP26-\/Roboticke-\/rameno/geometry.h@{TP26-\/Roboticke-\/rameno/geometry.h}}
+
+
+Rotation matrices and derivatives for robot kinematics.  
+
+
+{\ttfamily \#include "{}Eigen/\+Dense"{}}\newline
+Include dependency graph for geometry.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{geometry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{geometry_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classRotationMatrix}{Rotation\+Matrix}}
+\begin{DoxyCompactList}\small\item\em Abstract base class for joint rotation matrix generation. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRotationX}{RotationX}}
+\begin{DoxyCompactList}\small\item\em Rotation in X-\/axis (right-\/hand rule\+: thumb along +X) \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRotationY}{RotationY}}
+\begin{DoxyCompactList}\small\item\em Rotation in Y-\/axis (right-\/hand rule\+: thumb along +Y) \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classRotationZ}{RotationZ}}
+\begin{DoxyCompactList}\small\item\em Rotation in Z-\/axis (right-\/hand rule\+: thumb along +Z) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}\label{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef} 
+{\footnotesize template$<$\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{int}} Rows, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{int}} Cols$>$ }\\\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{using}} {\bfseries Matrix} = Eigen\+::\+Matrix$<$ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Rows}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Cols}} $>$
+\begin{DoxyCompactList}\small\item\em Type alias for fixed-\/size Eigen matrix of floats. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{Indent}\textbf{ Rotation matrix generation and derivatives}\par
+{\em Each set of functions provides\+:
+\begin{DoxyItemize}
+\item Rotation matrix from sine and cosine values.
+\item Rotation matrix from an angle (radians).
+\item Derivative of rotation matrix w.\+r.\+t. angle.
+\end{DoxyItemize}
+
+Rotations follow the right-\/hand rule. }\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_ada99a649951af8b02d738aca229c74d1}{rotX}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\+\_\+theta}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\+\_\+theta}})
+\begin{DoxyCompactList}\small\item\em Rotation matrix in the X-\/axis from pre-\/computed sine and cosine. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_acfd0fc54a3194545ff0ff117d34a504a}{rotX}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})
+\begin{DoxyCompactList}\small\item\em Rotation matrix in the X-\/axis from angle in radians. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}{drotX}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\+\_\+theta}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\+\_\+theta}})
+\begin{DoxyCompactList}\small\item\em Derivative of X-\/axis rotation matrix with respect to angle from pre-\/computed sin/cos. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a74211aa42c2d1bb463bea0313543e8f3}{drotX}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})
+\begin{DoxyCompactList}\small\item\em Derivative of X-\/axis rotation matrix with respect to angle in radians. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}{rotY}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\+\_\+theta}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\+\_\+theta}})
+\begin{DoxyCompactList}\small\item\em Rotation matrix in the Y-\/axis from pre-\/computed sine and cosine. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a958c4cdce7503f31b37a72fc96f48eca}{rotY}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})
+\begin{DoxyCompactList}\small\item\em Rotation matrix in the Y-\/axis from angle in radians. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}{drotY}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\+\_\+theta}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\+\_\+theta}})
+\begin{DoxyCompactList}\small\item\em Derivative of Y-\/axis rotation matrix with respect to angle from pre-\/computed sin/cos. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a5980b87db96819e1d7b2a3d02292bbf6}{drotY}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})
+\begin{DoxyCompactList}\small\item\em Derivative of Y-\/axis rotation matrix with respect to angle in radians. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}{rotZ}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\+\_\+theta}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\+\_\+theta}})
+\begin{DoxyCompactList}\small\item\em Rotation matrix in the Z-\/axis from pre-\/computed sine and cosine. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_ad11c9adfb9542e10ebca7647b5db88dc}{rotZ}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})
+\begin{DoxyCompactList}\small\item\em Rotation matrix in the Z-\/axis from angle in radians. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}{drotZ}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{s\+\_\+theta}}, \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{c\+\_\+theta}})
+\begin{DoxyCompactList}\small\item\em Derivative of Z-\/axis rotation matrix with respect to angle from pre-\/computed sin/cos. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ \mbox{\hyperlink{geometry_8h_a0fcf21312f03ba7df6a5b2fdc97fa7c0}{drotZ}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{theta}})
+\begin{DoxyCompactList}\small\item\em Derivative of Z-\/axis rotation matrix with respect to angle in radians. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+
+
+\doxysubsection{Detailed Description}
+Rotation matrices and derivatives for robot kinematics. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d}\label{geometry_8h_a28f8fbbd8d73a0166c437ccd22ec970d} 
+\index{geometry.h@{geometry.h}!drotX@{drotX}}
+\index{drotX@{drotX}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{drotX()}{drotX()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ drotX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{s\+\_\+theta,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{c\+\_\+theta }\end{DoxyParamCaption})}
+
+
+
+Derivative of X-\/axis rotation matrix with respect to angle from pre-\/computed sin/cos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+\_\+theta} & Sine of the rotation angle \\
+\hline
+{\em c\+\_\+theta} & Cosine of the rotation angle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R\+\_\+x/d\theta$
+\end{DoxyReturn}
+Represents the rate of change of the rotation matrix as the angle changes. Used in Jacobian computations for inverse kinematics. \Hypertarget{geometry_8h_a74211aa42c2d1bb463bea0313543e8f3}\label{geometry_8h_a74211aa42c2d1bb463bea0313543e8f3} 
+\index{geometry.h@{geometry.h}!drotX@{drotX}}
+\index{drotX@{drotX}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{drotX()}{drotX()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ drotX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{theta }\end{DoxyParamCaption})}
+
+
+
+Derivative of X-\/axis rotation matrix with respect to angle in radians. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R\+\_\+x/d\theta$ 
+\end{DoxyReturn}
+\Hypertarget{geometry_8h_acdb37010c92e1a6ed13a91f601080f88}\label{geometry_8h_acdb37010c92e1a6ed13a91f601080f88} 
+\index{geometry.h@{geometry.h}!drotY@{drotY}}
+\index{drotY@{drotY}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{drotY()}{drotY()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ drotY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{s\+\_\+theta,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{c\+\_\+theta }\end{DoxyParamCaption})}
+
+
+
+Derivative of Y-\/axis rotation matrix with respect to angle from pre-\/computed sin/cos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+\_\+theta} & Sine of the rotation angle \\
+\hline
+{\em c\+\_\+theta} & Cosine of the rotation angle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R\+\_\+y/d\theta$
+\end{DoxyReturn}
+Represents the rate of change of the rotation matrix as the angle changes. Used in Jacobian computations for inverse kinematics. \Hypertarget{geometry_8h_a5980b87db96819e1d7b2a3d02292bbf6}\label{geometry_8h_a5980b87db96819e1d7b2a3d02292bbf6} 
+\index{geometry.h@{geometry.h}!drotY@{drotY}}
+\index{drotY@{drotY}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{drotY()}{drotY()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ drotY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{theta }\end{DoxyParamCaption})}
+
+
+
+Derivative of Y-\/axis rotation matrix with respect to angle in radians. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R\+\_\+y/d\theta$
+\end{DoxyReturn}
+\Hypertarget{geometry_8h_a85d4a70296a549daffedc5dfca6dd997}\label{geometry_8h_a85d4a70296a549daffedc5dfca6dd997} 
+\index{geometry.h@{geometry.h}!drotZ@{drotZ}}
+\index{drotZ@{drotZ}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{drotZ()}{drotZ()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ drotZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{s\+\_\+theta,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{c\+\_\+theta }\end{DoxyParamCaption})}
+
+
+
+Derivative of Z-\/axis rotation matrix with respect to angle from pre-\/computed sin/cos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+\_\+theta} & Sine of the rotation angle \\
+\hline
+{\em c\+\_\+theta} & Cosine of the rotation angle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R\+\_\+z/d\theta$
+\end{DoxyReturn}
+Represents the rate of change of the rotation matrix as the angle changes. Used in Jacobian computations for inverse kinematics. \Hypertarget{geometry_8h_a0fcf21312f03ba7df6a5b2fdc97fa7c0}\label{geometry_8h_a0fcf21312f03ba7df6a5b2fdc97fa7c0} 
+\index{geometry.h@{geometry.h}!drotZ@{drotZ}}
+\index{drotZ@{drotZ}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{drotZ()}{drotZ()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ drotZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{theta }\end{DoxyParamCaption})}
+
+
+
+Derivative of Z-\/axis rotation matrix with respect to angle in radians. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 derivative matrix\+: $d\+R\+\_\+z/d\theta$ 
+\end{DoxyReturn}
+\Hypertarget{geometry_8h_ada99a649951af8b02d738aca229c74d1}\label{geometry_8h_ada99a649951af8b02d738aca229c74d1} 
+\index{geometry.h@{geometry.h}!rotX@{rotX}}
+\index{rotX@{rotX}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{rotX()}{rotX()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ rotX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{s\+\_\+theta,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{c\+\_\+theta }\end{DoxyParamCaption})}
+
+
+
+Rotation matrix in the X-\/axis from pre-\/computed sine and cosine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+\_\+theta} & Sine of the rotation angle \\
+\hline
+{\em c\+\_\+theta} & Cosine of the rotation angle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for rotation in X-\/axis
+\end{DoxyReturn}
+Avoids redundant trigonometric computations when both sin and cos are available. \Hypertarget{geometry_8h_acfd0fc54a3194545ff0ff117d34a504a}\label{geometry_8h_acfd0fc54a3194545ff0ff117d34a504a} 
+\index{geometry.h@{geometry.h}!rotX@{rotX}}
+\index{rotX@{rotX}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{rotX()}{rotX()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ rotX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{theta }\end{DoxyParamCaption})}
+
+
+
+Rotation matrix in the X-\/axis from angle in radians. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for rotation in X-\/axis (right-\/hand rule) 
+\end{DoxyReturn}
+\Hypertarget{geometry_8h_aebe82282c434453dc2d1eb97b1f71144}\label{geometry_8h_aebe82282c434453dc2d1eb97b1f71144} 
+\index{geometry.h@{geometry.h}!rotY@{rotY}}
+\index{rotY@{rotY}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{rotY()}{rotY()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ rotY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{s\+\_\+theta,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{c\+\_\+theta }\end{DoxyParamCaption})}
+
+
+
+Rotation matrix in the Y-\/axis from pre-\/computed sine and cosine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+\_\+theta} & Sine of the rotation angle \\
+\hline
+{\em c\+\_\+theta} & Cosine of the rotation angle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for rotation in Y-\/axis
+\end{DoxyReturn}
+Avoids redundant trigonometric computations when both sin and cos are available. \Hypertarget{geometry_8h_a958c4cdce7503f31b37a72fc96f48eca}\label{geometry_8h_a958c4cdce7503f31b37a72fc96f48eca} 
+\index{geometry.h@{geometry.h}!rotY@{rotY}}
+\index{rotY@{rotY}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{rotY()}{rotY()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ rotY (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{theta }\end{DoxyParamCaption})}
+
+
+
+Rotation matrix in the Y-\/axis from angle in radians. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for rotation in Y-\/axis (right-\/hand rule) 
+\end{DoxyReturn}
+\Hypertarget{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62}\label{geometry_8h_a4850e9e0f10d863ac8e75f4f25e8bf62} 
+\index{geometry.h@{geometry.h}!rotZ@{rotZ}}
+\index{rotZ@{rotZ}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{rotZ()}{rotZ()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ rotZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{s\+\_\+theta,  }\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{c\+\_\+theta }\end{DoxyParamCaption})}
+
+
+
+Rotation matrix in the Z-\/axis from pre-\/computed sine and cosine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+\_\+theta} & Sine of the rotation angle \\
+\hline
+{\em c\+\_\+theta} & Cosine of the rotation angle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for rotation in Z-\/axis
+\end{DoxyReturn}
+Avoids redundant trigonometric computations when both sin and cos are available. \Hypertarget{geometry_8h_ad11c9adfb9542e10ebca7647b5db88dc}\label{geometry_8h_ad11c9adfb9542e10ebca7647b5db88dc} 
+\index{geometry.h@{geometry.h}!rotZ@{rotZ}}
+\index{rotZ@{rotZ}!geometry.h@{geometry.h}}
+\doxysubsubsection{\texorpdfstring{rotZ()}{rotZ()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{Matrix}}$<$ 3, 3 $>$ rotZ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}}}]{theta }\end{DoxyParamCaption})}
+
+
+
+Rotation matrix in the Z-\/axis from angle in radians. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Rotation angle in radians \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+3×3 rotation matrix for rotation in Z-\/axis (right-\/hand rule) 
+\end{DoxyReturn}

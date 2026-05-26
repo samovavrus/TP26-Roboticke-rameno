@@ -1,0 +1,65 @@
+\doxysection{Robot\+::Joint\+Actuators Class Reference}
+\hypertarget{classRobot_1_1JointActuators}{}\label{classRobot_1_1JointActuators}\index{Robot::JointActuators@{Robot::JointActuators}}
+
+
+Abstract base class for joint actuation hardware.  
+
+
+
+
+{\ttfamily \#include $<$robot.\+h$>$}
+
+
+
+Inheritance diagram for Robot\+::Joint\+Actuators\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classRobot_1_1JointActuators__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRobot_1_1JointActuators_a978a9226c9dab9f61eb23e234a58ea3a}\label{classRobot_1_1JointActuators_a978a9226c9dab9f61eb23e234a58ea3a} 
+{\bfseries Joint\+Actuators} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{virtual}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{bool}} \mbox{\hyperlink{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b}{write\+Angles}} (\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{const}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \texorpdfstring{$\ast$}{*}, std\+::size\+\_\+t)=0
+\begin{DoxyCompactList}\small\item\em Sends joint angle commands to all actuators. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for joint actuation hardware. 
+
+Defines the interface for sending computed joint angles to physical actuators (servos, motors, etc.). Implementations handle conversion from angles to hardware control signals (PWM, current commands, etc.). 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b}\label{classRobot_1_1JointActuators_a9f80d426264ba6e4e366cf83bed27e2b} 
+\index{Robot::JointActuators@{Robot::JointActuators}!writeAngles@{writeAngles}}
+\index{writeAngles@{writeAngles}!Robot::JointActuators@{Robot::JointActuators}}
+\doxysubsubsection{\texorpdfstring{writeAngles()}{writeAngles()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{virtual}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{bool}} Robot\+::\+Joint\+Actuators\+::write\+Angles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{const}} \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{float}} \texorpdfstring{$\ast$}{*}}]{,  }\item[{std\+::size\+\_\+t}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Sends joint angle commands to all actuators. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angles} & Array of joint angles in radians \\
+\hline
+{\em n} & Number of joints (should match DOF) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if all angles were within valid ranges and written successfully, false if any angle exceeded joint limits 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classRobotServoController_adffab91bbab34d2c30efd7a073773600}{Robot\+Servo\+Controller}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+TP26-\/\+Roboticke-\/rameno/\mbox{\hyperlink{robot_8h}{robot.\+h}}\end{DoxyCompactItemize}

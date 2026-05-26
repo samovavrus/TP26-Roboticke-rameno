@@ -1,3 +1,7 @@
+/**
+ * @file ui_screens.cpp
+ * @brief LCD UI implementation and input handling.
+ */
 #include <Arduino.h>
 #include <STM32FreeRTOS.h>
 #include "src/Keypad/Keypad.h"
@@ -7,6 +11,17 @@
 
 #define USE_KEYPAD  1   // 0 = dev buttons (pins 2,3), 1 = keypad buttons
 
+/**
+ * @brief Convert control state (SI units) to UI display units.
+ * @param state Control state message.
+ * @param x X position in mm (output).
+ * @param y Y position in mm (output).
+ * @param z Z position in mm (output).
+ * @param roll Roll angle in degrees (output).
+ * @param pitch Pitch angle in degrees (output).
+ * @param yaw Yaw angle in degrees (output).
+ * @param servoAngles Joint angles in degrees (output).
+ */
 static void applyControlStateToUi(const UiControlStateMessage& state,
                                   float& x,
                                   float& y,
@@ -28,6 +43,14 @@ static void applyControlStateToUi(const UiControlStateMessage& state,
   }
 }
 
+/**
+ * @brief Apply a deadzone to an analog axis and scale the result.
+ * @param value Raw ADC value.
+ * @param center Center ADC value.
+ * @param deadzone Deadzone half-width in ADC counts.
+ * @param scale Output scale factor.
+ * @return Scaled value with deadzone applied.
+ */
 float applyDeadzone(int value, int center, int deadzone, float scale)
 {
   float delta = (float)value - center;
@@ -44,6 +67,11 @@ float applyDeadzone(int value, int center, int deadzone, float scale)
   return sign * normalized * scale;
 }
 
+/**
+ * @brief Display a blocking error screen for fatal control states.
+ * @param lcd LCD instance.
+ * @param status Control status code.
+ */
 static void showFatalControlError(LiquidCrystal_I2C& lcd, uint8_t status)
 {
   const bool isIkError = (status == UI_CONTROL_STATUS_IK_FAILED);
@@ -64,6 +92,14 @@ static void showFatalControlError(LiquidCrystal_I2C& lcd, uint8_t status)
   }
 }
 
+/**
+ * @brief Draw XYZ coordinates on the LCD.
+ * @param lcd LCD instance.
+ * @param x X coordinate (mm).
+ * @param y Y coordinate (mm).
+ * @param z Z coordinate (mm).
+ * @param pair Label for active axis pair.
+ */
 void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair)
 {
   lcd.setCursor(0,0);
@@ -85,6 +121,14 @@ void drawXYZ(LiquidCrystal_I2C& lcd, float x, float y, float z, const char* pair
   lcd.print(pair);
 }
 
+/**
+ * @brief Draw roll, pitch, yaw on the LCD.
+ * @param lcd LCD instance.
+ * @param r Roll angle (deg).
+ * @param p Pitch angle (deg).
+ * @param y Yaw angle (deg).
+ * @param pair Label for active axis pair.
+ */
 void drawRPY(LiquidCrystal_I2C& lcd, float r, float p, float y, const char* pair)
 {
   lcd.setCursor(0,0);
@@ -106,6 +150,12 @@ void drawRPY(LiquidCrystal_I2C& lcd, float r, float p, float y, const char* pair
   lcd.print(pair);
 }
 
+/**
+ * @brief Draw a pair of joint angles on the LCD.
+ * @param lcd LCD instance.
+ * @param t Joint angles array (deg).
+ * @param mode Which joint pair to show (0..2).
+ */
 void drawJOINTS(LiquidCrystal_I2C& lcd, float* t, int mode)
 {
   int i1 = mode * 2;
@@ -131,6 +181,10 @@ void drawJOINTS(LiquidCrystal_I2C& lcd, float* t, int mode)
   lcd.print(i2+1);
 }
 
+/**
+ * @brief FreeRTOS task for LCD rendering and input handling.
+ * @param pvParameters Unused task parameter.
+ */
 void TaskUI(void* pvParameters) {
 
   LiquidCrystal_I2C lcd(0x27, 16, 2);

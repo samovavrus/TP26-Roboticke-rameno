@@ -1,0 +1,41 @@
+\doxysection{ui\+\_\+screens.\+h}
+\hypertarget{ui__screens_8h_source}{}\label{ui__screens_8h_source}\index{TP26-\/Roboticke-\/rameno/ui\_screens.h@{TP26-\/Roboticke-\/rameno/ui\_screens.h}}
+\mbox{\hyperlink{ui__screens_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}src\(\backslash\)LiquidMenu\(\backslash\)LiquidCrystal\_I2C.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ui__screens_8h_a889f9e6c2533095b3a7986d3092a4359}{drawXYZ}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{LiquidCrystal\_I2C}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{x}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{y}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{z}})\ \{}
+\DoxyCodeLine{00039\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.clear();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.setCursor(0,0);}
+\DoxyCodeLine{00042\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\textcolor{stringliteral}{"{}X:"{}});}
+\DoxyCodeLine{00043\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{x}},1);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.setCursor(8,0);}
+\DoxyCodeLine{00046\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\textcolor{stringliteral}{"{}Y:"{}});}
+\DoxyCodeLine{00047\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{y}},1);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.setCursor(0,1);}
+\DoxyCodeLine{00050\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\textcolor{stringliteral}{"{}Z:"{}});}
+\DoxyCodeLine{00051\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{z}},1);}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ui__screens_8h_a644f2a3b017d1fcb3c419c53fcd437a0}{drawRPY}}(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{LiquidCrystal\_I2C}}\&\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{p}},\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{y}})\ \{}
+\DoxyCodeLine{00081\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.clear();}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.setCursor(0,0);}
+\DoxyCodeLine{00084\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\textcolor{stringliteral}{"{}R:"{}});}
+\DoxyCodeLine{00085\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{r}},1);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.setCursor(8,0);}
+\DoxyCodeLine{00088\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\textcolor{stringliteral}{"{}P:"{}});}
+\DoxyCodeLine{00089\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{p}},1);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.setCursor(0,1);}
+\DoxyCodeLine{00092\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\textcolor{stringliteral}{"{}Y:"{}});}
+\DoxyCodeLine{00093\ \ \ \mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{lcd}}.print(\mbox{\hyperlink{geometry_8h_aaa94f4c08bde77534dd5876511aa20ef}{y}},1);}
+\DoxyCodeLine{00094\ \}}
+
+\end{DoxyCode}

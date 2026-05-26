@@ -1,3 +1,7 @@
+/**
+ * @file Joystick.h
+ * @brief Analog joystick helper with deadzone filtering.
+ */
 #pragma once
 
 /**
