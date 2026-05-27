@@ -1,1 +1,39 @@
-Záver (ak je potrebný)
+V rámci tohto tímového projektu sme úspešne navrhli, implementovali a 
+otestovali komplexný vnorený riadiaci systém pre model robotického 
+manipulátora so šiestimi stupňami voľnosti (6-DOF). Podarilo sa nám 
+naplniť všetky hlavné body definované v zadaní a priniesť plne funkčné 
+mechatronické riešenie postavené na hardvérovej platforme mikrokontroléra 
+STM32. Celé programové vybavenie bolo implementované v jazyku C++ bez 
+použitia rozsiahlych frameworkov pre robotiku (ako napr. ROS), čo nám 
+poskytlo oveľa hlbší pohľad do problematiky tohto riešenia.
+
+Architektonickým základom bolo využitie operačného systému reálneho času 
+(FreeRTOS). Determinizmus systému sme dosiahli vďaka dôslednému rozdeleniu
+ procesov na samostatné paralelné úlohy, ktoré bezpečne a s nízkou 
+ latenciou zvládajú výpočet kinematiky, generovanie riadiacich signálov 
+ pre servomotory aj komunikáciu naprieč procesmi prostredníctvom správ a 
+ frontov.
+
+Jadrom práce bolo zvládnutie problematiky 
+priestorovej kinematiky. Návrh numerického riešenia inverznej kinematickej 
+úlohy (IKÚ) na báze Newtonovej metódy a maticových operácií z knižnice 
+Eigen bol úspešne aplikovaný do výpočtov v reálnom čase.
+
+Ďalším dôležitým splneným míľnikom z pohľadu zadania a hardvérovej 
+integrácie bolo spojazdnenie prehľadného používateľského rozhrania, 
+ktoré kombinuje LCD displej a joystick. Jeho prostredníctvom bola 
+zabezpečená spätná väzba a zadávanie cieľových priestorových 
+súradníc koncového efektora. Navyše bol systém rožšírený o aplikáciu 
+3D mapovania priestoru integráciou laserového ToF senzora (VL53L1X), na 
+ktorú nadväzuje funkčné logovanie vyhodnotených dát priamo na SD kartu.
+Taktiež sme si vyškúšali namodelovať istú časť manipulátora, ktorú sme aj
+spojili na druhom manipulátore.
+
+Zhodnotením celej našej práce konštatujeme, že tento tímový projekt splnil 
+všetky definované ciele integrácie pokročilého algoritmu a embedded 
+hardvéru. Aplikovaním teoretických matematických modelov z oblasti robotiky 
+priamo do softvéru s limitovaným hardvérovým výkonom sme získali cenné 
+praktické skúsenosti. Náš systém je robustný, preukázal funkčnosť aj 
+napriek mechanickým obmedzeniam 6-DOF modelu a zároveň tvorí otvorený 
+systém, ktorý je plne pripravený pre možné budúce rozsiahlejšie experimenty 
+a vylepšenia.
