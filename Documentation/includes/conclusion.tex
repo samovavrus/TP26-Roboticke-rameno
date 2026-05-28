@@ -3,13 +3,15 @@ otestovali komplexný vnorený riadiaci systém pre model robotického
 manipulátora so šiestimi stupňami voľnosti (6-DOF). Podarilo sa nám 
 naplniť všetky hlavné body definované v zadaní a priniesť plne funkčné 
 mechatronické riešenie postavené na hardvérovej platforme mikrokontroléra 
-STM32. Celé programové vybavenie bolo implementované v jazyku C++ bez 
+STM32. Celé programové vybavenie bolo implementované v jazyku C++ s využitím
+knižnice Eigen bez 
 použitia rozsiahlych frameworkov pre robotiku (ako napr. ROS), čo nám 
 poskytlo oveľa hlbší pohľad do problematiky tohto riešenia.
 
 Architektonickým základom bolo využitie operačného systému reálneho času 
 (FreeRTOS). Determinizmus systému sme dosiahli vďaka dôslednému rozdeleniu
- procesov na samostatné paralelné úlohy, ktoré bezpečne a s nízkou 
+ procesov na samostatné paralelné úlohy s vhodnou prioritizáciou
+ , ktoré bezpečne a s nízkou 
  latenciou zvládajú výpočet kinematiky, generovanie riadiacich signálov 
  pre servomotory aj komunikáciu naprieč procesmi prostredníctvom správ a 
  frontov.
@@ -26,8 +28,9 @@ zabezpečená spätná väzba a zadávanie cieľových priestorových
 súradníc koncového efektora. Navyše bol systém rožšírený o aplikáciu 
 3D mapovania priestoru integráciou laserového ToF senzora (VL53L1X), na 
 ktorú nadväzuje funkčné logovanie vyhodnotených dát priamo na SD kartu.
-Taktiež sme si vyškúšali namodelovať istú časť manipulátora, ktorú sme aj
-spojili na druhom manipulátore.
+Taktiež sme si vyškúšali skonštruovať ďalší model manipulátora na 
+báze 3D tlače a mechanicky navrhnúť jeho vybranú 
+časť manipulátora, ktorá viedla k vytvoreniu nového manipulátora.
 
 Zhodnotením celej našej práce konštatujeme, že tento tímový projekt splnil 
 všetky definované ciele integrácie pokročilého algoritmu a embedded 
