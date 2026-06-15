@@ -191,25 +191,25 @@ void TaskSensor(void* pvParameters) {
     TwoWire Wire3(PB4, PA8);
     Wire3.begin();
     Wire3.setClock(400000);
-    RangingSensor rangingSensor(Wire3);
-    if (!rangingSensor.init(Ts_ms, RangingSensor::DistanceMode::Short)) {
+    RangingSensor::instance(Wire3); // Initialize singleton instance
+    if (!RangingSensor::instance.init(Ts_ms, RangingSensor::DistanceMode::Short)) {
         Serial.println("RangingSensor init failed!");
         vTaskDelete(NULL);
         return;
     }
 
-    if (rangingSensor.initSD(PE4)) {
+    if (RangingSensor::instance.initSD(PE4)) {
         Serial.println("SD Card initialized for RangingSensor!");
-        rangingSensor.enableLogging(true, true);
+        RangingSensor::instance.enableLogging(true, true);
     } else {
         Serial.println("SD Card init failed! Logging disabled.");
     }
 
-    rangingSensor.startContinuous();
+    RangingSensor::instance.startContinuous();
     Serial.println("RangingSensor initialized");
 
     while (1) {
-        MeasurementData measurement = rangingSensor.read(x, y, z, roll, pitch, yaw);
+        MeasurementData measurement = RangingSensor::instance.read(x, y, z, roll, pitch, yaw);
         
         if (measurement.valid) {
             Serial.print("Distance: ");

@@ -186,7 +186,7 @@ void TaskTrajectory(void* pvParameters) {
             vTaskDelay(pdMS_TO_TICKS(Ts_ms));
           }
         }
-        
+        RangingSensor::instance().enableLogging(false,false); // Stop logging after trajectory is done
         // Ukončenie / Návrat povelov do rúk UI Controlu
         taskENTER_CRITICAL();
         gTrajectoryTargetPose.valid = 0;

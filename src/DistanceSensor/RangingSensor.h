@@ -35,6 +35,8 @@ struct MeasurementData {
 /// Designed for future integration with octomap and RAM storage
 class RangingSensor {
 public:
+
+    static RangingSensor& instance(TwoWire& wire);
     /// @brief Distance measurement mode for the ToF sensor.
     enum class DistanceMode : uint8_t {
         Short  = 0,  // Up to 1.3m, better ambient immunity
@@ -93,6 +95,8 @@ public:
     void enableLogging(bool enable, bool clear = false);
 
 private:
+    RangingSensor(TwoWire& wire);
+
     VL53L1X _sensor;
     TwoWire* _wire;
     bool _initialized;
@@ -103,7 +107,6 @@ private:
     bool _is_logging_enabled;
     uint32_t _sd_cs_pin;
 
-    // Performance improvement variables for SD writing
     File _dataFile;
     uint8_t _flush_counter;
 };
